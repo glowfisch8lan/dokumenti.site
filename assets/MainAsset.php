@@ -15,21 +15,14 @@ use yii\web\AssetBundle;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class AppAsset extends AssetBundle
+class MainAsset extends AssetBundle
 {
-    public $basePath = '@webroot';
-    public $baseUrl = '@web';
-//    public $publishOptions = [
-//        'forceCopy' => true
-//    ];
+    public $css = [
+        'css/main.css',
+        'css/header-footer.css',
+    ];
     public $js = [
-        'js/jquery.touch.js',
-        'js/common.js'
     ];
     public $depends = [
-        'yii\web\YiiAsset',
-        'app\assets\MainAsset',
-        'app\assets\OwlCarouselAsset',
-        'app\assets\LoginRegAsset',
     ];
 }
