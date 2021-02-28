@@ -9,19 +9,23 @@ use yii\widgets\ActiveForm;
 $this->title = 'Login';
 ?>
 <section class="login">
-    <form class="login-form" action="">
-        <h2 class="h2 title">Вход</h2>
-        <div class="login-item">
-            <label for="">E-mail <span>*</span></label>
-            <input type="text" name="e-mail" id="e-mail" placeholder="example@mail.ru">
-        </div>
-        <div class="login-item">
-            <label for="">Пароль <span>*</span></label>
-            <input type="text" name="password" id="password" placeholder="**********">
-        </div>
-        <button type="submit">Войти</button>
-    </form>
-    <div class="reg-already">
-        <p>Еще не зарегистрировались? &nbsp; <a href="reg.html">Регистрация</a></p>
-    </div>
+
+<?php $form = ActiveForm::begin([
+    'options' => [
+                'class' => 'login-form'
+             ],
+    'fieldConfig' => [
+        'options' => ['class' => 'login-item'],
+        'template' => "{label}\n{input}\n<div>{error}</div>"
+    ],
+]); ?>
+    <h2 class="h2 title">Вход</h2>
+<?= $form->field($model, 'username')->textInput(['autofocus' => true])->input('login', ['placeholder' => "example@mail.ru", 'id' => 'e-mail'])->label('E-mail <span>*</span>')?>
+<?= $form->field($model, 'password')->passwordInput()->input('password', ['placeholder' => "Введите свой пароль",  'id' => 'password'])->label('Пароль <span>*</span>')?>
+
+<div class="form-group">
+    <?= Html::submitButton('Вход', ['class' => 'btn btn-primary shadow- mb-4', 'name' => 'login-button'])?>
+</div>
+
+<?php ActiveForm::end();?>
 </section>

@@ -15,15 +15,15 @@ use yii\web\AssetBundle;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class MainAsset extends AssetBundle
+class SitesAsset extends AssetBundle
 {
-    public $css = [
-        'css/main.css'
-    ];
 
+    public $css = [
+        'css/sites.css'
+
+    ];
     public $js = [
     ];
-
     public $depends = [
     ];
 }

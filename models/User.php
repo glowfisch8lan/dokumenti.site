@@ -2,73 +2,211 @@
 
 namespace app\models;
 
-class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
+
+
+use Yii;
+use yii\db\ActiveRecord;
+use yii\web\IdentityInterface;
+use app\modules\system\components\behaviors\CachedBehavior;
+
+class User extends ActiveRecord implements IdentityInterface
 {
-    public $id;
-    public $username;
-    public $password;
-    public $authKey;
-    public $accessToken;
 
-    private static $users = [
-        '100' => [
-            'id' => '100',
-            'username' => 'admin',
-            'password' => 'admin',
-            'authKey' => 'test100key',
-            'accessToken' => '100-token',
-        ],
-        '101' => [
-            'id' => '101',
-            'username' => 'demo',
-            'password' => 'demo',
-            'authKey' => 'test101key',
-            'accessToken' => '101-token',
-        ],
-    ];
+    public $permissions;
+    public $groups;
 
+    protected $cache;
 
     /**
-     * {@inheritdoc}
+     * User constructor. Определяем в какой кеш будем сбрасывать данные
      */
-    public static function findIdentity($id)
+    public function __construct()
     {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        $this->cache = Yii::$app->cacheUsers;
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public static function findIdentityByAccessToken($token, $type = null)
-    {
-        foreach (self::$users as $user) {
-            if ($user['accessToken'] === $token) {
-                return new static($user);
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Finds user by username
+     * Правила валидации
      *
-     * @param string $username
-     * @return static|null
+     * @return array
      */
-    public static function findByUsername($username)
-    {
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
-            }
-        }
+    public function rules(){
+        return [
+            [
+                ['username', 'name', 'groups'],
+                'required',
+                'message' => 'Заполните поля!'
+            ],
+            [
+                ['username', 'name', 'groups', 'password'],
+                'required',
+                'message' => 'Заполните поля!',
+                'on' => 'sign-up'
+            ],
+            [['username','phone'],'unique'],
+//            ['password', 'match', 'pattern' => '/[a-z0-9]*/', 'message' => 'Пароль не должен содержать пробелы'],
 
-        return null;
+        ];
     }
 
     /**
-     * {@inheritdoc}
+     * Поведение перед сохранением в БД AR
+     *
+     * @param bool $insert
+     * @return bool
+     * @throws \yii\base\Exception
+     */
+    public function beforeSave($insert)
+    {
+        if(parent::beforeSave($insert)){
+            (empty($this->password) && Yii::$app->controller->action->id == 'update') ? null : $this->setPassword($this->password);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Определяем поведение, очищающее кеш, при записи в БД AR
+     *
+     * @return array
+     */
+    public function behaviors()
+    {
+        return [
+            'CachedBehavior' => [
+                'class' => CachedBehavior::class,
+                'cache' => Yii::$app->cacheUsers
+            ]
+        ];
+    }
+
+    /**
+     * Устанавливаем аттрибуты
+     *
+     * @return array
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'username' => 'Логин',
+            'password' => 'Пароль',
+            'userGroup' => 'Группа',
+            'name' => 'Фамилия, имя и отчество'
+        ];
+    }
+
+    /**
+     * Определяем таблицу, привязанную к моделе
+     *
+     * @return string
+     */
+    public static function tableName()
+    {
+        return 'system_users';
+    }
+
+    /**
+     * Получить информацию о членстве пользователя в группах
+     *
+     * @param $user_id
+     * @return array | ['group_id','user_username', 'group_name']
+     */
+    public static function getUserGroups($user_id)
+    {
+
+        $cache = Yii::$app->cacheUser;
+        $duration = 12000;
+
+        /**
+         * Кеширование
+         */
+        // $response = $cache->get('userGroupsMembers');
+        $response = false;
+        if ($response === false) {
+
+            $response = (new \yii\db\Query())
+                ->select('system_groups.id as id, system_User.username as username, system_groups.name as group ')
+                ->from('system_User')
+                ->join('LEFT JOIN', 'system_User_groups', 'system_User.id = system_User_groups.user_id')
+
+                ->join('LEFT JOIN', 'system_groups', 'system_User_groups.group_id = system_groups.id')
+
+                ->where('user_id = :user_id')
+                ->addParams([':user_id' => (int) $user_id])
+                //->createCommand()->queryAll( \PDO::FETCH_CLASS);
+                ->all();
+            $cache->set('userGroupsMembers', $response, $duration);
+        }
+        return $response;
+
+
+    }
+
+    /**
+     * Получить список пользователей
+     *
+     * @return array
+     * @throws \yii\db\Exception
+     */
+    public function getUserList(){
+
+        return (new \yii\db\Query())
+            ->select('
+                `system_User`.`id` AS `id`,
+                `system_User`.`username` AS `username`,
+                `system_User`.`name` AS `name`
+
+                ')
+            ->from('system_User')
+            //->join('LEFT JOIN', 'system_User', 'system_User_groups.user_id = system_User.id')
+            ->createCommand()->queryAll( \PDO::FETCH_CLASS);
+
+    }
+
+    /**
+     * Этот метод находит экземпляр identity class, используя ID пользователя. Этот метод используется, когда необходимо поддерживать состояние аутентификации через сессии.
+     * @param int|string $id
+     * @return User|IdentityInterface|null
+     */
+    public static function findIdentity($id){
+        return static::findOne($id);
+    }
+
+    /**
+     * Этот метод находит экземпляр identity class, используя токен доступа. Метод используется, когда требуется аутентифицировать пользователя только по секретному токену
+     * (например в RESTful приложениях, не сохраняющих состояние между запросами).
+     *
+     * @param mixed $token
+     * @param null $type
+     * @return void|IdentityInterface|null
+     */
+    public static function findIdentityByAccessToken($token, $type = null){
+    }
+
+    /**
+     * Установить пользователю новый пароль
+     * @param $password
+     * @throws \yii\base\Exception
+     */
+    public function setPassword($password){
+        $this->password = Yii::$app->security->generatePasswordHash($password);
+    }
+
+    /**
+     * Поиск пользователя по логину
+     *
+     * @param $username
+     * @return User|null
+     */
+    public static function findByUsername($username){
+        return static::findOne(['username' => $username]);
+    }
+
+    /**
+     * Этот метод возвращает ID пользователя, представленного данным экземпляром identity.
+     *
+     * @return int|mixed|string
      */
     public function getId()
     {
@@ -76,29 +214,49 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Этот метод возвращает ключ, используемый для основанной на cookie аутентификации. Ключ сохраняется в аутентификационной cookie и позже сравнивается с версией, находящейся на сервере,
+     * чтобы удостоверится, что аутентификационная cookie верная.
+     * @return string|void
      */
-    public function getAuthKey()
-    {
-        return $this->authKey;
+    public function getAuthKey(){
+        //   return $this->authKey;
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function validateAuthKey($authKey)
-    {
-        return $this->authKey === $authKey;
-    }
-
-    /**
-     * Validates password
+     * Этот метод реализует логику проверки ключа для основанной на cookie аутентификации.
      *
-     * @param string $password password to validate
-     * @return bool if password provided is valid for current user
+     * @param string $authKey
+     * @return bool|void
      */
-    public function validatePassword($password)
-    {
-        return $this->password === $password;
+    public function validateAuthKey($authKey){
+        //    return $this->authKey === $authKey;
     }
+
+    /**
+     * Проверяет пароль по хешу.
+     *
+     * @param $password
+     * @return bool|mixed
+     * @throws \Adldap\Auth\BindException
+     * @throws \Adldap\Auth\PasswordRequiredException
+     * @throws \Adldap\Auth\UsernameRequiredException
+     */
+    public function validatePassword($password){
+        /* Если пароль не хранится в локальной Базе, авторизуемся через LDAP */
+        if ($this->password == '' or $this->password == null) {
+
+            $result = Auth::getInstance()->process($this->username, $password);
+            if($result)
+            {
+                Auth::getInstance()->syncUserGroups($this->username, $password);
+            }
+
+            return $result;
+
+        } else {
+            /* В ином случае проверяем пароль локально */
+            return Yii::$app->security->validatePassword($password, $this->password);
+        }
+    }
+
 }

@@ -29,6 +29,7 @@ class AppAsset extends AssetBundle
     public $depends = [
         'yii\web\YiiAsset',
         'app\assets\MainAsset',
+        'app\assets\HeaderFootersAsset',
         'app\assets\OwlCarouselAsset',
         'app\assets\LoginRegAsset',
     ];

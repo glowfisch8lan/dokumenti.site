@@ -11,12 +11,23 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
+    'modules' => [
+        'system' => [
+            'class' => 'app\modules\system\Module',
+        ],
+    ],
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'D8779m0gjp2Aq92Hns9JJqJsdTOXxcQ3',
         ],
         'cache' => [
+            'class' => 'yii\caching\FileCache',
+        ],
+        'cacheUsers' => [
+            'class' => 'yii\caching\FileCache',
+        ],
+        'cacheGroups' => [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [

@@ -231,7 +231,7 @@ $this->title = 'My Yii Application';
         <div class="arbitrage-practice-left">
             <div class="arbitrage-practice-left-container">
                 <div class="arbitrage-practice-left-item">
-                    <a href="#">1. Нарушение исключительных имущественных прав на произведение изобразительного искусства</a>
+                    <a href="https://sudact.ru/arbitral/doc/ZLJJRyWiPamv/" target="_blank">1. Нарушение исключительных имущественных прав на произведение изобразительного искусства</a>
                     <p>Сумма иска: 50.845 рублей; Дело №А55-39556/2019 от 19 марта 2020 года</p>
                 </div>
                 <div class="arbitrage-practice-left-item">

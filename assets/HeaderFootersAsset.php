@@ -15,15 +15,13 @@ use yii\web\AssetBundle;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class MainAsset extends AssetBundle
+class HeaderFootersAsset extends AssetBundle
 {
     public $css = [
-        'css/main.css'
+        'css/header-footer.css'
     ];
-
     public $js = [
     ];
-
     public $depends = [
     ];
 }
