@@ -7,9 +7,9 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
+use app\modules\system\models\users\LoginForm;
 use app\models\ContactForm;
-use app\models\User;
+use app\modules\system\models\users\Users;
 
 class SiteController extends Controller
 {
@@ -134,7 +134,7 @@ class SiteController extends Controller
      */
     public function actionSignUp()
     {
-        $model = new User();
+        $model = new Users();
         $model->scenario = 'sign-up';
         if(Yii::$app->request->isPost)
         {

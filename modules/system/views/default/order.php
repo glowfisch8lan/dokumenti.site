@@ -6,7 +6,7 @@ echo Cabinet::topMenu();
 
 <section class="main-cabinet">
     <div class="main-cabinet-container">
-        <?= Cabinet::menu();?>
+        <?= Cabinet::menu('order');?>
         <div class="main-cabinet-content">
             <form class="main-cabinet-order">
                 <h2 class="h2 title">Разработка документов для вашего сайта в 2 шага</h2>

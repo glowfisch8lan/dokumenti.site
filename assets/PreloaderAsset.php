@@ -10,18 +10,18 @@ namespace app\assets;
 use yii\web\AssetBundle;
 
 /**
- * Main application asset bundle.
+ * Asset bundle for the Twitter bootstrap javascript files.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
  */
-class SitesAsset extends AssetBundle
+class PreloaderAsset extends AssetBundle
 {
-
+    public $sourcePath = '@app/modules/system/assets';
     public $css = [
-        'css/sites.css'
+        'css/preloader.css',
     ];
     public $js = [
+        'js/preloader.js'
     ];
     public $depends = [
     ];

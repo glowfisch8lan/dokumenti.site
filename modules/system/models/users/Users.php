@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace app\modules\system\models\users;
 
 
 
@@ -9,7 +9,7 @@ use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 use app\modules\system\components\behaviors\CachedBehavior;
 
-class User extends ActiveRecord implements IdentityInterface
+class Users extends ActiveRecord implements IdentityInterface
 {
 
     public $permissions;
@@ -115,7 +115,7 @@ class User extends ActiveRecord implements IdentityInterface
     public static function getUserGroups($user_id)
     {
 
-        $cache = Yii::$app->cacheUser;
+        $cache = Yii::$app->cacheUsers;
         $duration = 12000;
 
         /**
@@ -126,11 +126,11 @@ class User extends ActiveRecord implements IdentityInterface
         if ($response === false) {
 
             $response = (new \yii\db\Query())
-                ->select('system_groups.id as id, system_User.username as username, system_groups.name as group ')
-                ->from('system_User')
-                ->join('LEFT JOIN', 'system_User_groups', 'system_User.id = system_User_groups.user_id')
+                ->select('system_groups.id as id, system_users.username as username, system_groups.name as group ')
+                ->from('system_users')
+                ->join('LEFT JOIN', 'system_users_groups', 'system_users.id = system_users_groups.user_id')
 
-                ->join('LEFT JOIN', 'system_groups', 'system_User_groups.group_id = system_groups.id')
+                ->join('LEFT JOIN', 'system_groups', 'system_users_groups.group_id = system_groups.id')
 
                 ->where('user_id = :user_id')
                 ->addParams([':user_id' => (int) $user_id])
@@ -153,13 +153,13 @@ class User extends ActiveRecord implements IdentityInterface
 
         return (new \yii\db\Query())
             ->select('
-                `system_User`.`id` AS `id`,
-                `system_User`.`username` AS `username`,
-                `system_User`.`name` AS `name`
+                `system_users`.`id` AS `id`,
+                `system_users`.`username` AS `username`,
+                `system_users`.`name` AS `name`
 
                 ')
-            ->from('system_User')
-            //->join('LEFT JOIN', 'system_User', 'system_User_groups.user_id = system_User.id')
+            ->from('system_users')
+            //->join('LEFT JOIN', 'system_users', 'system_users_groups.user_id = system_users.id')
             ->createCommand()->queryAll( \PDO::FETCH_CLASS);
 
     }

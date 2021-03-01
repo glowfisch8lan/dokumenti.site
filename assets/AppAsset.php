@@ -19,18 +19,26 @@ class AppAsset extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
-//    public $publishOptions = [
-//        'forceCopy' => true
-//    ];
+    public $publishOptions = [
+        'forceCopy' => true
+    ];
     public $js = [
         'js/jquery.touch.js',
         'js/common.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',
+
+        'yii\bootstrap4\BootstrapPluginAsset',
+        'app\assets\PreloaderAsset',
+
         'app\assets\MainAsset',
         'app\assets\HeaderFootersAsset',
-        'app\assets\OwlCarouselAsset',
         'app\assets\LoginRegAsset',
+        'app\assets\SitesAsset',
+
+        'app\assets\OwlCarouselAsset',
+        'app\assets\FontAwesomeAsset',
+
     ];
 }

@@ -6,7 +6,7 @@ echo Cabinet::topMenu();
 
 <section class="main-cabinet">
     <div class="main-cabinet-container">
-        <?= Cabinet::menu();?>
+        <?= Cabinet::menu('sites');?>
         <div class="main-cabinet-content">
             <div class="main-cabinet-sites">
                 <div class="main-cabinet-sites__item">

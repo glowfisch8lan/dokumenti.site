@@ -2,7 +2,10 @@
 
 
 namespace app\modules\system\helpers;
+use app\modules\system\models\rbac\AccessControl;
+use app\modules\system\Module;
 use Yii;
+use app\modules\system\models\users\UsersBalance;
 class Cabinet
 {
 
@@ -14,35 +17,26 @@ class Cabinet
                 </div>
                 <div class="cabinet-top-menu-right">
                     <a href="#">Пополнить</a>
-                    <p>Баланс: <span>0 ₽</span></p>
+                    <p>Баланс: <span>'.UsersBalance::getBalance(Yii::$app->user->identity->id).' ₽</span></p>
                 </div>
             </div>
         </section>';
         return $code;
     }
 
-    public static function menu(){
-        $array = [
-            [
-                'id' => 'order',
-                'linkPath' => '/'.Yii::$app->controller->module->id . '/' . Yii::$app->controller->id .'/',
-                'title' => 'Заказ документов'
-            ],
-            [
-                'id' => 'sites',
-                'linkPath' => '/'.Yii::$app->controller->module->id . '/' . Yii::$app->controller->id .'/',
-                'title' => 'Мои сайты'
-            ],
-            [
-                'id' => 'orders',
-                'linkPath' => '/'.Yii::$app->controller->module->id . '/' . Yii::$app->controller->id .'/',
-                'title' => 'Список заказов'
-            ],
-        ];
+    /**
+     * Генерация меню в Личном кабинете;
+     *
+     * @param null $action : позволяет выделить активный link
+     * @return string
+     */
+    public static function menu($action = null){
+        $array = Yii::$app->getModule('system')->routes;
 
         $code = null;
         foreach($array as $item => $value){
-            $code .= '<a href="'.$value['linkPath'].$value['id'].'" class="'.(($value['id'] === Yii::$app->controller->action->id) ? 'active' : null).'">'.$value['title'].'</a>';
+            if($value['visible'] && AccessControl::checkAccess(Yii::$app->user->identity->id,$value['access']))
+                $code .= '<a href="'.$value['route'].'" class="'.(($value['id'] === $action) ? 'active' : null).'">'.$value['title'].'</a>';
         }
 
         return '<div class="main-cabinet-menu"><div class="main-cabinet-menu-container">'.$code.'</div></div>';

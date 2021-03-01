@@ -5,7 +5,9 @@
 
 use yii\helpers\Html;
 use app\assets\AppAsset;
-
+use yii\widgets\ActiveForm;
+use app\modules\feedback\models\FeedbackRequest;
+use app\models\User;
 AppAsset::register($this);
 $js = <<< JS
 
@@ -17,6 +19,7 @@ $('.main-carousel').owlCarousel({
 JS;
 
 $this->registerJs( $js, $position = yii\web\View::POS_END, $key = null );
+$model = new FeedbackRequest();
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -31,31 +34,44 @@ $this->registerJs( $js, $position = yii\web\View::POS_END, $key = null );
 </head>
 <body>
 <?php $this->beginBody() ?>
+<div class="preloader">
+    <div class="preloader__row">
+        <div class="preloader__item"></div>
+        <div class="preloader__item"></div>
+    </div>
+</div>
 <div id="wrapper">
     <div class="callback">
         <div class="callback-container">
-            <form class="callback-content">
-                <a class="close" href="#">
-                    <img src="/img/close.png" alt="">
-                </a>
-                <h2 class="h2 title">
-                    Оставьте нам свой номер и <br>
-                    мы обязательно перезвоним
-                </h2>
-                <div class="callback-content__item">
-                    <label for="name">Ваше имя</label>
-                    <input type="text" name="name" id="name" placeholder="Иван">
-                </div>
-                <div class="callback-content__item">
-                    <label for="phone">Ваш телефон</label>
-                    <input type="text" name="phone" id="phone" placeholder="+7 900 000 00 00">
-                </div>
-                <div class="callback-content__item">
-                    <input type="checkbox" name="polit" id="polit">
-                    <label for="polit">Я согласен на обработку персональных данных</label>
-                </div>
-                <button type="submit">Отправить</button>
-            </form>
+            <?php $form = ActiveForm::begin([
+                'options' => [
+                    'class' => 'callback-content'
+                ],
+                'fieldConfig' => [
+                    'options' => ['class' => 'callback-content__item'],
+                    'template' => "{label}\n{input}\n{error}"
+                ],
+            ]); ?>
+            <a class="close" href="#">
+                <img src="/img/close.png" alt="">
+            </a>
+            <h2 class="h2 title">
+                Оставьте нам свой номер и <br>
+                мы обязательно перезвоним
+            </h2>
+            <?= $form->field($model, 'name')->textInput(['autofocus' => true])->input('text', ['placeholder' => "Ваше Имя", 'name'=>'name','id' => 'name'])->label('Ваше имя',['for' => 'name'])?>
+            <?= $form->field($model, 'phone')->textInput(['autofocus' => true])->input('text', ['placeholder' => "+7 900 000 00 00", 'id' => 'phone'])->label('')?>
+
+            <div class="callback-content__item">
+                <input type="checkbox" name="polit" id="polit">
+                <label for="polit">Я согласен на обработку персональных данных</label>
+            </div>
+
+            <div class="form-group">
+                <?= Html::submitButton('Отправить', ['class' => '', 'name' => 'login-button'])?>
+            </div>
+
+            <?php ActiveForm::end();?>
         </div>
     </div>
 
