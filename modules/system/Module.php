@@ -105,32 +105,52 @@ class Module extends \yii\base\Module
      */
     private function verifyAccess(){
 
-        $act = '/' . Yii::$app->controller->module->id . '/' . Yii::$app->controller->id;
+        $act = '/' . Yii::$app->controller->module->id . '/' . Yii::$app->controller->id . '/' . ((Yii::$app->controller->action->id === 'index') ? null : Yii::$app->controller->action->id);
 
-
+        /**
+         * Проверка правил-исключений;
+         *
+         * Принудительно наполняем массив если он пустой;
+         */
         if(empty($this->excludedRules))
-            $this->excludedRules = [['route' => '', 'name' => '', 'module' => '']]; //Принудительно наполняем массив если он пустой;
+            $this->excludedRules = [['route' => '', 'name' => '', 'module' => '']];
 
 
+        /**
+         * Цикл №1 -> Массив Правил исключений;
+         *
+         */
         foreach($this->excludedRules as $eRule){
-            if($eRule['route'] != $act){
-                if(!\app\modules\system\models\rbac\AccessControl::checkAccess(Yii::$app->user->identity->id,$this->visible)){
-                    throw new ForbiddenHttpException('You are not allowed to perform this action.');
-                }
 
-                //Провера доступа к подразделу модуля;
-                $action = '/' . Yii::$app->controller->module->id . '/' . Yii::$app->controller->id . '/' . Yii::$app->controller->action->id;
+            /**
+             * Если исключение не равно нынешнему модулю/контроллеру/действию, то проверяем доступ;
+             */
+            if($eRule['route'] != $act){
+
+                /**
+                 * Проверяем доступ к МОДУЛЮ;
+                 */
+                if(!AccessControl::checkAccess(Yii::$app->user->identity->id,$this->visible))
+                    throw new ForbiddenHttpException('You are not allowed to perform this action.');
+
+
+                /**
+                 * Провряем доступ к контроллеру/действию модуля;
+                 *
+                 * /module/controller/index => /module/controller
+                 */
+                $action = '/' . Yii::$app->controller->module->id . '/' . Yii::$app->controller->id . ((Yii::$app->controller->action->id === 'index') ? null : '/' . Yii::$app->controller->action->id);
                 $user_id = Yii::$app->user->identity->id;
 
                 foreach($this->routes as $route){
-                    if($route['route'] == $action) {
-                        if(!AccessControl::checkAccess($user_id, $route['access']))
+
+                    if( $route['route'] == $action && !AccessControl::checkAccess($user_id, str_replace('index', '', $route['access'])))
                             throw new ForbiddenHttpException('You are not allowed to perform this action.');
 
-                    }
                 }
             }
         }
+
         return false;
     }
 

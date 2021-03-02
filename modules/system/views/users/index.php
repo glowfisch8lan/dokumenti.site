@@ -9,7 +9,6 @@ use app\modules\system\helpers\Grid;
 /* @var $searchModel app\modules\system\models\users\UsersSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$action = 'users';
 $this->title = 'Пользователи';
 ?>
 

@@ -39,7 +39,7 @@ class Settings extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'value'], 'required'],
+            [['name', 'value', 'description'], 'required'],
             [['name', 'value'], 'validateSettings'],
 //            [['user_id'], 'integer'],
 //            [['name', 'value'], 'string', 'max' => 65],

@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use app\modules\system\models\users\LoginForm;
 use app\models\ContactForm;
 use app\modules\system\models\users\Users;
+use app\modules\system\models\settings\Settings;
 
 class SiteController extends Controller
 {
@@ -139,7 +140,7 @@ class SiteController extends Controller
         if(Yii::$app->request->isPost)
         {
             $model->load(Yii::$app->request->post());
-            $model->groups = [2];
+            $model->groups = [Settings::getValue('system.signup.group.default')];
             $model->save();
             Yii::$app->user->login($model);
             return $this->goHome();

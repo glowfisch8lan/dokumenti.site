@@ -7,7 +7,9 @@ use yii\helpers\Html;
 use app\assets\AppAsset;
 use yii\widgets\ActiveForm;
 use app\modules\feedback\models\FeedbackRequest;
-use app\models\User;
+use yii\bootstrap4\Alert;
+
+
 AppAsset::register($this);
 $js = <<< JS
 
@@ -31,6 +33,21 @@ $model = new FeedbackRequest();
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <style>
+        .alert{
+            width: 400px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+    </style>
 </head>
 <body>
 <?php $this->beginBody() ?>

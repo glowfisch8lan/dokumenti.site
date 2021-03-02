@@ -2,7 +2,9 @@
 
 namespace app\modules\system\controllers;
 
+use Yii;
 use yii\web\Controller;
+use app\modules\system\models\users\UsersOrders;
 
 /**
  * Default controller for the `system` module
@@ -33,6 +35,19 @@ class DefaultController extends Controller
      */
     public function actionOrder()
     {
-        return $this->render('order');
+        Yii::$app->session->setFlash('alert-success', 'Ваш заказ № успешно принят!');
+        if(Yii::$app->request->isPost)
+        {
+            $model = new UsersOrders();
+            $value = UsersOrders::get(1);
+
+            if($model->load(Yii::$app->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('alert-success', 'Ваш заказ №<b>'.$model->id.'</b> успешно принят!');
+                return $this->redirect('/system/default/order');
+            }
+        }
+
+        $model = new UsersOrders();
+        return $this->render('order', ['model' => $model]);
     }
 }

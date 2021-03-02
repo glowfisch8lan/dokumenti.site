@@ -6,10 +6,13 @@ use app\modules\system\models\rbac\AccessControl;
 use app\modules\system\Module;
 use Yii;
 use app\modules\system\models\users\UsersBalance;
+use yii\bootstrap4\Alert;
+
 class Cabinet
 {
 
     public static function topMenu(){
+
         $code = '<section class="cabinet-top-menu">
             <div class="cabinet-top-menu-container">
                 <div class="cabinet-top-menu-left">
@@ -21,6 +24,25 @@ class Cabinet
                 </div>
             </div>
         </section>';
+
+        $typeAlert = ['alert-success', 'alert-warning', 'alert-danger'];
+        foreach ($typeAlert as $key => $value) {
+            $sessionKey = Yii::$app->session->getFlash($value);
+            if (!is_null($sessionKey)) {
+                $body = $sessionKey;
+                break;
+            }
+        }
+        if (isset($body)) {
+            $code .= '<section class="alert"><div class="alert">'. Alert::widget([
+                'options' => [
+                    'class' => ' alert-info',
+                ],
+                'body' => $body,
+            ]).'</div></div></section>';
+        }
+
+
         return $code;
     }
 
