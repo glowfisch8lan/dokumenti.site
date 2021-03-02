@@ -35,7 +35,7 @@ class DefaultController extends Controller
      */
     public function actionOrder()
     {
-        Yii::$app->session->setFlash('alert-success', 'Ваш заказ № успешно принят!');
+
         if(Yii::$app->request->isPost)
         {
             $model = new UsersOrders();

@@ -34,12 +34,17 @@ class Cabinet
             }
         }
         if (isset($body)) {
-            $code .= '<section class="alert"><div class="alert">'. Alert::widget([
+            $code .= '<div class="box-alert">
+  <div>'. Alert::widget([
                 'options' => [
                     'class' => ' alert-info',
                 ],
                 'body' => $body,
-            ]).'</div></div></section>';
+            ]).'
+</div>
+</div>';
+
+
         }
 
 

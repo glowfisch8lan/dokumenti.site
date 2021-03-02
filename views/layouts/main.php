@@ -12,7 +12,10 @@ use yii\bootstrap4\Alert;
 
 AppAsset::register($this);
 $js = <<< JS
-
+$('button.close').on('click', function(){
+    alert();
+   $('.box-alert').hide();
+});
 $('.main-carousel').owlCarousel({
             items: 1,
             nav: true
@@ -34,18 +37,15 @@ $model = new FeedbackRequest();
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
     <style>
-        .alert{
-            width: 400px;
-            display: -webkit-box;
-            display: -ms-flexbox;
+        .box-alert {
             display: flex;
-            -webkit-box-orient: vertical;
-            -webkit-box-direction: normal;
-            -ms-flex-direction: column;
-            flex-direction: column;
-            -webkit-box-align: center;
-            -ms-flex-align: center;
             align-items: center;
+            justify-content: center;
+        }
+
+        .box-alert div {
+            margin:1vh 0 0 0;
+            width:50vw;
         }
     </style>
 </head>
