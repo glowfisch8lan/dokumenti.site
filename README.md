@@ -1,1 +1,1 @@
-# 098f6bc1
+Меню админки находится в классе app\modules\system\helpers\Cabinet

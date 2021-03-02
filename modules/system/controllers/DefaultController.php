@@ -26,6 +26,7 @@ class DefaultController extends Controller
      */
     public function actionOrders()
     {
+
         return $this->render('orders');
     }
 
@@ -40,7 +41,7 @@ class DefaultController extends Controller
         {
             $model = new UsersOrders();
             $value = UsersOrders::get(1);
-
+            $model->user_id = Yii::$app->user->identity->id;
             if($model->load(Yii::$app->request->post()) && $model->save()) {
                 Yii::$app->session->setFlash('alert-success', 'Ваш заказ №<b>'.$model->id.'</b> успешно принят!');
                 return $this->redirect('/system/default/order');

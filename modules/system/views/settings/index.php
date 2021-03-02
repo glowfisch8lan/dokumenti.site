@@ -44,7 +44,10 @@ $this->title = 'Настройки';
                 'buttonsOptions' => ['template' => '{edit}'],
 
 
-            ]);?>
+            ],
+                [
+                    'enableActionColumn' => false
+                ]);?>
             <?php Pjax::end(); ?>
         </div>
     </div>

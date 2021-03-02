@@ -13,14 +13,14 @@ class Grid extends GridView
 {
 
 
-    /*
+    /**
      *  ActionColumnHeader кнопка через определение $data['ActionColumnHeader']
      *  ActionColumnButtons кнопка через определение $data['ActionColumnButtons']
      */
 
     public static $gridData;
 
-    /*
+    /**
      * Параметры GridView
      */
 
@@ -38,15 +38,18 @@ class Grid extends GridView
         $data = self::$gridData;
 
 
-        /*
+        /**
          * ActionColumn
          */
 
-        /*
+        /**
          * 1. Формируем кнопки-действия
+         *
          */
 
-        /* Вспомогательные функции */
+        /**
+         * Вспомогательные функции
+         */
         $headerCallback = function($url){
             return Html::a('<i class="fas fa-plus" aria-hidden="true"></i></i>', $url,
                 ['class' => 'btn btn-outline-info']);
@@ -89,9 +92,15 @@ class Grid extends GridView
             },
         ];
 
-        /* Условия для основного скелета */
+        /**
+         *
+         * Условия для основного скелета
+         *
+         */
 
-        /* Параметры Header */
+        /**
+         * Параметры Header
+         */
         $headerActionColumn = empty($data['searchModel']) ? $headerCallback($urlCreate) : null; //Наличие или отсутствие searchModel;
         $headerActionColumn = !empty($data['ActionColumnHeader']) ? $data['ActionColumnHeader'] : $headerActionColumn; //Выбираем header: по-умолчанию или пользовательский;
         $ActionColumnHeaderWidth = !empty($data['buttonsOptions']['headerWidth']) ? $data['buttonsOptions']['headerWidth'] : 150; //Выбираем ширину колонки: по-умолчанию или пользовательский;
@@ -101,7 +110,9 @@ class Grid extends GridView
         $buttonsTemplate = !empty($data['buttonsOptions']['template']) ? $data['buttonsOptions']['template'] : '{update} {delete}'; //Выбираем какие кнопки отобразить: шаблон;
 
 
-        /* Скелет Action Column Default */
+        /**
+         * Скелет Action Column Default
+         */
         $ActionColumnDefault =   [
             'class' => 'app\modules\system\components\gridviewer\CustomActionColumns',
             'header' => $headerActionColumn,
@@ -116,7 +127,9 @@ class Grid extends GridView
         ];
 
 
-        /* Условия формирования скелета */
+        /**
+         * Условия формирования скелета
+         */
         $ActionColumn = (!empty($data['ActionColumn'])) ? $data['ActionColumn'] : $ActionColumnDefault; //Если $data['ActionColumn'] не пустой, то присвоить Action Column из данной переменной, иначе по-умолчанию.
 
         /*
@@ -153,7 +166,6 @@ class Grid extends GridView
 
         $dataProvider = $data['dataProvider'];
         $searchModel = !empty($data['searchModel']) ? $data['searchModel'] : null;
-
 
         foreach($params as $key => $value){
             self::config($key, $value);

@@ -62,9 +62,10 @@ class UsersOrders extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['url', 'sitetype'], 'required'],
+            [['url', 'sitetype', 'user_id'], 'required'],
             [['url'], 'string'],
             [['sitetype'], 'integer'],
+            [['user_id'], 'integer'],
         ];
     }
 

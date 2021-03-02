@@ -33,15 +33,23 @@ class Module extends \yii\base\Module
             'route' => '/system/default/sites',
             'title' => '<i class="fas fa-sitemap"></i>&nbsp;Мои сайты',
             'access' => 'viewSites',
-            'description' => 'Доступ к списку заказов',
+            'description' => 'Доступ к списку заказов (пользователь)',
             'visible' => true
         ],
         [
             'id' => 'orders',
-            'route' => '/system/default/orders',
+            'route' => '/system/orders',
             'title' => '<i class="fas fa-list-alt"></i>&nbsp;Список заказов',
             'access' => 'viewOrders',
             'description' => 'Доступ к состоянию заказов',
+            'visible' => true
+        ],
+        [
+            'id' => 'lawyer-orders',
+            'route' => '/system/lawyer/orders',
+            'title' => '<i class="fas fa-list-alt"></i>&nbsp;Заказы',
+            'access' => 'viewLawyerOrders',
+            'description' => 'Доступ к заказам (модератор)',
             'visible' => true
         ],
         [
@@ -67,7 +75,7 @@ class Module extends \yii\base\Module
             'access' => 'viewSettings',
             'description' => 'Доступ к настройкам',
             'visible' => true
-        ]
+        ],
     ];
     public $description = "Описание отсутствует";
     private $excludedRules;

@@ -11,6 +11,12 @@ use yii\bootstrap4\Alert;
 class Cabinet
 {
 
+    /**
+     * Меню-строка пользовательского баланса;
+     *
+     * @return string
+     * @throws \Exception
+     */
     public static function topMenu(){
 
         $code = '<section class="cabinet-top-menu">
