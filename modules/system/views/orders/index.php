@@ -12,6 +12,38 @@ $this->title = 'Заявки';
 
 
 echo Cabinet::topMenu();
+
+$grid = [
+        'dataProvider' => $dataProvider,
+        'columns' => [
+            [   'attribute' => 'id',
+                'label' => 'Идентификатор',
+                'headerOptions' => [
+                    'width' => 50,
+                    'class' => 'text-center'
+                ],
+                'contentOptions' => ['class' => 'text-center'],
+            ],
+            'url:ntext',
+            'sitetype',
+
+    ]
+];
+
+/**
+ * Если пользователь имеет на то право, показываем все учетные записи и выводим информацию о владельце заказа;
+ *
+ */
+if(Yii::$app->user->identity->id === 1){
+        $grid['columns'][] = [
+                'attribute' => 'user_id'
+        ];
+}
+
+$options =
+    [
+        'enableActionColumn' => false
+    ];
 ?>
 
 <section class="main-cabinet">
@@ -22,27 +54,7 @@ echo Cabinet::topMenu();
                 <h2 class="h2 title">Список заказов</h2>
 
                 <?php Pjax::begin(); ?>
-                <?= Grid::initWidget([
-                    'dataProvider' => $dataProvider,
-                    'columns' => [
-                        [   'attribute' => 'id',
-                            'label' => 'Идентификатор',
-                            'headerOptions' => [
-                                'width' => 50,
-                                'class' => 'text-center'
-                            ],
-                            'contentOptions' => ['class' => 'text-center'],
-                        ],
-                        'url:ntext',
-                        'sitetype',
-                    ],
-
-                ],
-                    [
-                            'enableActionColumn' => false
-                        ]
-
-                );?>
+                <?= Grid::initWidget( $grid, $options );?>
                 <?php Pjax::end(); ?>
 
 <!--                <div class="main-cabinet-orders__item">-->
