@@ -171,7 +171,7 @@ $model = new FeedbackRequest();
                 <a href="/#checking">Проверка сайта</a>
             </div>
             <div class="header-nav-login">
-                <?= (!Yii::$app->user->isGuest) ? '<a href="/system/default/orders"><i class="fa fa-user"></i>&nbsp;'.Yii::$app->user->identity->username.'</a><span>|</span><a href="/site/logout" data-method="post"><i class="fas fa-sign-out-alt"></i>&nbsp;Выход</a>' : '<a href="/site/login">Войти</a><span>|</span><a href="/site/sign-up">Зарегистрироваться</a>';?>
+                <?= (!Yii::$app->user->isGuest) ? '<a href="/system/orders"><i class="fa fa-user"></i>&nbsp;'.Yii::$app->user->identity->username.'</a><span>|</span><a href="/site/logout" data-method="post"><i class="fas fa-sign-out-alt"></i>&nbsp;Выход</a>' : '<a href="/site/login">Войти</a><span>|</span><a href="/site/sign-up">Зарегистрироваться</a>';?>
             </div>
             <a href="#" class="hamb">
                 <svg height="32px" viewBox="0 -53 384 384" width="32px" xmlns="http://www.w3.org/2000/svg"><path d="m368 154.667969h-352c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h352c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0"/><path d="m368 32h-352c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h352c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0"/><path d="m368 277.332031h-352c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h352c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0"/></svg>
