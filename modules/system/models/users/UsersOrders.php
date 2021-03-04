@@ -76,8 +76,9 @@ class UsersOrders extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'url' => 'Url',
-            'sitetype' => 'Site Type',
+            'url' => 'Адрес сайта',
+            'sitetype' => 'Тип сайта',
+            'user_id' => 'Пользователь'
         ];
     }
 }

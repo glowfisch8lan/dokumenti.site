@@ -10,7 +10,10 @@ use yii\filters\VerbFilter;
 use app\modules\system\models\users\LoginForm;
 use app\models\ContactForm;
 use app\modules\system\models\users\Users;
+use app\modules\system\models\users\Groups;
 use app\modules\system\models\settings\Settings;
+use app\modules\system\helpers\ArrayHelper;
+use yii\web\ServerErrorHttpException;
 
 class SiteController extends Controller
 {
@@ -74,7 +77,7 @@ class SiteController extends Controller
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+            return $this->redirect('/system/orders');
         }
 
         $model = new LoginForm();
@@ -141,9 +144,14 @@ class SiteController extends Controller
         {
             $model->load(Yii::$app->request->post());
             $model->groups = [Settings::getValue('system.signup.group.default')];
-            $model->save();
+
+            if(!$model->save())
+                throw new ServerErrorHttpException('Сохранение нового пользователя прошло неудачно');
+
+            Groups::addMembers(ArrayHelper::indexMap($model->groups, $model->id));
+
             Yii::$app->user->login($model);
-            return $this->goHome();
+            return $this->redirect('/system/orders');
         }
 
         return $this->render('sign-up', ['model' => $model]);

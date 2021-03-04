@@ -39,7 +39,7 @@ class Module extends \yii\base\Module
         [
             'id' => 'orders',
             'route' => '/system/orders',
-            'title' => '<i class="fas fa-list-alt"></i>&nbsp;Список заказов',
+            'title' => '<i class="fas fa-list-alt"></i>&nbsp;Мои заказы',
             'access' => 'viewOrders',
             'description' => 'Доступ к состоянию заказов',
             'visible' => true
@@ -47,7 +47,7 @@ class Module extends \yii\base\Module
         [
             'id' => 'lawyer-orders',
             'route' => '/system/lawyer/orders',
-            'title' => '<i class="fas fa-list-alt"></i>&nbsp;Заказы',
+            'title' => '<i class="fas fa-list-alt"></i>&nbsp;Все заказы',
             'access' => 'viewLawyerOrders',
             'description' => 'Доступ к заказам (модератор)',
             'visible' => true

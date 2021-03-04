@@ -259,4 +259,14 @@ class Users extends ActiveRecord implements IdentityInterface
         }
     }
 
+    /**
+     * Finds user by [[username]]
+     *
+     * @return Users |null
+     */
+    public static function getUser($id)
+    {
+        return Users::findOne($id);
+    }
+
 }

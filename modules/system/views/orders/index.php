@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\Pjax;
 use app\modules\system\helpers\Grid;
 use app\modules\system\helpers\Cabinet;
+use app\modules\system\models\users\Users;
 /* @var $this yii\web\View */
 /* @var $searchModel app\modules\system\models\users\UsersOrdersSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -36,7 +37,8 @@ $grid = [
  */
 if(Yii::$app->user->identity->id === 1){
         $grid['columns'][] = [
-                'attribute' => 'user_id'
+                'attribute' => 'user_id',
+                'value' => function($model){return Users::getUser($model->user_id)->name;}
         ];
 }
 
