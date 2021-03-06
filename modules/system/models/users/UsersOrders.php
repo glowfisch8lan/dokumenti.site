@@ -4,6 +4,7 @@ namespace app\modules\system\models\users;
 
 use Yii;
 use app\modules\system\helpers\ArrayHelper;
+use app\modules\system\models\files\Files;
 
 /**
  * This is the model class for table "users_orders".
@@ -14,6 +15,8 @@ use app\modules\system\helpers\ArrayHelper;
  */
 class UsersOrders extends \yii\db\ActiveRecord
 {
+
+    public $_files;
 
     public static $data = [
         [
@@ -45,17 +48,6 @@ class UsersOrders extends \yii\db\ActiveRecord
     ];
 
     /**
-     * Получить данные о категории сайта по ID из массива $data;
-     *
-     * @param $id
-     * @return mixed
-     */
-    public static function getSiteType($id)
-    {
-        return self::$data[ArrayHelper::recursiveArraySearch($id,self::$data)[0]];
-    }
-
-    /**
      * {@inheritdoc}
      */
     public static function tableName()
@@ -73,7 +65,9 @@ class UsersOrders extends \yii\db\ActiveRecord
             [['url'], 'string'],
             [['sitetype'], 'integer'],
             [['user_id'], 'integer'],
-            [['file', 'comment', 'locking'], 'safe']
+            [['stage'], 'integer'],
+            [['comment', 'locking', 'tag'], 'safe'],
+            [['_files'], 'safe']
         ];
     }
 
@@ -88,7 +82,34 @@ class UsersOrders extends \yii\db\ActiveRecord
             'sitetype' => 'Тип сайта',
             'user_id' => 'Пользователь',
             'comment' => 'Комментарий',
-            'file' => 'Файлы'
+            'status' => 'Статус платежа',
+            'stage'  => 'Стадия выполнения'
         ];
+    }
+
+    /**
+     * Получить данные о категории сайта по ID из массива $data;
+     *
+     * @param $id
+     * @return mixed
+     */
+    public static function getSiteType($id)
+    {
+        return self::$data[ArrayHelper::recursiveArraySearch($id,self::$data)[0]];
+    }
+
+    /**
+     * Получить файлы пользователя;
+     */
+    public function getOrderFiles()
+    {
+        foreach(json_decode($this->tag) as $key => $value)
+        {
+            $arr[] = Files::getFilesByTag($value);
+        }
+
+        return $arr;
+
+
     }
 }

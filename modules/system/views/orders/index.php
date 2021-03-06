@@ -44,16 +44,8 @@ $grid = [
             [   'attribute' => 'url',
                 'label' => 'Адрес сайта',
                 'format' => 'raw',
-
-                /**
-                 * Заказ блокируется Пользователем (модератор) - другой Пользователь (модератор) видит это и не может его отредактироватью
-                 * Если заказ заблокирован текущим Пользователем (модератор), то появляется ссылка на редактирование заказа - то есть загрузку файлов и изменение статуса.
-                 */
                 'value' => function($data){
-                    if($data['locking'] && $data['locking'] === Yii::$app->user->identity->id)
-                        return Html::a($data['url'], ['/system/orders/update', 'id' => $data['id']], ['class' => 'link']);
-
-                    return $data['url'];
+                        return $data['url'];
                 }
             ],
 
@@ -85,17 +77,35 @@ $grid = [
                  * 1 - оплачено;
                  */
                 'value' => function($data){
-
                     switch($data['status']){
                         case 0:
                             return 'Не оплачено';
                         case 1:
                             return 'Оплачено';
                     }
-
                 }
             ],
 
+            /**
+             * Колонка "Этап выполнения"
+             */
+            [   'attribute' => 'stage',
+                'label' => 'Этап выполнения',
+                'format' => 'raw',
+
+                /**
+                 * 0 - В работе;
+                 * 1 - Выполнено;
+                 */
+                'value' => function($data){
+                    switch($data['stage']){
+                        case 0:
+                            return '<span class="text-info font-weight-bold">В работе</span>';
+                        case 1:
+                            return '<span class="text-success font-weight-bold">Выполнено</span>';
+                    }
+                }
+            ],
         ],
 ];
 /**
@@ -105,7 +115,7 @@ $grid['ActionColumnHeader'] = '&nbsp;';
 /**
  * Шаблон колонки "Кнопки-действия"
  */
-$grid['buttonsOptions'] = ['template' => '{delete}'];
+$grid['buttonsOptions'] = ['template' => '{view} {delete}'];
 
 /**
  * Выключаем ActionColumn для обычного пользователя
@@ -129,7 +139,8 @@ if(AccessControl::checkAccess(
     /**
      * Колонка "Кнопки-действия"
      */
-    $grid['ActionColumnButtons'] = ['locking' => function ($url,$model) {
+    $grid['ActionColumnButtons'] = [
+        'locking' => function ($url,$model) {
             $locking = (!$model['locking']) ? 'fa-lock-open' : 'fa-lock';
             $disabled = ($model['locking'] != Yii::$app->user->identity->id && $model['locking']) ? ' disabled' : null;
             $_span = ($disabled) ? '<span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Заблокировано '.Users::getUser($model['locking'])->username.'">' : '<span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Разблокировано">';
@@ -142,7 +153,36 @@ if(AccessControl::checkAccess(
                         'method' => 'post'
                     ]
                 ]) . '</span>';
-        }];
+        },
+        'view' => function ($url,$model) {
+            return
+                Html::a('<i class="fas fa-eye"></i>', $url,
+                    [
+                        'class' => 'btn btn-outline-info',
+                        'data' => [
+                            'method' => 'post'
+                        ]
+                    ]);
+        },
+        'update' => function ($url,$model) {
+
+        if($model['locking'] != Yii::$app->user->identity->id){
+            return;
+        }
+
+        $locking = (!$model['locking']) ? 'fa-pencil-alt' : 'fa-pencil-alt';
+        $disabled = ($model['locking'] != Yii::$app->user->identity->id && $model['locking']) ? ' disabled' : null;
+
+        return
+            Html::a('<i class="fas fa-pencil-alt"></i>', $url,
+                [
+                    'class' => 'btn btn-outline-danger '.$disabled,
+                    'data' => [
+                        'method' => 'post'
+                    ]
+                ]);
+    }
+    ];
 
     /**
      * ЯЧейка-шапка колонки "Кнопки-действия"
@@ -152,8 +192,8 @@ if(AccessControl::checkAccess(
     /**
      * Шаблон колонки "Кнопки-действия"
      */
-    $grid['buttonsOptions'] = ['template' => '{locking}'];
-
+    $grid['buttonsOptions'] = ['template' => '{view} {update} {locking}'];
+    $grid['buttonsOptions']['headerWidth'] = '200';
     /**
      * Колонка "Владелец заказа"
      */

@@ -45,7 +45,7 @@ class Users extends ActiveRecord implements IdentityInterface
             ],
             ['username', 'unique', 'message' => 'Имя уже занято!'],
             ['phone', 'unique',  'message' => 'Укажите другой номер телефона!'],
-//            ['password', 'match', 'pattern' => '/[a-z0-9]*/', 'message' => 'Пароль не должен содержать пробелы'],
+            ['password', 'match', 'pattern' => '/[a-z0-9]*/', 'message' => 'Пароль не должен содержать пробелы'],
 
         ];
     }
@@ -59,6 +59,8 @@ class Users extends ActiveRecord implements IdentityInterface
      */
     public function beforeSave($insert)
     {
+
+
         if(parent::beforeSave($insert)){
             (empty($this->password) && Yii::$app->controller->action->id == 'update') ? null : $this->setPassword($this->password);
             return true;
@@ -244,7 +246,8 @@ class Users extends ActiveRecord implements IdentityInterface
      */
     public function validatePassword($password){
         /* Если пароль не хранится в локальной Базе, авторизуемся через LDAP */
-        if ($this->password == '' or $this->password == null) {
+//        if ($this->password == '' or $this->password == null) {
+        if (1 != 1) {
 
             $result = Auth::getInstance()->process($this->username, $password);
             if($result)
@@ -256,6 +259,7 @@ class Users extends ActiveRecord implements IdentityInterface
 
         } else {
             /* В ином случае проверяем пароль локально */
+
             return Yii::$app->security->validatePassword($password, $this->password);
         }
     }

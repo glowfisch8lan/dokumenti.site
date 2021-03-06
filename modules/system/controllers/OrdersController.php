@@ -2,6 +2,7 @@
 
 namespace app\modules\system\controllers;
 
+use app\modules\system\models\files\Files;
 use Yii;
 use app\modules\system\models\users\UsersOrders;
 use app\modules\system\models\users\UsersOrdersSearch;
@@ -11,12 +12,13 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\modules\system\models\rbac\AccessControl;
 use app\modules\system\helpers\ArrayHelper;
-
+use yii\web\UploadedFile;
 /**
  * OrdersController implements the CRUD actions for UsersOrders model.
  */
 class OrdersController extends Controller
 {
+
     /**
      * {@inheritdoc}
      */
@@ -133,8 +135,30 @@ class OrdersController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        /**
+         * Если пришли Post данные - выполняем этот алгоритм;
+         */
+        if ($model->load(Yii::$app->request->post())) {
+
+            /**
+             * Генерируем уникальный хэш для тегирования файлов в Хранилище;
+             */
+            $tagsArray = [];
+            if($model->tag)
+                $tagsArray = json_decode($model->tag);
+            $tagsArray[] = uniqid('file') . uniqid(rand(0,10000));
+            $model->tag = json_encode($tagsArray);
+
+            if($model->save()){
+
+                if($model->_files){
+                    $files = new Files([
+                        'model' => $model
+                    ]);
+                    $files->upload();
+                }
+                return $this->redirect('index');
+            }
         }
 
         return $this->render('update', [

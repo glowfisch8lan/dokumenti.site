@@ -72,6 +72,14 @@ class Module extends \yii\base\Module
             'visible' => false
         ],
         [
+            'id' => 'modify-user-orders',
+            'route' => '/',
+            'title' => '',
+            'access' => 'modifyUserOrders',
+            'description' => 'Редактировать заказы',
+            'visible' => false
+        ],
+        [
             'id' => 'users',
             'route' => '/system/users',
             'title' => '<i class="fas fa-users"></i>&nbsp;Пользователи',

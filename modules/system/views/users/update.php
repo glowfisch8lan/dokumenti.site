@@ -53,8 +53,6 @@ $this->title = 'Изменить пользователя';
                 <div id="users-groups">
 
                     <?
-
-
                     foreach( Groups::getAllGroupList() as $val ){
                         //TODO: Сделать проверку аккаунта на уровне движка;
 

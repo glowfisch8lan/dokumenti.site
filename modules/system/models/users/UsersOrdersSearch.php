@@ -62,7 +62,7 @@ class UsersOrdersSearch extends UsersOrders
         $query->andFilterWhere([
             'id' => $this->id,
             'sitetype' => $this->sitetype,
-            'user_id' => $this->user_id
+            'user_id' => $this->user_id,
         ]);
 
         $query->andFilterWhere(['like', 'url', $this->url]);

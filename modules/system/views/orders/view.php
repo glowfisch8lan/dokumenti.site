@@ -1,38 +1,64 @@
 <?php
 
 use yii\helpers\Html;
+use app\modules\system\helpers\Cabinet;
+use yii\widgets\ActiveForm;
+use kartik\file\FileInput;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\system\models\users\UsersOrders */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Users Orders', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
+$this->title = 'Просмотр Заказа: #' . $model->id;
 ?>
-<div class="users-orders-view">
+<section class="main-cabinet">
+    <div class="main-cabinet-container">
+        <?= Cabinet::menu('orders');?>
+        <div class="main-cabinet-content">
+            <h2><?= Html::encode($this->title) ?></h2>
 
-    <h1><?= Html::encode($this->title) ?></h1>
+            <?= DetailView::widget([
+                'model' => $model,
+                'attributes' => [
+                    'id',
+                    'url',
+                    'comment',
+                    [
+                        'attribute' => 'status',
+                        'format' => 'raw',
+                        /**
+                         * 0 - не оплачено;
+                         * 1 - оплачено;
+                         */
+                        'value' => function($data){
+                            switch($data['status']){
+                                case 0:
+                                    $result = 'Не оплачено';
+                                    if($data['user_id'] === Yii::$app->user->identity->id){
+                                    $result = 'Не оплачено. ' . Html::a('Оплатить?', '#',
+                                            [
+                                                'class' => 'link',
+                                                'data' => [
+                                                    'method' => 'post'
+                                                ]
+                                            ]);
+                                    }
+                                    return $result;
+                                case 1:
+                                    return 'Оплачено';
+                            }
+                        }
+                    ],
+                    [
+                        'label' => 'Файлы',
+                        'format' => 'raw',
+                        'value' => function($data) use($model){
+                                var_dump($model->getOrderFiles());
+                        }
+                    ]
+                ],
+            ]) ?>
 
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'url:ntext',
-            'sitetype',
-        ],
-    ]) ?>
-
-</div>
+        </div>
+    </div>
+</section>
