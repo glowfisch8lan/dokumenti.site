@@ -4,15 +4,15 @@ use yii\helpers\Html;
 use app\modules\system\helpers\Cabinet;
 use yii\widgets\ActiveForm;
 use kartik\file\FileInput;
-
 /* @var $this yii\web\View */
-/* @var $model app\modules\system\models\users\UsersOrders */
+/* @var $model app\modules\system\models\users\Users */
 
-$this->title = 'Изменение Заказа: #' . $model->id;
+$this->title = 'Изменить пользователя';
 ?>
+
 <section class="main-cabinet">
     <div class="main-cabinet-container">
-        <?= Cabinet::menu('orders');?>
+        <?= Cabinet::menu('users');?>
         <div class="main-cabinet-content">
             <h2><?= Html::encode($this->title) ?></h2>
 
@@ -37,10 +37,13 @@ $this->title = 'Изменение Заказа: #' . $model->id;
             <div class="form-row">
                 <div class="form-group col-md-12">
                     <?= $form->field($model, 'file')->widget(FileInput::classname(), [
-                        'options' => ['accept' => 'image/*', 'multiple' => true],
+                    'options' => ['accept' => 'image/*', 'multiple' => true],
                     ]);?>
                 </div>
             </div>
+
+
+
             <div class="form-group">
                 <?= Html::submitButton('<i class="fa fa-save"></i> Сохранить', ['class' => 'btn btn-success']) ?>
             </div>

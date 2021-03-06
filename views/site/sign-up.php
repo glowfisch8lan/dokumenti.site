@@ -24,7 +24,7 @@ $this->title = 'Регистрация';
     <?= $form->field($model, 'password')->passwordInput()->input('password', ['placeholder' => "Введите свой пароль",  'id' => 'password'])->label('Пароль <span>*</span>')?>
     <?= $form->field($model, 'phone')->textInput(['autofocus' => false])->input('text', ['placeholder' => "+7(900)-000-00-00", 'id' => 'phone'])->label('Телефон <span>*</span>')?>
     <div class="form-group">
-        <?= Html::submitButton('Вход', ['class' => 'btn btn-primary shadow- mb-4', 'name' => 'login-button'])?>
+        <?= Html::submitButton('Регистрация', ['class' => 'btn btn-info shadow- mb-4', 'name' => 'login-button'])?>
     </div>
 
     <?php ActiveForm::end();?>

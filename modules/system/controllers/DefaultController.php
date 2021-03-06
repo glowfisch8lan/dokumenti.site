@@ -12,43 +12,11 @@ use app\modules\system\models\users\UsersOrders;
 class DefaultController extends Controller
 {
     /**
-     * Мои сайты
+     * Категория "Мои сайты"
      * @return string
      */
     public function actionSites()
     {
         return $this->render('sites');
-    }
-
-    /**
-     * Заказы;
-     * @return string
-     */
-    public function actionOrders()
-    {
-
-        return $this->render('orders');
-    }
-
-    /**
-     * Сделать заказ;
-     * @return string
-     */
-    public function actionOrder()
-    {
-
-        if(Yii::$app->request->isPost)
-        {
-            $model = new UsersOrders();
-            $value = UsersOrders::get(1);
-            $model->user_id = Yii::$app->user->identity->id;
-            if($model->load(Yii::$app->request->post()) && $model->save()) {
-                Yii::$app->session->setFlash('alert-success', 'Ваш заказ №<b>'.$model->id.'</b> успешно принят!');
-                return $this->redirect('/system/default/order');
-            }
-        }
-
-        $model = new UsersOrders();
-        return $this->render('order', ['model' => $model]);
     }
 }

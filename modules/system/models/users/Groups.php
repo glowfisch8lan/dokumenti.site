@@ -99,7 +99,7 @@ class Groups extends ActiveRecord
      * @param $id Идентификатор группы
      * @return array
      */
-    public function getGroupMembers($id){
+    public function getGroupMembers($group_id){
 
         return (new \yii\db\Query())
             ->select(' 
@@ -112,9 +112,8 @@ class Groups extends ActiveRecord
             ->join('LEFT JOIN', 'system_users', 'system_users_groups.user_id = system_users.id')
             ->join('LEFT JOIN', 'system_groups', 'system_users_groups.group_id = system_groups.id')
             ->where('group_id = :group_id')
-            ->addParams([':group_id' => (int) $id])
+            ->addParams([':group_id' => (int) $group_id])
             ->all();
-
     }
 
     /**

@@ -140,18 +140,19 @@ class SiteController extends Controller
     {
         $model = new Users();
         $model->scenario = 'sign-up';
+
         if(Yii::$app->request->isPost)
         {
-            $model->load(Yii::$app->request->post());
-            $model->groups = [Settings::getValue('system.signup.group.default')];
+            if($model->load(Yii::$app->request->post())){
+                $model->groups = [Settings::getValue('system.signup.group.default')];
 
-            if(!$model->save())
-                throw new ServerErrorHttpException('Сохранение нового пользователя прошло неудачно');
+                if($model->save()){
+                    Groups::addMembers(ArrayHelper::indexMap($model->groups, $model->id));
+                    Yii::$app->user->login($model);
+                    return $this->redirect('/system/orders');
+                }
 
-            Groups::addMembers(ArrayHelper::indexMap($model->groups, $model->id));
-
-            Yii::$app->user->login($model);
-            return $this->redirect('/system/orders');
+            }
         }
 
         return $this->render('sign-up', ['model' => $model]);

@@ -43,7 +43,8 @@ class Users extends ActiveRecord implements IdentityInterface
                 'message' => 'Заполните поля!',
                 'on' => 'sign-up'
             ],
-            [['username','phone'],'unique'],
+            ['username', 'unique', 'message' => 'Имя уже занято!'],
+            ['phone', 'unique',  'message' => 'Укажите другой номер телефона!'],
 //            ['password', 'match', 'pattern' => '/[a-z0-9]*/', 'message' => 'Пароль не должен содержать пробелы'],
 
         ];
@@ -260,7 +261,7 @@ class Users extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Finds user by [[username]]
+     * Finds user by [[id]]
      *
      * @return Users |null
      */

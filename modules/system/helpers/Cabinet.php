@@ -12,13 +12,16 @@ class Cabinet
 {
 
     /**
-     * Меню-строка пользовательского баланса;
+     * Меню-строка пользовательского баланса на каждом Views;
      *
      * @return string
      * @throws \Exception
      */
     public static function topMenu(){
 
+        /**
+         * HTML-шаблон
+         */
         $code = '<section class="cabinet-top-menu">
             <div class="cabinet-top-menu-container">
                 <div class="cabinet-top-menu-left">
@@ -32,27 +35,19 @@ class Cabinet
         </section>';
 
         $typeAlert = ['alert-success', 'alert-warning', 'alert-danger'];
+
         foreach ($typeAlert as $key => $value) {
             $sessionKey = Yii::$app->session->getFlash($value);
-            if (!is_null($sessionKey)) {
+
+            if (!is_null($sessionKey)){
+                $class = $value;
                 $body = $sessionKey;
                 break;
             }
         }
-        if (isset($body)) {
-            $code .= '<div class="box-alert">
-  <div>'. Alert::widget([
-                'options' => [
-                    'class' => ' alert-info',
-                ],
-                'body' => $body,
-            ]).'
-</div>
-</div>';
 
-
-        }
-
+        if (isset($body))
+            $code .= '<div class="box-alert"><div>' . Alert::widget( ['options' => ['class' => $class], 'body' => $body] ) . '</div></div>';
 
         return $code;
     }

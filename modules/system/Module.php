@@ -19,10 +19,21 @@ class Module extends \yii\base\Module
     public $controllerNamespace = 'app\modules\system\controllers';
     public $visible = 'viewSystem';
     public $name = "Система";
+
+    /**
+     * Permissions:
+     *  viewSystem -> доступ к системному модулю;
+     *  viewSites -> Доступ к списку заказов;
+     *  viewOrders -> 'Доступ к состоянию заказов;
+     *
+     *
+     * @var array
+     */
+
     public $routes = [
         [
             'id' => 'order',
-            'route' => '/system/default/order',
+            'route' => '/system/orders/create',
             'title' => '<i class="fas fa-plus-square"></i>&nbsp;Заказ документов',
             'access' => 'createOrder',
             'description' => 'Доступ к формированию заказа',
@@ -39,18 +50,26 @@ class Module extends \yii\base\Module
         [
             'id' => 'orders',
             'route' => '/system/orders',
-            'title' => '<i class="fas fa-list-alt"></i>&nbsp;Мои заказы',
+            'title' => '<i class="fas fa-list-alt"></i>&nbsp;Список заказов',
             'access' => 'viewOrders',
             'description' => 'Доступ к состоянию заказов',
             'visible' => true
         ],
+//        [
+//            'id' => 'lawyer-orders',
+//            'route' => '/system/lawyer/orders',
+//            'title' => '<i class="fas fa-list-alt"></i>&nbsp;Все заказы',
+//            'access' => 'viewLawyerOrders',
+//            'description' => 'Доступ к заказам (Адвокат)',
+//            'visible' => true
+//        ],
         [
-            'id' => 'lawyer-orders',
-            'route' => '/system/lawyer/orders',
-            'title' => '<i class="fas fa-list-alt"></i>&nbsp;Все заказы',
-            'access' => 'viewLawyerOrders',
-            'description' => 'Доступ к заказам (модератор)',
-            'visible' => true
+            'id' => 'all-user-orders',
+            'route' => '/',
+            'title' => '',
+            'access' => 'viewAllOrders',
+            'description' => 'Видеть все заказы',
+            'visible' => false
         ],
         [
             'id' => 'users',
@@ -76,6 +95,7 @@ class Module extends \yii\base\Module
             'description' => 'Доступ к настройкам',
             'visible' => true
         ],
+
     ];
     public $description = "Описание отсутствует";
     private $excludedRules;

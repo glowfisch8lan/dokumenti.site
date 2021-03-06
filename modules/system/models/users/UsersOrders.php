@@ -44,10 +44,17 @@ class UsersOrders extends \yii\db\ActiveRecord
 
     ];
 
-    public static function get($id)
+    /**
+     * Получить данные о категории сайта по ID из массива $data;
+     *
+     * @param $id
+     * @return mixed
+     */
+    public static function getSiteType($id)
     {
         return self::$data[ArrayHelper::recursiveArraySearch($id,self::$data)[0]];
     }
+
     /**
      * {@inheritdoc}
      */
@@ -66,6 +73,7 @@ class UsersOrders extends \yii\db\ActiveRecord
             [['url'], 'string'],
             [['sitetype'], 'integer'],
             [['user_id'], 'integer'],
+            [['file', 'comment', 'locking'], 'safe']
         ];
     }
 
@@ -78,7 +86,9 @@ class UsersOrders extends \yii\db\ActiveRecord
             'id' => 'ID',
             'url' => 'Адрес сайта',
             'sitetype' => 'Тип сайта',
-            'user_id' => 'Пользователь'
+            'user_id' => 'Пользователь',
+            'comment' => 'Комментарий',
+            'file' => 'Файлы'
         ];
     }
 }

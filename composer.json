@@ -22,6 +22,8 @@
         "bower-asset/owl.carousel": "~2.3.4",
         "bower-asset/font-awesome": "^5.15",
 
+        "kartik-v/yii2-widget-fileinput": "dev-master"
+
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

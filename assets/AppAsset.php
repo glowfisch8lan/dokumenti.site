@@ -19,9 +19,9 @@ class AppAsset extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
-    public $publishOptions = [
-        'forceCopy' => true
-    ];
+//    public $publishOptions = [
+//        'forceCopy' => true
+//    ];
     public $js = [
         'js/jquery.touch.js',
         'js/common.js'

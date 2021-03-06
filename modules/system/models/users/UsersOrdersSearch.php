@@ -12,16 +12,16 @@ use app\modules\system\models\users\UsersOrders;
  */
 class UsersOrdersSearch extends UsersOrders
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
-    {
-        return [
-            [['id', 'sitetype', 'user_id'], 'integer'],
-            [['url'], 'safe'],
-        ];
-    }
+//    /**
+//     * {@inheritdoc}
+//     */
+//    public function rules()
+//    {
+//        return [
+//            [['id', 'sitetype', 'user_id'], 'integer'],
+//            [['url'], 'safe'],
+//        ];
+//    }
 
     /**
      * {@inheritdoc}
@@ -39,10 +39,10 @@ class UsersOrdersSearch extends UsersOrders
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $query = false)
     {
-
-        $query = (Yii::$app->user->identity->id === 1) ? UsersOrders::find() : UsersOrders::find()->where(['user_id' => Yii::$app->user->identity->id]);
+        if(!$query)
+            $query = UsersOrders::find();
 
         // add conditions that should always apply here
 

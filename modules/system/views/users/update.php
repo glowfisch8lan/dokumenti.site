@@ -30,7 +30,6 @@ $this->title = 'Изменить пользователя';
                     <?= $form->field($model, 'username', [
                         'template' => '<div>{label}</div><div>{input}</div><div class="text-danger">{error}</div>'
                     ])->textInput(['maxlength' => true, 'disabled' => $model->username == 'admin']); ?>
-
                 </div>
 
                 <div class="form-group col-md-6">

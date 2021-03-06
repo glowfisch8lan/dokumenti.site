@@ -1,22 +1,34 @@
 <?php
 
+use app\modules\system\models\rbac\AccessControl;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
 use app\modules\system\helpers\Grid;
 use app\modules\system\helpers\Cabinet;
 use app\modules\system\models\users\Users;
+use app\modules\system\helpers\ArrayHelper;
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\modules\system\models\users\UsersOrdersSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Заявки';
 
-
+/**
+ * Выводим Верхнее меню;
+ */
 echo Cabinet::topMenu();
 
+/**
+ * Определяем стандартные параметры для хелпера GridView. По ходу выполнения в зависимости от разрешений пользователя - будем переопределять данные в массиве;
+ */
 $grid = [
         'dataProvider' => $dataProvider,
         'columns' => [
+
+            /**
+             * Колонка "Идентификатор"
+             */
             [   'attribute' => 'id',
                 'label' => 'Идентификатор',
                 'headerOptions' => [
@@ -25,27 +37,132 @@ $grid = [
                 ],
                 'contentOptions' => ['class' => 'text-center'],
             ],
-            'url:ntext',
-            'sitetype',
 
-    ]
+            /**
+             * Колонка "Адрес Сайта"
+             */
+            [   'attribute' => 'url',
+                'label' => 'Адрес сайта',
+                'format' => 'raw',
+
+                /**
+                 * Заказ блокируется Пользователем (модератор) - другой Пользователь (модератор) видит это и не может его отредактироватью
+                 * Если заказ заблокирован текущим Пользователем (модератор), то появляется ссылка на редактирование заказа - то есть загрузку файлов и изменение статуса.
+                 */
+                'value' => function($data){
+                    if($data['locking'] && $data['locking'] === Yii::$app->user->identity->id)
+                        return Html::a($data['url'], ['/system/orders/update', 'id' => $data['id']], ['class' => 'link']);
+
+                    return $data['url'];
+                }
+            ],
+
+            /**
+             * Колонка "Тип сайта"
+             */
+            [   'attribute' => 'sitetype',
+                'label' => 'Тип сайта',
+                'format' => 'raw',
+
+                /**
+                 * Преобразует ID наименования Типа сайта в Строку;
+                 */
+                'value' => function($data){
+                    return
+                        \app\modules\system\models\users\UsersOrders::getSiteType($data['sitetype'])['name'];
+                }
+            ],
+
+            /**
+             * Колонка "Статус платежа"
+             */
+            [   'attribute' => 'status',
+                'label' => 'Статус платежа',
+                'format' => 'raw',
+
+                /**
+                 * 0 - не оплачено;
+                 * 1 - оплачено;
+                 */
+                'value' => function($data){
+
+                    switch($data['status']){
+                        case 0:
+                            return 'Не оплачено';
+                        case 1:
+                            return 'Оплачено';
+                    }
+
+                }
+            ],
+
+        ],
 ];
+/**
+ * ЯЧейка-шапка колонки "Кнопки-действия"
+ */
+$grid['ActionColumnHeader'] = '&nbsp;';
+/**
+ * Шаблон колонки "Кнопки-действия"
+ */
+$grid['buttonsOptions'] = ['template' => '{delete}'];
 
 /**
- * Если пользователь имеет на то право, показываем все учетные записи и выводим информацию о владельце заказа;
- *
+ * Выключаем ActionColumn для обычного пользователя
  */
-if(Yii::$app->user->identity->id === 1){
-        $grid['columns'][] = [
-                'attribute' => 'user_id',
-                'value' => function($model){return Users::getUser($model->user_id)->name;}
-        ];
+$options = ['enableActionColumn' => true];
+
+/**
+ * Grid для Модераторов
+ */
+if(AccessControl::checkAccess(
+        Yii::$app->user->identity->id,
+        ArrayHelper::getDataById(Yii::$app->getModule('system')->routes, 'all-user-orders')['access']
+    ))
+{
+
+    /**
+     * Включаем ActionColumn
+     */
+    $options = ['enableActionColumn' => true];
+
+    /**
+     * Колонка "Кнопки-действия"
+     */
+    $grid['ActionColumnButtons'] = ['locking' => function ($url,$model) {
+            $locking = (!$model['locking']) ? 'fa-lock-open' : 'fa-lock';
+            $disabled = ($model['locking'] != Yii::$app->user->identity->id && $model['locking']) ? ' disabled' : null;
+            $_span = ($disabled) ? '<span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Заблокировано '.Users::getUser($model['locking'])->username.'">' : '<span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Разблокировано">';
+
+            return $_span.
+                Html::a('<i class="fas '.$locking.'"></i>', $url,
+                [
+                    'class' => 'btn btn-outline-info'.$disabled,
+                    'data' => [
+                        'method' => 'post'
+                    ]
+                ]) . '</span>';
+        }];
+
+    /**
+     * ЯЧейка-шапка колонки "Кнопки-действия"
+     */
+    $grid['ActionColumnHeader'] = '&nbsp;';
+
+    /**
+     * Шаблон колонки "Кнопки-действия"
+     */
+    $grid['buttonsOptions'] = ['template' => '{locking}'];
+
+    /**
+     * Колонка "Владелец заказа"
+     */
+    $grid['columns'][] = [
+        'attribute' => 'user_id',
+        'value' => function($model){return Users::getUser($model->user_id)->name;}
+    ];
 }
 
-$options =
-    [
-        'enableActionColumn' => false
-    ];
 ?>
 
 <section class="main-cabinet">

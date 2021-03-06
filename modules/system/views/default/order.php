@@ -50,11 +50,9 @@ echo Cabinet::topMenu();
                     <input type="radio" name="UsersOrders[sitetype]" id="'.$value['gid'].'" value="'.$value['id'].'">
                     <label for="'.$value['gid'].'">'.$value['name'].'</label>
                 </div>';
-
                     }
                 ?>
 
-                <div class="help-block"></div>
             </div>
 <?
 foreach($array as $key => $value){
