@@ -100,16 +100,17 @@ class UsersOrders extends \yii\db\ActiveRecord
 
     /**
      * Получить файлы пользователя;
+     *
+     * @return bool | Array
      */
     public function getOrderFiles()
     {
-        foreach(json_decode($this->tag) as $key => $value)
-        {
-            $arr[] = Files::getFilesByTag($value);
+        if($this->tag){
+            foreach(json_decode($this->tag) as $key => $value)
+                $arr[$value] = Files::getFilesByTag($value);
+            return $arr;
         }
 
-        return $arr;
-
-
+        return false;
     }
 }

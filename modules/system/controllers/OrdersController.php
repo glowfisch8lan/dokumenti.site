@@ -149,8 +149,14 @@ class OrdersController extends Controller
             $tagsArray[] = uniqid('file') . uniqid(rand(0,10000));
             $model->tag = json_encode($tagsArray);
 
+            /**
+             * Сохраняем данные о заказе;
+             */
             if($model->save()){
 
+                /**
+                 * Осуществляем подгрузку файлов к заказу;
+                 */
                 if($model->_files){
                     $files = new Files([
                         'model' => $model

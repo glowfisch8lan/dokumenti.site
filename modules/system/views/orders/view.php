@@ -21,7 +21,17 @@ $this->title = 'Просмотр Заказа: #' . $model->id;
                 'model' => $model,
                 'attributes' => [
                     'id',
-                    'url',
+                    [
+                        'attribute' => 'url',
+                        'format' => 'raw',
+                        'value' => function($data) {
+                            return Html::a($data['url'], '//'.$data['url'],
+                                [
+                                    'class' => 'link',
+                                    'target' => '_blank'
+                                ]);
+                        }
+                    ],
                     'comment',
                     [
                         'attribute' => 'status',
@@ -53,7 +63,26 @@ $this->title = 'Просмотр Заказа: #' . $model->id;
                         'label' => 'Файлы',
                         'format' => 'raw',
                         'value' => function($data) use($model){
-                                var_dump($model->getOrderFiles());
+                                $array = $model->getOrderFiles();
+                                if(!$array)
+                                    return 'Отсутствуют';
+                                $code = null;
+                                foreach($array as $tag => $files)
+                                {
+                                    foreach($files as $index => $file)
+                                    {
+                                        $code .= Html::a($file['filename'], '/system/files/get-file?uuid='.$file->tag.'&file='.$file->filename,
+                                            [
+                                                'class' => 'link',
+                                                'data' => [
+                                                    'method' => 'post'
+                                                ]
+                                            ]);
+                                        $code .= '<br>';
+                                    }
+                                }
+
+                                return $code;
                         }
                     ]
                 ],
