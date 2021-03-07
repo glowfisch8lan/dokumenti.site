@@ -5,7 +5,7 @@ use app\modules\system\helpers\Cabinet;
 use yii\widgets\ActiveForm;
 use kartik\file\FileInput;
 use yii\widgets\DetailView;
-
+use app\modules\system\models\users\Users;
 /* @var $this yii\web\View */
 /* @var $model app\modules\system\models\users\UsersOrders */
 
@@ -67,18 +67,25 @@ $this->title = 'Просмотр Заказа: #' . $model->id;
                                 if(!$array)
                                     return 'Отсутствуют';
                                 $code = null;
+                                $index = 0;
                                 foreach($array as $tag => $files)
                                 {
                                     foreach($files as $index => $file)
                                     {
-                                        $code .= Html::a($file['filename'], '/system/files/get-file?uuid='.$file->tag.'&file='.$file->filename,
+                                        $index++;
+                                        $code .= $index.')&nbsp;';
+                                        $code .= 'Загружено: <b>'. date('j.m.Y H:i:s',$file['timestamp']). '</b> -&nbsp;';
+                                        $code .=  'Пользователь: <b>'. Users::getUser($file['user_id'])->name . '</b> -&nbsp;';
+                                        $code .= Html::a('Скачать <i class="fas fa-file-download"></i>', '/system/files/get-file?uuid='.$file->tag.'&file='.$file->filename,
                                             [
                                                 'class' => 'link',
                                                 'data' => [
                                                     'method' => 'post'
                                                 ]
                                             ]);
+
                                         $code .= '<br>';
+
                                     }
                                 }
 

@@ -114,9 +114,19 @@ class OrdersController extends Controller
         {
             $model = new UsersOrders();
             $model->user_id = Yii::$app->user->identity->id;
-            if($model->load(Yii::$app->request->post()) && $model->save()) {
-                Yii::$app->session->setFlash('alert-success', 'Ваш заказ №<b>'.$model->id.'</b> успешно принят!');
-                return $this->redirect('/system/orders/create');
+
+            if($model->load(Yii::$app->request->post())) {
+
+                /**
+                 * Фильтруем http(s)://
+                 */
+                $model->url = preg_replace('%^(htt|ft)ps?://|(www\.)%i', '', $model->url);
+                $model->url = preg_replace('%/$%i', '', $model->url);
+
+                if($model->save()){
+                    Yii::$app->session->setFlash('alert-success', 'Ваш заказ №<b>'.$model->id.'</b> успешно принят!');
+                    return $this->redirect('/system/orders/create');
+                }
             }
         }
 
