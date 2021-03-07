@@ -20,7 +20,7 @@ class FilesController extends \yii\web\Controller
         if (file_exists(Yii::getAlias(Yii::getAlias('@uploads') . '/files/' . $uuid . '/' . $file)))
             return Yii::$app->response->sendFile(Yii::getAlias('@uploads') . '/files/' . $uuid . '/' . $file);
         else
-            throw new NotFoundHttpException();
+            throw new NotFoundHttpException('Файл не найден...');
     }
 
 }
