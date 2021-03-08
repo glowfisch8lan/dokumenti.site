@@ -223,6 +223,7 @@ $this->title = 'My Yii Application';
         <a href="#">обратная связь</a>
     </div>
 </section>
+
 <section class="arbitrage-practice" id="arbitrage-practice">
     <div class="arbitrage-practice-container">
         <h2 class="h2 title">

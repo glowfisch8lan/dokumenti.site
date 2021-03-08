@@ -141,6 +141,11 @@ class Files extends \yii\db\ActiveRecord
      */
     public static function getFilesByTag($tag)
     {
-       return self::find()->all();
+       return self::find()->where(['tag' => $tag])->all();
+    }
+
+    public static function fileExist($uuid, $file)
+    {
+        return file_exists(Yii::getAlias('@uploads/files').'/'.$uuid.'/'.$file);
     }
 }

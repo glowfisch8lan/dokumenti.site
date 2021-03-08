@@ -131,8 +131,9 @@ class Settings extends \yii\db\ActiveRecord
     }
 
     public function validateSettings($attribute, $params){
-        $this->addError('value', 'Имя слишsком слабый');
-        $this->addError('name', 'Имя слишsком слабый');
+        return false;
+//        $this->addError('value', 'Имя слишsком слабый');
+//        $this->addError('name', 'Имя слишsком слабый');
     }
 
 }

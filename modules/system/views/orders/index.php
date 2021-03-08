@@ -166,12 +166,12 @@ if(AccessControl::checkAccess(
         },
         'update' => function ($url,$model) {
 
-        if($model['locking'] != Yii::$app->user->identity->id){
+        if($model['locking'] != Yii::$app->user->identity->id && Yii::$app->user->identity->id != 1){
             return;
         }
 
         $locking = (!$model['locking']) ? 'fa-pencil-alt' : 'fa-pencil-alt';
-        $disabled = ($model['locking'] != Yii::$app->user->identity->id && $model['locking']) ? ' disabled' : null;
+        $disabled = ($model['locking'] != Yii::$app->user->identity->id && $model['locking'] && Yii::$app->user->identity->id != 1) ? ' disabled' : null;
 
         return
             Html::a('<i class="fas fa-pencil-alt"></i>', $url,

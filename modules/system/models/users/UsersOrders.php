@@ -105,8 +105,10 @@ class UsersOrders extends \yii\db\ActiveRecord
      */
     public function getOrderFiles()
     {
+
         if($this->tag){
-            foreach(json_decode($this->tag) as $key => $value)
+            $tags = json_decode($this->tag);
+            foreach($tags as $key => $value)
                 $arr[$value] = Files::getFilesByTag($value);
             return $arr;
         }
