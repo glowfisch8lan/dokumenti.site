@@ -19,14 +19,6 @@ class m210228_070939_system_users extends Migration
             'password' => $this->string(255)->notNull()
         ]);
 
-        $this->createTable('system_groups', [
-            'id' => $this->primaryKey(),
-            'name' => $this->string(255)->notNull()->unique(),
-            'description' => $this->string(255)->notNull(),
-            'permissions' => $this->string(255)->notNull(),
-        ]);
-
-        $this->insert('system_groups', array('name'=>'Администратор','description'=>'Администраторы системы','permissions'=>'["viewSystem","readSystemModules","viewSystemUpdates","viewUsers","viewGroups"]'));
         $this->insert('system_users', array('login'=>'admin','password'=>'$2y$13$srKMjyd5c.Z3QHdZd/.RXO7soqZ/ZQ4651XmcVSZ97tvxJYiUVPxi','name'=>'Администратор'));
 
     }

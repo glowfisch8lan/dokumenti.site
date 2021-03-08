@@ -40,11 +40,11 @@ class Module extends \yii\base\Module
             'visible' => true
         ],
         [
-            'id' => 'sites',
-            'route' => '/system/default/sites',
-            'title' => '<i class="fas fa-sitemap"></i>&nbsp;Мои сайты',
-            'access' => 'viewSites',
-            'description' => 'Доступ к списку заказов (пользователь)',
+            'id' => 'files',
+            'route' => '/system/storage',
+            'title' => '<i class="fas fa-file-pdf"></i>&nbsp;Мои файлы',
+            'access' => 'viewStorage',
+            'description' => 'Доступ к Хранилищу Файлов',
             'visible' => true
         ],
         [

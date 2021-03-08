@@ -1,21 +1,23 @@
 <?php
 
 use yii\helpers\Html;
-
+use yii\widgets\Pjax;
+use app\modules\system\helpers\Grid;
+use app\modules\system\helpers\Cabinet;
 /* @var $this yii\web\View */
-/* @var $model app\modules\system\models\settings\Settings */
+/* @var $searchModel app\modules\system\models\settings\SettingsSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Update Settings: ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Settings', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Редактирование настроек';
 ?>
-<div class="settings-update">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
-</div>
+<section class="main-cabinet">
+    <div class="main-cabinet-container">
+        <?= Cabinet::menu('settings');?>
+        <div class="main-cabinet-content">
+            <h2><?= Html::encode($this->title) ?></h2>
+            <?= $this->render('_form', [
+                'model' => $model,
+            ]) ?>
+        </div>
+    </div>
+</section>

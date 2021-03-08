@@ -6,14 +6,21 @@ echo Cabinet::topMenu();
 
 <section class="main-cabinet">
     <div class="main-cabinet-container">
-        <?= Cabinet::menu('sites');?>
+        <?= Cabinet::menu('files');?>
         <div class="main-cabinet-content">
             <div class="main-cabinet-sites">
+                <!--Документы готовые к скачиванию-->
+
+                <?
+                $orders = \app\modules\system\models\users\UsersOrders::find()->where(['user_id' => Yii::$app->request->])
+
+                ?>
                 <div class="main-cabinet-sites__item">
                     <div class="main-cabinet-sites__item__head">
                         <b>examplesite.ru</b>
                         <p>Статус: <span class="process">Документы готовятся</span></p>
                     </div>
+
                     <div class="main-cabinet-sites__item__list">
                         <div class="main-cabinet-sites__item__list__doc">
                             <img src="/img/doc.png" alt="">
@@ -47,6 +54,8 @@ echo Cabinet::topMenu();
                         </div>
                     </div>
                 </div>
+
+                <!--Документы в обработке-->
                 <div class="main-cabinet-sites__item">
                     <div class="main-cabinet-sites__item__head">
                         <b>examplesite.ru</b>

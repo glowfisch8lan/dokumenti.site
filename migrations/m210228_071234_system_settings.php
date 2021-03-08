@@ -20,7 +20,12 @@ class m210228_071234_system_settings extends Migration
         ]);
 
 
-        $this->insert('system_settings', array('name'=>'system.cache.status','value'=>'true'));
+        $this->insert('system_settings', array('name'=>'system.cache.status','value'=>'true', 'description' => 'Кеширование данных'));
+        $this->insert('system_settings', array('name'=>'system.signup.group.default','value'=>'true', 'description' => 'Группа по-умолчанию при регистрации новых пользователей'));
+        $this->insert('system_settings', array('name'=>'system.orders.sitetype.landingpage','value'=>'4 000', 'description' => 'Цена за Landing-page'));
+        $this->insert('system_settings', array('name'=>'system.orders.sitetype.vizitka','value'=>'4 000', 'description' => 'Цена за Сайт-визитку'));
+        $this->insert('system_settings', array('name'=>'system.orders.sitetype.magazine','value'=>'4 000', 'description' => 'Цена за Сайт-магазин'));
+        $this->insert('system_settings', array('name'=>'system.orders.sitetype.forum','value'=>'4 000', 'description' => 'Цена за Форум'));
 
     }
 
