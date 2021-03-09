@@ -38,7 +38,7 @@ class PaymentService
       'IP' => Yii::$app->request->getUserIP(),
       'PayType' => 'O',
       'Description' => 'Пополнение баланса личного кабинета',
-      'SuccessURL' => \yii\helpers\Url::base('https') . '/',
+      'SuccessURL' => \yii\helpers\Url::base('https') . '/cabinet',
       'NotificationURL' => \yii\helpers\Url::base('https') . '/callback/tb'
     ]);
   }
