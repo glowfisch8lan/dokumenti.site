@@ -40,5 +40,7 @@ class AppAsset extends AssetBundle
         'app\assets\OwlCarouselAsset',
         'app\assets\FontAwesomeAsset',
 
+        'app\assets\PayScriptsAsset'
+
     ];
 }

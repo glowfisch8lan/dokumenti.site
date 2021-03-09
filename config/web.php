@@ -17,6 +17,9 @@ $config = [
         'system' => [
             'class' => 'app\modules\system\Module',
         ],
+        'api' => [
+            'class' => 'app\modules\api\Module',
+        ],
         'feedback' => [
             'class' => 'app\modules\feedback\Module',
         ],
@@ -65,6 +68,10 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'cabinet' => 'system',
+                'cabinet/orders' => 'system/orders',
+                'login' => '/system/login',
+                'logout' => '/system/logout'
             ],
         ],
 

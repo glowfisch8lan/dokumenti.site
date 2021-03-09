@@ -21,6 +21,7 @@ class Cabinet
 
         /**
          * HTML-шаблон
+         * Само модальное окно выводится по условию в layout;
          */
         $code = '<section class="cabinet-top-menu">
             <div class="cabinet-top-menu-container">
@@ -28,29 +29,9 @@ class Cabinet
                     <p>'.Yii::$app->user->identity->username.'</p>
                 </div>
                 <div class="cabinet-top-menu-right">
-                    <a href="#" type="button" data-toggle="modal" data-target="#myModal">Пополнить</a>
+                    <a href="#" class="btn_profile btn_small" type="button" data-toggle="modal" data-target="#refill-modal">Пополнить</a>
                     <p>Баланс: <span>'.UsersBalance::getBalance(Yii::$app->user->identity->id).' ₽</span></p>
                 </div>
-            </div>
-            <!-- Модальное окно -->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                  </div>
-                  <div class="modal-body">
-                    ...
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                  </div>
-                </div>
-              </div>
             </div>
         </section>';
 

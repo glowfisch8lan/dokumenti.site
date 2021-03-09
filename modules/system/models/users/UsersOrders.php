@@ -18,6 +18,10 @@ class UsersOrders extends \yii\db\ActiveRecord
 
     public $_files;
 
+    const PAYMENT_TYPE_CARD = 1;
+    const PAYMENT_TYPE_ACCOUNT = 2;
+    const PAYMENT_TYPE_INVOICE = 3;
+
     public static $data = [
         [
             'id' => 1 ,

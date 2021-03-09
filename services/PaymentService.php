@@ -4,7 +4,7 @@
 namespace app\services;
 
 
-use app\models\Orders;
+use app\modules\system\models\users\UsersOrders;
 use Yii;
 
 class PaymentService
@@ -13,7 +13,7 @@ class PaymentService
   {
     $api = new TinkoffMerchantAPI(Yii::$app->params['tb_terminalKey'], Yii::$app->params['tb_secretKey']);
 
-    $order = Orders::find()->where(['transaction_id' => $transactionId])->one();
+    $order = UsersOrders::find()->where(['transaction_id' => $transactionId])->one();
 
     return $api->init([
       'TerminalKey' => Yii::$app->params['tb_terminalKey'],
@@ -38,7 +38,8 @@ class PaymentService
       'IP' => Yii::$app->request->getUserIP(),
       'PayType' => 'O',
       'Description' => 'Пополнение баланса личного кабинета',
-      'SuccessURL' => \yii\helpers\Url::base('https') . '/cabinet'
+      'SuccessURL' => \yii\helpers\Url::base('https') . '/',
+      'NotificationURL' => \yii\helpers\Url::base('https') . '/callback/tb'
     ]);
   }
 

@@ -10,6 +10,7 @@ use app\modules\feedback\models\FeedbackRequest;
 use yii\bootstrap4\Alert;
 use app\modules\system\models\users\Groups;
 use app\modules\system\models\users\Users;
+use app\modules\system\models\history\History;
 
 AppAsset::register($this);
 $js = <<< JS
@@ -183,6 +184,49 @@ $model = new FeedbackRequest();
         </div>
     </header>
     <?= $content ?>
+    <!--Добавить условие при котором модальное окно появляется только когда пользователль зарегистрирован -->
+    <div class="modal fade profile__modal" id="refill-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-narrow modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Пополнение</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <?php $model = new History() ?>
+
+                    <?php $form = ActiveForm::begin(['options' => ['class' => 'profile__refill-form']]) ?>
+
+                    <?= $form->field($model, 'amount', [
+                        'labelOptions' => ['class' => 'profile__refill-label']
+                    ])->textInput([
+                        'class' => 'form-control profile__order-url',
+                        'placeholder' => '3000'
+                    ])->label('Введите сумму') ?>
+
+                    <div class="form-group">
+                        <label class="profile__refill-label">Способ оплаты</label>
+                        <div class="profile__select">
+                            <select class="form-control profile__order-url profile__order-select">
+                                <option value="<?= \app\modules\system\models\users\UsersOrders::PAYMENT_TYPE_CARD ?>">Карта Visa, Mastercard, МИР
+                                <option value="<?= \app\modules\system\models\users\UsersOrders::PAYMENT_TYPE_INVOICE ?>">Счёт юридического лица
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn_prices pay-refill">Оплатить</button>
+                    </div>
+
+                    <?php ActiveForm::end() ?>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
 
     <footer class="footer">
         <div class="footer-container">
