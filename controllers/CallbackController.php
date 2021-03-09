@@ -48,15 +48,16 @@ class CallbackController extends Controller
         'transaction_id' => $transaction->id,
         'status' => History::STATUS_ORDER_PAID
       ])->one());
-      $messageParams = [
-        'type' => 'order',
-        'mailTo' => $order->user->email,
-        'order' => $order
-      ];
+//      $messageParams = [
+//        'type' => 'order',
+//        'mailTo' => $order->user->email,
+//        'order' => $order
+//      ];
     } else {
       $history->description = "Пополнение баланса";
       $history->status = History::STATUS_BALANCE_FILLED;
-      $user = User::findOne($transaction->user_id);
+
+      $user = Users::findOne($transaction->user_id);
       $user->balance += $response['Amount'];
       $user->save();
 
@@ -65,15 +66,15 @@ class CallbackController extends Controller
         'status' => History::STATUS_BALANCE_FILLED
       ])->one());
 
-      $messageParams = [
-        'type' => 'refill',
-        'user' => $user,
-        'amount' => $response['Amount']
-      ];
+//      $messageParams = [
+//        'type' => 'refill',
+//        'user' => $user,
+//        'amount' => $response['Amount']Amountl'
+//      ];
     }
 
     if ($transaction->save() && $history->save() && !$is_callback_duplicated) {
-      (new PaymentService())->sendEmails($messageParams);
+      //(new PaymentService())->sendEmails($messageParams);
       $db_transaction->commit();
     } else {
       $db_transaction->rollBack();
