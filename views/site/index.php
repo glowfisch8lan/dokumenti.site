@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
+$this->title = 'Документы для сайта | Интернет право';
 ?>
 <section class="main" id="main">
     <div class="main-carousel owl-carousel">

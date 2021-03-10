@@ -9,7 +9,23 @@ use app\modules\system\models\users\Users;
 use app\services\PaymentService;
 use yii\base\Controller;
 use yii\helpers\Json;
+use app\modules\system\models\users\UsersBalance;
 
+/**
+
+curl -X POST \
+  https://098f6bc1/callback/tb \
+  -H 'Authorization: Basic token==' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "OrderId": 38,
+  "Status": "Confirmed",
+  "PaymentId": 4,
+  "Pan": 5,
+  "Token": 6,
+}'
+
+ */
 class CallbackController extends Controller
 {
 
@@ -57,9 +73,9 @@ class CallbackController extends Controller
       $history->description = "Пополнение баланса";
       $history->status = History::STATUS_BALANCE_FILLED;
 
-      $user = Users::findOne($transaction->user_id);
-      $user->balance += $response['Amount'];
-      $user->save();
+        $user_balance = UsersBalance::findOne(['user_id' => $transaction->user_id]);
+        $user_balance->value += $response['Amount'];
+        $user_balance->save();
 
       $is_callback_duplicated = !is_null(History::find()->where([
         'transaction_id' => $transaction->id,
@@ -73,7 +89,10 @@ class CallbackController extends Controller
 //      ];
     }
 
-    if ($transaction->save() && $history->save() && !$is_callback_duplicated) {
+    $tr_save = $transaction->save();
+    $h_save = $history->save();
+
+    if ($tr_save && $h_save && !$is_callback_duplicated) {
       //(new PaymentService())->sendEmails($messageParams);
       $db_transaction->commit();
     } else {

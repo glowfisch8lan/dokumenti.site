@@ -32,7 +32,7 @@ class UsersBalance extends \yii\db\ActiveRecord
             [['user_id'], 'required'],
             [['user_id', 'value'], 'integer'],
             [['user_id'], 'unique'],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => SystemUsers::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -55,7 +55,7 @@ class UsersBalance extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(SystemUsers::className(), ['id' => 'user_id']);
+        return $this->hasOne(Users::className(), ['id' => 'user_id']);
     }
 
     /**

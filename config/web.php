@@ -11,7 +11,8 @@ $config = [
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
-        '@uploads' => '@app/uploads'
+        '@uploads' => '@app/uploads',
+        '@webroot' => '@app/docs'
     ],
     'modules' => [
         'system' => [
