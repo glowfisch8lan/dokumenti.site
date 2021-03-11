@@ -84,9 +84,33 @@ class Module extends \yii\base\Module
             'route' => '/system/users',
             'title' => '<i class="fas fa-users"></i>&nbsp;Пользователи',
             'access' => 'viewUsers',
-            'description' => 'Доступ к управлению пользователями',
+            'description' => 'Доступ к просмотру списка пользователей',
             'visible' => true
         ],
+//        [
+//            'id' => 'users',
+//            'route' => '/system/users/update',
+//            'title' => '<i class="fas fa-users"></i>&nbsp;Пользователи',
+//            'access' => 'updateUsers',
+//            'description' => 'Доступ к редактированию пользователей',
+//            'visible' => false
+//        ],
+//        [
+//            'id' => 'users',
+//            'route' => '/system/users/create',
+//            'title' => '<i class="fas fa-users"></i>&nbsp;Пользователи',
+//            'access' => 'createUsers',
+//            'description' => 'Доступ к созданию пользователей',
+//            'visible' => false
+//        ],
+//        [
+//            'id' => 'users',
+//            'route' => '/system/users/delete',
+//            'title' => '<i class="fas fa-users"></i>&nbsp;Пользователи',
+//            'access' => 'deleteUsers',
+//            'description' => 'Доступ к удалению пользователей',
+//            'visible' => false
+//        ],
         [
             'id' => 'groups',
             'route' => '/system/groups',
@@ -141,47 +165,34 @@ class Module extends \yii\base\Module
      */
     private function verifyAccess(){
 
+        /** @var $act | Здесь храним полный путь ( URL ) */
         $act = '/' . Yii::$app->controller->module->id . '/' . Yii::$app->controller->id . '/' . ((Yii::$app->controller->action->id === 'index') ? null : Yii::$app->controller->action->id);
 
-        /**
-         * Проверка правил-исключений;
-         *
-         * Принудительно наполняем массив если он пустой;
-         */
+        /** Проверка правил-исключений; Принудительно наполняем массив если он пустой; */
         if(empty($this->excludedRules))
             $this->excludedRules = [['route' => '', 'name' => '', 'module' => '']];
 
-
-        /**
-         * Цикл №1 -> Массив Правил исключений;
-         *
-         */
+        /** Цикл №1 -> Массив Правил исключений; */
         foreach($this->excludedRules as $eRule){
-
-            /**
-             * Если исключение не равно нынешнему модулю/контроллеру/действию, то проверяем доступ;
-             */
+            /** Если исключение не равно нынешнему модулю/контроллеру/действию, то проверяем доступ; */
             if($eRule['route'] != $act){
 
-                /**
-                 * Проверяем доступ к МОДУЛЮ;
-                 */
+                /** Проверяем доступ к МОДУЛЮ; */
                 if(!AccessControl::checkAccess(Yii::$app->user->identity->id,$this->visible))
                     throw new ForbiddenHttpException('You are not allowed to perform this action.');
 
-
-                /**
-                 * Провряем доступ к контроллеру/действию модуля;
-                 *
-                 * /module/controller/index => /module/controller
-                 */
-                $action = '/' . Yii::$app->controller->module->id . '/' . Yii::$app->controller->id . ((Yii::$app->controller->action->id === 'index') ? null : '/' . Yii::$app->controller->action->id);
+                /** Провряем доступ к контроллеру/действию модуля; /module/controller/index => /module/controller */
+                $controller = '/' . Yii::$app->controller->module->id . '/' . Yii::$app->controller->id;
+                $action = (Yii::$app->controller->action->id === 'index') ? null : Yii::$app->controller->action->id;
                 $user_id = Yii::$app->user->identity->id;
 
                 foreach($this->routes as $route){
-
-                    if( $route['route'] == $action && !AccessControl::checkAccess($user_id, str_replace('index', '', $route['access'])))
+                    /** Проверяем доступ либо к контроллеру либо к действию и наличие разрешения у пользователя*/
+                    if( ($route['route'] == $controller || $route['route'] == $controller . ((!is_null($action)) ? '/' . $action : null))
+                        && !AccessControl::checkAccess($user_id, str_replace('index', '', $route['access']))
+                    ){
                             throw new ForbiddenHttpException('You are not allowed to perform this action.');
+                    }
 
                 }
             }

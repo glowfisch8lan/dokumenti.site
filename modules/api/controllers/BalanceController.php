@@ -66,6 +66,7 @@ class BalanceController extends Controller
     $payment_type_id = (int)Yii::$app->request->post('payment_type'); //Тип платежа
 
     $history = new History();
+    $history->description = 'Инициализация транзакции';
 
     if ($payment_type_id !== UsersOrders::PAYMENT_TYPE_INVOICE) {
       $transaction = new Transactions();
@@ -80,7 +81,7 @@ class BalanceController extends Controller
     }
 
     $history->user_id = Yii::$app->user->identity->id;
-    $history->amount = $amount * 100;
+    $history->amount = $amount;
 
     $history->status = History::STATUS_BALANCE_FILL_AWAITS;
 

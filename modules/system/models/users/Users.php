@@ -7,6 +7,7 @@ namespace app\modules\system\models\users;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
+use app\modules\system\models\users\UsersBalance;
 use app\modules\system\components\behaviors\CachedBehavior;
 
 class Users extends ActiveRecord implements IdentityInterface
@@ -59,14 +60,28 @@ class Users extends ActiveRecord implements IdentityInterface
      */
     public function beforeSave($insert)
     {
-
-
         if(parent::beforeSave($insert)){
-            (empty($this->password) && Yii::$app->controller->action->id == 'update') ? null : $this->setPassword($this->password);
+            $this->password = ( empty($this->password) && Yii::$app->controller->action->id == 'update' ) ? $this->getOldAttribute('password') : Yii::$app->security->generatePasswordHash($this->password);
             return true;
         }
         return false;
     }
+
+
+    public function afterSave($insert, $changedAttributes){
+
+        /** Если в таблице users_balance нет записи о балансе - создаем ее с нулевым значением; */
+        if(is_null(UsersBalance::findOne(['user_id' => $this->id])))
+        {
+            $balance = new UsersBalance();
+            $balance->user_id = $this->id;
+            $balance->value = 0;
+            $balance->save();
+        }
+
+        parent::afterSave($insert, $changedAttributes);
+    }
+
 
     /**
      * Определяем поведение, очищающее кеш, при записи в БД AR
@@ -95,7 +110,8 @@ class Users extends ActiveRecord implements IdentityInterface
             'username' => 'Логин',
             'password' => 'Пароль',
             'userGroup' => 'Группа',
-            'name' => 'Фамилия, имя и отчество'
+            'name' => 'Фамилия, имя и отчество',
+            'phone' => 'Телефон'
         ];
     }
 
@@ -106,6 +122,7 @@ class Users extends ActiveRecord implements IdentityInterface
      */
     public static function tableName()
     {
+
         return 'system_users';
     }
 

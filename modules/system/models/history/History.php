@@ -22,11 +22,11 @@ use app\modules\system\models\users\Users;
  */
 class History extends \yii\db\ActiveRecord
 {
-  const STATUS_BALANCE_FILLED = 1;
-  const STATUS_BALANCE_FILL_AWAITS = 2;
-  const STATUS_PAYMENT_CANCELLED = 3;
-  const STATUS_ORDER_PAID = 4;
-  const STATUS_ORDER_PAY_AWAITS = 5;
+  const STATUS_BALANCE_FILLED = 1; //Пополнение баланса;
+  const STATUS_BALANCE_FILL_AWAITS = 2; //Ожидание пополнения баланса;
+  const STATUS_PAYMENT_CANCELLED = 3; //Платеж отменен;
+  const STATUS_ORDER_PAID = 4; //Заказ оплачен;
+  const STATUS_ORDER_PAY_AWAITS = 5; //Ожидание оплаты заказа;
 
   /**
    * {@inheritdoc}

@@ -2,6 +2,8 @@
 
 namespace app\modules\system\controllers;
 
+use app\modules\system\helpers\ArrayHelper;
+use app\modules\system\models\users\Groups;
 use Yii;
 use app\modules\system\models\users\Users;
 use app\modules\system\models\users\UsersSearch;
@@ -87,8 +89,15 @@ class UsersController extends Controller
         $model = $this->findModel($id);
 
 
-        if ($model->load(Yii::$app->request->post()) && $model->save())
+        if ($model->load(Yii::$app->request->post()) && $model->save()){
+            /** Удаляем все группы пользователя; */
+            Groups::removeAllGroupMember($id);
+            /** Добавляем список групп в system_users_groups заново; */
+            Groups::addMembers(ArrayHelper::indexMap($model->groups, $model->id));
+
             return $this->redirect(['view', 'id' => $model->id]);
+        }
+
 
 
         $model->password = null;

@@ -30,7 +30,8 @@ class UsersBalance extends \yii\db\ActiveRecord
     {
         return [
             [['user_id'], 'required'],
-            [['user_id', 'value'], 'integer'],
+            [['user_id'], 'integer'],
+            [['value'], 'number'],
             [['user_id'], 'unique'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];

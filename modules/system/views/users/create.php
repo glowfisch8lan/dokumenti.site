@@ -2,7 +2,8 @@
 
 use yii\helpers\Html;
 use app\modules\system\helpers\Cabinet;
-
+use yii\widgets\ActiveForm;
+use app\modules\system\models\users\Groups;
 /* @var $this yii\web\View */
 /* @var $model app\modules\system\models\users\Users */
 
@@ -24,8 +25,14 @@ $this->title = 'Создать пользователя';
                     ])->textInput(['autofocus' => true]); ?>
 
                 </div>
+                <div class="form-group col-md-12">
+                    <?= $form->field($model, 'phone', [
+                        'template' => '<div>{label}</div><div>{input}</div><small>Введите номер телефона</small><div class="text-danger">{error}</div>'
+                    ])->textInput(['autofocus' => true]); ?>
+
+                </div>
                 <div class="form-group col-md-6">
-                    <?= $form->field($model, 'login', [
+                    <?= $form->field($model, 'username', [
                         'template' => '<div>{label}</div><div>{input}</div><small>Введите логин пользователя</small>
                         <div class="text-danger">{error}</div>'
                     ])->textInput(); ?>

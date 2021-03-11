@@ -3,7 +3,9 @@
 namespace app\modules\system\models\transactions;
 
 use Yii;
+use app\modules\system\models\users\Users;
 use yii\behaviors\TimestampBehavior;
+use app\modules\system\models\users\UsersOrders;
 
 /**
  * This is the model class for table "transactions".
@@ -24,6 +26,8 @@ use yii\behaviors\TimestampBehavior;
  */
 class Transactions extends \yii\db\ActiveRecord
 {
+
+
 
   const CREATED = 0;
   const AUTHORIZED = 1;
@@ -57,8 +61,9 @@ class Transactions extends \yii\db\ActiveRecord
   public function rules()
   {
     return [
-      [['tb_payment_id', 'tb_card_id', 'tb_amount', 'created_at', 'updated_at', 'status', 'user_id'], 'integer'],
+      [['tb_payment_id', 'tb_card_id', 'created_at', 'updated_at', 'status', 'user_id'], 'integer'],
       [['tb_token'], 'string'],
+      [['tb_amount'], 'number'],
       [['tb_pan'], 'string', 'max' => 16],
       [['tb_exp_date'], 'string', 'max' => 4],
     ];
@@ -89,6 +94,6 @@ class Transactions extends \yii\db\ActiveRecord
    */
   public function getOrders()
   {
-    return $this->hasMany(Orders::className(), ['transaction_id' => 'id']);
+    return $this->hasMany(UsersOrders::className(), ['transaction_id' => 'id']);
   }
 }
