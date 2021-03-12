@@ -5,6 +5,7 @@ namespace app\modules\system\models\users;
 use Yii;
 use app\modules\system\helpers\ArrayHelper;
 use app\modules\system\models\files\Files;
+use app\modules\system\models\settings\Settings;
 
 /**
  * This is the model class for table "users_orders".
@@ -22,6 +23,10 @@ class UsersOrders extends \yii\db\ActiveRecord
     const PAYMENT_TYPE_ACCOUNT = 2;
     const PAYMENT_TYPE_INVOICE = 3;
 
+    /**
+     * Типы сайтов для заказа;
+     * @var array
+     */
     public static $data = [
         [
             'id' => 1 ,
@@ -118,5 +123,19 @@ class UsersOrders extends \yii\db\ActiveRecord
         }
 
         return false;
+    }
+
+    /**
+     * Получить расчет стоимости заказа;
+     * Поиск в статическом массиве  $data информации о типе сайта в заказе, затем получаем значение настройки,
+     * где хранится цена за заказ такого типа сайта, получаем стоимость и возвращаем.
+     * Фильтрация от пробелов и других символов, так как в настройки мы пишем любую строку.
+     *
+     * @return int
+     */
+    public function getCoastOrder()
+    {
+        $setting = self::$data[ArrayHelper::recursiveArraySearch($this->sitetype,self::$data)[0]]['settings'];
+        return intval(preg_replace('/[^0-9]/', '', Settings::getValue($setting)));
     }
 }

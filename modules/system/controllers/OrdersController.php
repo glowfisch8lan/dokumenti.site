@@ -58,8 +58,8 @@ class OrdersController extends Controller
         if(AccessControl::checkAccess(
             Yii::$app->user->identity->id,
             ArrayHelper::getDataById(Yii::$app->getModule('system')->routes, 'all-user-orders')['access']
-        ))
-            $query = UsersOrders::find();
+        )){
+            $query = UsersOrders::find();}
 
         $query = (isset($query)) ? $query : UsersOrders::find()->where(['user_id' => Yii::$app->user->identity->id]);
 

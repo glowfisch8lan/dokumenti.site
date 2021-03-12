@@ -46,7 +46,7 @@ $this->title = 'Просмотр Заказа: #' . $model->id;
                                 case 0:
                                     $result = 'Не оплачено';
                                     if($data['user_id'] === Yii::$app->user->identity->id){
-                                    $result = 'Не оплачено. ' . Html::a('Оплатить?', '#',
+                                    $result = 'Не оплачено. ' . Html::a('Оплатить?', ['/system/payment/pay', 'order_id' => $data['id']],
                                             [
                                                 'class' => 'link',
                                                 'data' => [

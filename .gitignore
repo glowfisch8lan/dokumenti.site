@@ -1,4 +1,4 @@
-# phpstorm project files
+﻿# phpstorm project files
 .idea
 
 # netbeans project files
@@ -33,3 +33,6 @@ tests/_support/_generated
 
 #vagrant folder
 /.vagrant
+
+# PHPMyAdmin
+/docs/db_d77d5e503ad1439f585ac494268b351b/
