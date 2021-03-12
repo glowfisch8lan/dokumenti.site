@@ -208,7 +208,7 @@ if(AccessControl::checkAccess(
     /**
      * Шаблон колонки "Кнопки-действия"
      */
-    $grid['buttonsOptions'] = ['template' => '{view} {update} {locking}'];
+    $grid['buttonsOptions'] = ['template' => '{view} {update} {locking} '];
     $grid['buttonsOptions']['headerWidth'] = '200';
     /**
      * Колонка "Владелец заказа"
