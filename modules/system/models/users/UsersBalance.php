@@ -15,6 +15,7 @@ use Yii;
  */
 class UsersBalance extends \yii\db\ActiveRecord
 {
+
     /**
      * {@inheritdoc}
      */
@@ -72,5 +73,13 @@ class UsersBalance extends \yii\db\ActiveRecord
             return 0;
 
         return $user->value;
+    }
+
+    /**
+     * Списать деньги с баланса пользователя без сохранения в БД
+     */
+    public function subtract($value)
+    {
+        $this-> value = $this->value - $value;
     }
 }

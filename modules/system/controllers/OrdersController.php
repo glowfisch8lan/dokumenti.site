@@ -125,7 +125,10 @@ class OrdersController extends Controller
 
                 if($model->save()){
                     Yii::$app->session->setFlash('alert-success', 'Ваш заказ №<b>'.$model->id.'</b> успешно принят!');
-                    return $this->redirect('/system/orders/create');
+                    return $this->redirect('index');
+//                    return $this->render('view', [
+//                        'model' => $model,
+//                    ]);
                 }
             }
         }
@@ -192,7 +195,6 @@ class OrdersController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        var_dump($model->user_id);
         if($model->user_id === Yii::$app->user->identity->id){
             $model->delete();
             Yii::$app->session->setFlash('alert-danger', 'Ваш заказ №<b>'.$model->id.'</b> успешно удален!');

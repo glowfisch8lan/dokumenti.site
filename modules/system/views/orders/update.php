@@ -9,6 +9,10 @@ use yii\widgets\DetailView;
 /* @var $model app\modules\system\models\users\UsersOrders */
 
 $this->title = 'Изменение Заказа: #' . $model->id;
+/**
+ * Выводим Верхнее меню;
+ */
+echo Cabinet::topMenu();
 ?>
 <section class="main-cabinet">
     <div class="main-cabinet-container">

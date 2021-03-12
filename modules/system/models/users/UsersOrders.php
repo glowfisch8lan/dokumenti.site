@@ -19,9 +19,14 @@ class UsersOrders extends \yii\db\ActiveRecord
 
     public $_files;
 
+    const STATUS_ORDER_PAY_AWAITS = 0; //Ожидание оплаты заказа;
+    const STATUS_ORDER_PAID = 1; //Заказ оплачен;
+
     const PAYMENT_TYPE_CARD = 1;
     const PAYMENT_TYPE_ACCOUNT = 2;
     const PAYMENT_TYPE_INVOICE = 3;
+
+
 
     /**
      * Типы сайтов для заказа;

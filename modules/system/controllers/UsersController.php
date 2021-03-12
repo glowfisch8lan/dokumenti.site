@@ -10,6 +10,7 @@ use app\modules\system\models\users\UsersSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\modules\system\models\rbac\AccessControl;
 
 /**
  * UsersController отвечающий за заказы
@@ -95,7 +96,7 @@ class UsersController extends Controller
             /** Добавляем список групп в system_users_groups заново; */
             Groups::addMembers(ArrayHelper::indexMap($model->groups, $model->id));
 
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
 
@@ -135,5 +136,32 @@ class UsersController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    /**
+     * Возможность входа администратору под другим пользователем;
+     *
+     * @param $id
+     * @return void|\yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \yii\web\ServerErrorHttpException
+     */
+    public function actionLogin($id)
+    {
+        if(AccessControl::checkAccess(
+            Yii::$app->user->identity->id,
+            ArrayHelper::getDataById(Yii::$app->getModule('system')->routes, 'login-by-user')['access']
+        ))
+        {
+            $user = $this->findModel($id);
+            Yii::$app->user->login($user);
+            return $this->redirect('/system/orders');
+        }
+        return;
+    }
+
+    public function actionProfile($id)
+    {
+
     }
 }

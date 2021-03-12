@@ -84,33 +84,49 @@ class Module extends \yii\base\Module
             'route' => '/system/users',
             'title' => '<i class="fas fa-users"></i>&nbsp;Пользователи',
             'access' => 'viewUsers',
-            'description' => 'Доступ к просмотру списка пользователей',
+            'description' => 'Доступ к просмотру управлению пользователями',
             'visible' => true
         ],
-//        [
-//            'id' => 'users',
-//            'route' => '/system/users/update',
-//            'title' => '<i class="fas fa-users"></i>&nbsp;Пользователи',
-//            'access' => 'updateUsers',
-//            'description' => 'Доступ к редактированию пользователей',
-//            'visible' => false
-//        ],
-//        [
-//            'id' => 'users',
-//            'route' => '/system/users/create',
-//            'title' => '<i class="fas fa-users"></i>&nbsp;Пользователи',
-//            'access' => 'createUsers',
-//            'description' => 'Доступ к созданию пользователей',
-//            'visible' => false
-//        ],
-//        [
-//            'id' => 'users',
-//            'route' => '/system/users/delete',
-//            'title' => '<i class="fas fa-users"></i>&nbsp;Пользователи',
-//            'access' => 'deleteUsers',
-//            'description' => 'Доступ к удалению пользователей',
-//            'visible' => false
-//        ],
+        [
+            'id' => 'login-by-user',
+            'route' => '/users/login',
+            'title' => '<i class="fas fa-users"></i>&nbsp;Пользователи',
+            'access' => 'loginByUser',
+            'description' => 'Право логиниться под другим пользователем',
+            'visible' => false
+        ],
+        [
+            'id' => 'login-by-user',
+            'route' => '/users/profile',
+            'title' => '<i class="fas fa-users"></i>&nbsp;Пользователи',
+            'access' => 'loginByUser',
+            'description' => 'Право логиниться под другим пользователем',
+            'visible' => false
+        ],
+/*        [
+            'id' => 'users',
+            'route' => '/system/users/update',
+            'title' => '<i class="fas fa-users"></i>&nbsp;Пользователи',
+            'access' => 'updateUsers',
+            'description' => 'Доступ к редактированию пользователей',
+            'visible' => false
+        ],
+        [
+            'id' => 'users',
+            'route' => '/system/users/create',
+            'title' => '<i class="fas fa-users"></i>&nbsp;Пользователи',
+            'access' => 'createUsers',
+            'description' => 'Доступ к созданию пользователей',
+            'visible' => false
+        ],
+        [
+            'id' => 'users',
+            'route' => '/system/users/delete',
+            'title' => '<i class="fas fa-users"></i>&nbsp;Пользователи',
+            'access' => 'deleteUsers',
+            'description' => 'Доступ к удалению пользователей',
+            'visible' => false
+        ],*/
         [
             'id' => 'groups',
             'route' => '/system/groups',

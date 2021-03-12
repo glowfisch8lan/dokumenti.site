@@ -9,6 +9,10 @@ use app\modules\system\helpers\Cabinet;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Настройки';
+/**
+ * Выводим Верхнее меню;
+ */
+echo Cabinet::topMenu();
 ?>
 <section class="main-cabinet">
     <div class="main-cabinet-container">

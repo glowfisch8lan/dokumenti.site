@@ -79,9 +79,9 @@ $grid = [
                 'value' => function($data){
                     switch($data['status']){
                         case 0:
-                            return 'Не оплачено';
+                            return '<span class="text-danger font-weight-bold">Не оплачено</span>';
                         case 1:
-                            return 'Оплачено';
+                            return '<span class="text-success font-weight-bold">Оплачено</span>';
                     }
                 }
             ],
@@ -181,7 +181,23 @@ if(AccessControl::checkAccess(
                         'method' => 'post'
                     ]
                 ]);
-    }
+        },
+        'delete' => function ($url,$model) {
+
+            if($model['locking'] || Yii::$app->user->identity->id != 1){
+                return;
+            }
+
+            return
+                Html::a('<i class="fas fa-trash"></i>', $url,
+                    [
+                        'class' => 'btn btn-outline-danger',
+                        'data' => [
+                            'method' => 'post'
+                        ]
+                    ]);
+        }
+
     ];
 
     /**

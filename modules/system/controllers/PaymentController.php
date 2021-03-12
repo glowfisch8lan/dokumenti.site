@@ -2,6 +2,7 @@
 
 namespace app\modules\system\controllers;
 
+use app\modules\system\models\history\History;
 use app\modules\system\models\users\UsersBalance;
 use app\modules\system\models\users\UsersOrders;
 use Yii;
@@ -35,25 +36,48 @@ class PaymentController extends Controller
 
     public function actionPay($order_id)
     {
+
         $order = $this->findOrder($order_id);
+
         $user_id = Yii::$app->user->identity->id;
-        $user_balance = UsersBalance::getBalance($user_id);
+
+        $balance = $this->findUserBalance($user_id);
+        die();
         $order_coast = $order->getCoastOrder();
-        if( $user_balance-$order_coast < 0 )
+
+        /** Проверяем хватит ли денег на оплату на балансе */
+        if( $balance->value-$order_coast < 0 )
             throw new ServerErrorHttpException('Извините! На вашем балансе не достаточно средств.');
 
 
-        //var_dump($order->status);
+        /** Списываем деньги с баланса пользователя */
+        $balance->subtract($order_coast);
+        if(!$balance->save())
+            throw new ServerErrorHttpException('Извините! Произошла ошибка при списании денежных средств.');
+
+
+        /** Обновление статуса платежа */
+        $order->status = UsersOrders::STATUS_ORDER_PAID;
+        if(!$order->save())
+            throw new ServerErrorHttpException('Извините! Произошла ошибка обновления статуса оплаты заказа.');
+
+        /** Записываем в историю; */
+        $history = new History();
+        $history->user_id = $user_id;
+        $history->amount = $order_coast;
+        $history->transaction_id = null;
+        $history->description = 'Оплата заказа #' . $order_id;
+        $history->status = History::STATUS_ORDER_PAID;
+
+        if(!$history->save())
+            throw new ServerErrorHttpException('Извините! Произошла ошибка записи в Историю платежей.');
+
+
+        Yii::$app->session->setFlash('alert-success', 'Ваш заказ №<b>'.$order_id.'</b> успешно оплачен!');
+        return $this->redirect('/system/orders');
     }
 
 
-    /**
-     * Finds the Settings model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Settings the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     protected function findOrder($id)
     {
         if (($model = UsersOrders::findOne($id)) !== null) {
@@ -61,5 +85,14 @@ class PaymentController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    protected function findUserBalance($user_id)
+    {
+        if (($model = UsersBalance::findOne(['user_id' => $user_id])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('Баланс пользователя не найден.');
     }
 }
