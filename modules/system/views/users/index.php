@@ -11,9 +11,7 @@ use app\modules\system\models\users\Users;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Пользователи';
-/**
- * Выводим Верхнее меню;
- */
+/** Выводим Верхнее меню; */
 echo Cabinet::topMenu();
 ?>
 
@@ -21,7 +19,7 @@ echo Cabinet::topMenu();
     <div class="main-cabinet-container">
         <?= Cabinet::menu('users');?>
         <div class="main-cabinet-content">
-            <h2><?= Html::encode($this->title) ?></h2>
+            <h2 class="h2 title"><?= Html::encode($this->title) ?></h2>
 
             <?php Pjax::begin(); ?>
             <?= Grid::initWidget([
@@ -67,7 +65,7 @@ echo Cabinet::topMenu();
                 [
                 'update' => function ($url,$model) {
                     return Html::a('<i class="fas fa-pencil-alt" aria-hidden="true"></i>', $url,
-                        ['class' => 'btn btn-outline-info',
+                        ['class' => 'btn',
                             'data' => [
                                 'method' => 'post'
                             ]]);
@@ -75,7 +73,7 @@ echo Cabinet::topMenu();
                 'delete' =>
                     function($url, $model){
                         return ($model['username'] == 'admin' || $model['id'] == 1) ? null : Html::a('<i class="fas fa-trash" aria-hidden="true"></i>', $url,
-                            ['class' => 'btn btn-outline-danger',
+                            ['class' => 'btn',
                                 'data' => [
                                     'confirm' => 'Вы действительно хотите удалить данную позицию?',
                                     'method' => 'post'
@@ -87,10 +85,10 @@ echo Cabinet::topMenu();
                                 return;
 
                             return ($model['username'] == 'admin' || $model['id'] == 1) ? null : Html::a('<i class="fas fa-sign-in-alt" aria-hidden="true"></i>', $url,
-                                ['class' => 'btn btn-outline-info']);
+                                ['class' => 'btn']);
                         },
                     ],
-//                'ActionColumnHeader' => '&nbsp;',
+                'ActionColumnHeader' => '<a class="btn" href="/system/users/create"><i class="fas fa-plus" aria-hidden="true"></i></a>',
                 'buttonsOptions' => ['template' => '{login} {edit} {delete}'],
 
 

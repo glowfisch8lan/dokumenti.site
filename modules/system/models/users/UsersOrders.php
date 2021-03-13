@@ -97,7 +97,9 @@ class UsersOrders extends \yii\db\ActiveRecord
             'user_id' => 'Пользователь',
             'comment' => 'Комментарий',
             'status' => 'Статус платежа',
-            'stage'  => 'Стадия выполнения'
+            'stage'  => 'Стадия выполнения',
+            '_files' => 'Файлы'
+
         ];
     }
 

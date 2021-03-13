@@ -10,23 +10,16 @@ namespace app\assets;
 use yii\web\AssetBundle;
 
 /**
- * Main application asset bundle.
+ * Asset bundle for the Twitter bootstrap javascript files.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
  */
-class MainAsset extends AssetBundle
+class InputMaskedAsset extends AssetBundle
 {
-    public $css = [
-        'css/style.css',
-        'css/main.css',
-
-    ];
-
+    public $sourcePath = '@app/modules/system/assets';
     public $js = [
-        'js/main.js'
+        'js/jquery.maskedinput.min.js'
     ];
-
     public $depends = [
     ];
 }

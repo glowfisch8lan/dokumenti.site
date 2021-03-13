@@ -9,9 +9,7 @@ use app\modules\system\helpers\Cabinet;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Группы';
-/**
- * Выводим Верхнее меню;
- */
+/** Выводим Верхнее меню; */
 echo Cabinet::topMenu();
 ?>
 
@@ -19,7 +17,7 @@ echo Cabinet::topMenu();
     <div class="main-cabinet-container">
         <?= Cabinet::menu('groups');?>
         <div class="main-cabinet-content">
-            <h2><?= Html::encode($this->title) ?></h2>
+            <h2 class="h2 title"><?= Html::encode($this->title) ?></h2>
 
             <?php Pjax::begin(); ?>
             <?= Grid::initWidget([
@@ -41,7 +39,7 @@ echo Cabinet::topMenu();
                     [
                         'update' => function ($url,$model) {
                             return Html::a('<i class="fas fa-pencil-alt" aria-hidden="true"></i>', $url,
-                                ['class' => 'btn btn-outline-info',
+                                ['class' => 'btn',
                                     'data' => [
                                         'method' => 'post'
                                     ]]);
@@ -50,7 +48,7 @@ echo Cabinet::topMenu();
                         'delete' =>
                             function($url, $model){
                                 return ($model['name'] == 'Администраторы' || $model['id'] == 1) ? null : Html::a('<i class="fas fa-trash" aria-hidden="true"></i>', $url,
-                                    ['class' => 'btn btn-outline-danger',
+                                    ['class' => 'btn',
                                         'data' => [
                                             'confirm' => 'Вы действительно хотите удалить данную позицию?',
                                             'method' => 'post'

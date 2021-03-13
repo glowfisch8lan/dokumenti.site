@@ -4,10 +4,11 @@
 /* @var $content string */
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use app\assets\AppAsset;
+use yii\bootstrap4\Alert;
 use yii\widgets\ActiveForm;
 use app\modules\feedback\models\FeedbackRequest;
-use yii\bootstrap4\Alert;
 use app\modules\system\models\users\Groups;
 use app\modules\system\models\users\Users;
 use app\modules\system\models\history\History;
@@ -23,7 +24,7 @@ $('.main-carousel').owlCarousel({
         });
 
 JS;
-
+$this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => Url::to(['/favicon.ico'])]);
 $this->registerJs( $js, $position = yii\web\View::POS_END, $key = null );
 $model = new FeedbackRequest();
 ?>
@@ -78,7 +79,7 @@ $model = new FeedbackRequest();
                 мы обязательно перезвоним
             </h2>
             <?= $form->field($model, 'name')->textInput(['autofocus' => true])->input('text', ['placeholder' => "Ваше Имя", 'name'=>'name','id' => 'name'])->label('Ваше имя',['for' => 'name'])?>
-            <?= $form->field($model, 'phone')->textInput(['autofocus' => true])->input('text', ['placeholder' => "+7 900 000 00 00", 'id' => 'phone'])->label('')?>
+            <?= $form->field($model, 'phone')->textInput(['autofocus' => true])->input('text', ['placeholder' => "+7 900 000 00 00", 'id' => 'phone', 'class' => 'phone'])->label('')?>
 
             <div class="callback-content__item">
                 <input type="checkbox" name="polit" id="polit">
@@ -196,7 +197,9 @@ $model = new FeedbackRequest();
                 <div class="modal-body">
                     <?php $model = new History() ?>
 
-                    <?php $form = ActiveForm::begin(['options' => ['class' => 'profile__refill-form']]) ?>
+                    <?php $form = ActiveForm::begin([
+                            'options' => ['class' => 'profile__refill-form']
+                    ]) ?>
 
                     <?= $form->field($model, 'amount', [
                         'labelOptions' => ['class' => 'profile__refill-label']
@@ -245,26 +248,37 @@ $model = new FeedbackRequest();
                 </div>
                 <div class="footer-navs-item">
                     <b>Доп. информация</b>
-                    <a href="/#">Законы РФ</a>
-                    <a href="/#">Проверка сайта</a>
+                    <a href="/#laws">Законы РФ</a>
+                    <a href="/#check">Проверка сайта</a>
                 </div>
                 <div class="footer-navs-item">
                     <b>Личный кабинет</b>
+                    <?php  if(Yii::$app->user->isGuest)
+                    {
+                        echo '<a href="/site/login">Вход</a><a href="/site/sign-up">Регистрация</a>';
+                    }
+                    else {
+                        echo Html::a( Yii::$app->user->identity->username, '/system/orders');
+                    }
+                    ?>
 
-                    <a href="/site/login">Вход</a>
-                    <a href="/site/sign-up">Регистрация</a>
+
                 </div>
             </div>
+
+
             <div class="footer-callback">
                 <a class="callback-button" href="#">Обратная связь</a>
                 <div class="footer-phone">
-                    <a href="telTo:+7(499)9388764">
+                    <a href="telTo:<?= Yii::$app->params['callbackPhone'] ?>">
                         <img src="/img/open-24-hours.svg" alt="">
-                        <p>+7 (499) 938-87-64 <br>
+                        <p><?= Yii::$app->params['callbackPhone'] ?><br>
                             <span>Круглосуточная поддержка</span>
                         </p>
                     </a>
-                    <a class="mail" href="mailTo:info@dokumenti.site">info@dokumenti.site</a>
+                    <a href="mailto:<?= Yii::$app->params['adminEmail'] ?>" class="header__email footer__email">
+                        <?= Yii::$app->params['adminEmail'] ?>
+                    </a>
                 </div>
             </div>
         </div>
@@ -272,11 +286,13 @@ $model = new FeedbackRequest();
             <p>Copyright 2021 ©. Все права защищены.</p>
             <a href="#">Политика конфиденциальности</a>
             <a href="#">Оферта</a>
+            <a href="https://webrazavr.ru/">WEBRAZAVR - Студия для Вашего бизнеса</a>
         </div>
     </footer>
 </div>
 
 <?php $this->endBody() ?>
+
 </body>
 </html>
 <?php $this->endPage() ?>

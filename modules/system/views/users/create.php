@@ -8,13 +8,15 @@ use app\modules\system\models\users\Groups;
 /* @var $model app\modules\system\models\users\Users */
 
 $this->title = 'Создать пользователя';
+/** Выводим Верхнее меню; */
+echo Cabinet::topMenu();
 ?>
 
 <section class="main-cabinet">
     <div class="main-cabinet-container">
         <?= Cabinet::menu('users');?>
         <div class="main-cabinet-content">
-            <h2><?= Html::encode($this->title) ?></h2>
+            <h2 class="h2 title"><?= Html::encode($this->title) ?></h2>
 
             <?php $form = ActiveForm::begin(); ?>
 
@@ -67,7 +69,7 @@ $this->title = 'Создать пользователя';
 
 
             <div class="form-group">
-                <?= Html::submitButton('<i class="fa fa-save"></i> Создать', ['class' => 'btn btn-success']) ?>
+                <?= Html::submitButton('<i class="fa fa-save"></i> Создать', ['class' => 'btn']) ?>
             </div>
             <?php ActiveForm::end(); ?>
         </div>

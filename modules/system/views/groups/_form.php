@@ -64,14 +64,14 @@ $this->registerJs( $js, $position = yii\web\View::POS_END, $key = null );
     <div class="form-group col-md-12">
         <?= $form->field($model, 'name', [
             'template' => '<div>{label}</div><div>{input}</div><small>Введите имя новой Группы</small>
-            <div class="text-danger">{error}</div>'
+            <div class="text-danger small">{error}</div>'
         ])->textInput(['autofocus' => true]); ?>
     </div>
 
     <div class="form-group col-md-12">
         <?= $form->field($model, 'description', [
             'template' => '<div>{label}</div><div>{input}</div><small>Введите описание Группы</small>
-            <div class="text-danger">{error}</div>'
+            <div class="text-danger small">{error}</div>'
         ]); ?>
 
     </div>
@@ -118,7 +118,7 @@ $this->registerJs( $js, $position = yii\web\View::POS_END, $key = null );
 </div>
 
 <div class="form-group">
-    <?= Html::submitButton('<i class="fa fa-save"></i> Сохранить', ['class' => 'btn btn-success']) ?>
+    <?= Html::submitButton('<i class="fa fa-save"></i> Сохранить', ['class' => 'btn']) ?>
 </div>
 
 <?php ActiveForm::end(); ?>

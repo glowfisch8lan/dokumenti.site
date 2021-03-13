@@ -1,0 +1,247 @@
+.login__form .form-group {
+    flex-direction: column;
+}
+
+.login__form .form-group.required label:after {
+    content: '*';
+    color: #ff3535;
+}
+
+.help-block {
+    font-size: 14px;
+    color: #aa3e3e;
+    padding-top: 6px;
+}
+
+#orders-category_id {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.radio__group {
+    margin-right: .75rem;
+    margin-bottom: .75rem;
+}
+
+.radio__group label {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.profile__result-content ul {
+    padding-top: 15px;
+}
+
+.profile__result-content li {
+    display: flex;
+    margin-left: -14px;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 1.2;
+    padding-bottom: 20px;
+}
+
+.profile__result-content li:before {
+    display: block;
+    content: "\2022";
+    color: #aa3e3e;
+    width: 1em;
+    font-weight: 700;
+    margin-left: 1em;
+}
+
+.login__restore-offer {
+    margin-top: 0;
+    border-top: 0;
+}
+
+.profile__website-wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.feedback__modal .modal-dialog {
+    max-width: 586px;
+}
+
+.feedback__modal .modal-header {
+    margin-bottom: 23px;
+}
+
+.feedback__modal .modal-header {
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 42px;
+    text-align: center;
+    color: #3D3D3D;
+}
+
+.feedback__modal .modal-content {
+    background: #EEEEEE;
+    border: 5px solid #AA3E3E;
+}
+
+.feedback__form-label {
+    display: block;
+    padding-bottom: 5px;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+    color: #ADADAD;
+}
+
+.feedback__form-input {
+    width: 100%;
+    padding: 13px 0;
+    background: #FFFFFF;
+    border: 1px solid #B4B4B4;
+    font-weight: 300;
+    font-size: 16px;
+    text-align: center;
+    color: #8E8E8E;
+
+}
+
+.feedback__form .form-group {
+    max-width: 320px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
+
+.field-feedbackform-is_agree label {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 10px;
+}
+
+.field-feedbackform-is_agree label:before {
+    content: '';
+    width: 13px;
+    height: 13px;
+    background: #dadada;
+}
+
+.field-feedbackform-is_agree.has-success label:after {
+    content: '';
+    position: absolute;
+    left: 29px;
+    width: 7px;
+    height: 7px;
+    background: #aa3e3e;
+}
+
+.feedback__form .call-back__checkbox-custom {
+    top: 0;
+    left: 24px;
+}
+
+.feedback__form .call-back__checkbox:checked ~ .call-back__checkbox-custom:after {
+    display: block;
+}
+
+.call-back .form-group {
+    flex-direction: column;
+}
+
+.call-back__form .field-feedbackform-is_agree.has-success label:after {
+    left: 3px;
+}
+
+.header__logo {
+    width: 350px;
+    background-image: url("../images/logo_1_dark.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+@media screen and (max-width: 576px){
+    .header__logo {
+        width: 60px;
+        background-image: url("../images/logo_1_dark_mobile.png");
+    }
+}
+
+.slider, .slide {
+    height: 70vh;
+}
+
+@media screen and (max-width: 576px) {
+    .slider, .slide {
+        height: 60vh;
+    }
+}
+
+.slick-initialized .slick-slide {
+    display: flex !important;
+    align-items: center;
+    padding: 0;
+}
+
+@media screen and (max-width: 576px) {
+    .slide__header {
+        font-size: 28px;
+        line-height: 34px;
+    }
+
+    .slide__text {
+        font-size: 18px;
+        line-height: 24px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .slide__header {
+        font-size: 24px;
+        line-height: 28px;
+    }
+
+    .slide__text {
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    .slick-dots  {
+        display: none!important;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .menu-mobile__link:focus,
+    .menu-mobile__link:hover {
+        color: #fff;
+    }
+
+    #orders-category_id {
+        flex-direction: column;
+    }
+
+    .profile__order-form {
+        padding-bottom: 50px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

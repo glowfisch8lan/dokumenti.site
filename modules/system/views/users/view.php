@@ -10,6 +10,8 @@ $this->title = 'Просмор пользователя ' . $model->username;
 $this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
+/** Выводим Верхнее меню; */
+echo Cabinet::topMenu();
 ?>
 <section class="main-cabinet">
     <div class="main-cabinet-container">

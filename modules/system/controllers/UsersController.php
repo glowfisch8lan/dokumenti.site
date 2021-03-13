@@ -55,6 +55,7 @@ class UsersController extends Controller
      */
     public function actionView($id)
     {
+        return;
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -69,8 +70,10 @@ class UsersController extends Controller
     {
         $model = new Users();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        /** Добавляем в группы */
+        if ( $model->load(Yii::$app->request->post()) && $model->save()) {
+                Groups::addMembers(ArrayHelper::indexMap($model->groups, $model->id)); //Добавляем список групп в system_users_groups заново;
+                return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [

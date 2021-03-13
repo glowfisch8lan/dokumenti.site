@@ -42,12 +42,13 @@ class PaymentController extends Controller
         $user_id = Yii::$app->user->identity->id;
 
         $balance = $this->findUserBalance($user_id);
-        die();
+
         $order_coast = $order->getCoastOrder();
 
         /** Проверяем хватит ли денег на оплату на балансе */
-        if( $balance->value-$order_coast < 0 )
-            throw new ServerErrorHttpException('Извините! На вашем балансе не достаточно средств.');
+
+        if( ($balance->value - $order_coast) < 0 )
+            throw new ServerErrorHttpException('Извините! Стоимость заказа '.$order_coast.' руб. На вашем балансе не достаточно средств.');
 
 
         /** Списываем деньги с баланса пользователя */

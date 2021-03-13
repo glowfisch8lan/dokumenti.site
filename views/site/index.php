@@ -229,100 +229,161 @@ $this->title = 'Документы для сайта | Интернет прав
         <h2 class="h2 title">
             Список судебных практик
         </h2>
-        <div class="arbitrage-practice-left">
-            <div class="arbitrage-practice-left-container">
-                <div class="arbitrage-practice-left-item">
-                    <a href="https://sudact.ru/arbitral/doc/ZLJJRyWiPamv/" target="_blank">1. Нарушение исключительных имущественных прав на произведение изобразительного искусства</a>
-                    <p>Сумма иска: 50.845 рублей; Дело №А55-39556/2019 от 19 марта 2020 года</p>
-                </div>
-                <div class="arbitrage-practice-left-item">
-                    <a href="#"></a>
-                    <p></p>
-                </div>
-                <div class="arbitrage-practice-left-item">
-                    <a href="#">2. Нарушение исключительных прав на воспроизведение</a>
-                    <p>Сумма иска: 100.000 рублей; Дело №А22–3513/2019 от 05 марта 2020 года</p>
-                </div>
-                <div class="arbitrage-practice-left-item">
-                    <a href="#">3. Нарушение исключительных авторских прав</a>
-                    <p>Сумма иска: 25.000 рублей; Дело №А68-10514/2019 от 27 февраля 2020 года</p>
-                </div>
-                <div class="arbitrage-practice-left-item">
-                    <a href="#">4. Нарушение исключительных прав</a>
-                    <p>Сумма иска: 1.700.000 рублей; Дело №А57-14969/2019 от 04 марта 2020 года</p>
-                </div>
-                <div class="arbitrage-practice-left-item">
-                    <a href="#">5. Нарушение исключительных прав</a>
-                    <p>Сумма иска: 20.000 рублей; Дело №А48-11194/2019 от 02 марта 2020 года</p>
-                </div>
-                <div class="arbitrage-practice-left-item">
-                    <a href="#">6. Нарушение исключительных имущественных прав на произведение</a>
-                    <p>Сумма иска: 22.000 рублей; Дело №А54-9372/2019 от 02 марта 2020 года</p>
-                </div>
-                <div class="arbitrage-practice-left-item">
-                    <a href="#">7. Нарушение авторских прав</a>
-                    <p>Сумма иска: 76.000 рублей; Дело №А37-2956/2019 от 04 марта 2020 года</p>
-                </div>
-                <div class="arbitrage-practice-left-item">
-                    <a href="#">8. Нарушение исключительных прав на произведения</a>
-                    <p>Сумма иска: 60.000 рублей; Дело №А12-41765/2019 от 03 марта 2020 года</p>
-                </div>
-                <div class="arbitrage-practice-left-item">
-                    <a href="#">9. Нарушение исключительных прав</a>
-                    <p>Сумма иска: 113.000 рублей; Дело №А42-11341/2019 от 03 марта 2020 года</p>
-                </div>
-                <div class="arbitrage-practice-left-item">
-                    <a href="#">10. Нарушение исключительных прав</a>
-                    <p>Сумма иска: 60.000 рублей; Дело №А65-35062/2019 от 25 февраля 2020 года</p>
-                </div>
-                <div class="arbitrage-practice-left-item">
-                    <a href="#">11. Нарушение исключительных прав</a>
-                    <p>Сумма иска: 60.000 рублей; Дело №А57-22959/2019 от 03 марта 2020 года</p>
-                </div>
-                <div class="arbitrage-practice-left-item">
-                    <a href="#">12. Нарушение права использования произведения</a>
-                    <p>Сумма иска: 1.699.000 рублей; Дело №А33-24411/2019 от 02 марта 2020 года</p>
-                </div>
-                <div class="arbitrage-practice-left-item">
-                    <a href="#">13. Нарушение исключительных прав</a>
-                    <p>Сумма иска: 100.000 рублей; Дело №А55-30280/2019 от 21 февраля 2020 года</p>
-                </div>
-                <div class="arbitrage-practice-left-item">
-                    <a href="#">14. Нарушение исключительных прав</a>
-                    <p>Сумма иска: 200.000 рублей; Дело №А09-13008/2019 от 21 февраля 2020 года</p>
-                </div>
-                <div class="arbitrage-practice-left-item">
-                    <a href="#">15. Нарушение исключительных прав</a>
-                    <p>Сумма иска: 90.000 рублей; Дело №А45-37053/2019 от 20 февраля 2020 года</p>
-                </div>
-                <div class="arbitrage-practice-left-item">
-                    <a href="#">16. Нарушение исключительных прав</a>
-                    <p>Сумма иска: 80.000 рублей; Дело №А76-14386/2019 от 27 февраля 2020 года</p>
-                </div>
-                <div class="arbitrage-practice-left-item">
-                    <a href="#">17. Нарушение исключительных прав</a>
-                    <p>Сумма иска: 300.000 рублей; Дело А56-13767/2019 от 25 февраля 2020 года</p>
-                </div>
-                <div class="arbitrage-practice-left-item">
-                    <a href="#">18. Нарушение исключительных прав</a>
-                    <p>Сумма иска: 70.000 рублей; Дело А76-50860/2019 от 06 марта 2020 года</p>
-                </div>
-                <div class="arbitrage-practice-left-item">
-                    <a href="#">19. Нарушение исключительных прав</a>
-                    <p>Сумма иска: 100.000 рублей; Дело А09-13007/2019 от 19 февраля 2020 года</p>
-                </div>
-                <div class="arbitrage-practice-left-item">
-                    <a href="#">20. Нарушение исключительных прав</a>
-                    <p>Сумма иска: 124.000 рублей; Дело А56-126138/2019 от 19 февраля 2020 года</p>
+        <div class="row practice__row">
+            <div class="practice__list col-md-12 col-lg-6">
+                <div class="practice__item-scroll">
+                    <div class="practice__item-wrapper">
+                        <div class="practice__item">
+                            <a href="https://sudact.ru/arbitral/doc/ZLJJRyWiPamv/?arbitral-txt=&arbitral-case_doc=&arbitral-lawchunkinfo=Статья+1250.+Защита+интеллектуальных+прав%28ГК+РФ%29&arbitral-date_from=&arbitral-date_to=&arbitral-region=&arbitral-court=&arbitral-judge=&_=1597326530973"
+                               target="_blank" class="practice__item-link">
+                                1. Нарушение исключительных имущественных прав на произведение изобразительного искусства
+                            </a>
+                            <p class="practice__item-text">
+                                Сумма иска: 50.845 рублей; Дело №А55-39556/2019 от 19 марта 2020 года
+                            </p>
+                        </div>
+                        <div class="practice__item">
+                            <a href="https://sudact.ru/arbitral/doc/v3y9axAygeJT/?arbitral-txt=&arbitral-case_doc=&arbitral-lawchunkinfo=Статья+1250.+Защита+интеллектуальных+прав%28ГК+РФ%29&arbitral-date_from=&arbitral-date_to=&arbitral-region=&arbitral-court=&arbitral-judge=&_=1597326530973"
+                               target="_blank" class="practice__item-link">
+                                2. Нарушение исключительных прав на воспроизведение</a>
+                            <p class="practice__item-text">
+                                Сумма иска: 100.000 рублей; Дело №А22–3513/2019 от 05 марта 2020 года
+                            </p>
+                        </div>
+                        <div class="practice__item">
+                            <a href="https://sudact.ru/arbitral/doc/LR2swQFtIsxd/?arbitral-txt=&arbitral-case_doc=&arbitral-lawchunkinfo=Статья+1250.+Защита+интеллектуальных+прав%28ГК+РФ%29&arbitral-date_from=&arbitral-date_to=&arbitral-region=&arbitral-court=&arbitral-judge=&_=1597326530973"
+                               target="_blank" class="practice__item-link">2. Нарушение исключительных авторских прав</a>
+                            <p class="practice__item-text">
+                                Сумма иска: 25.000 рублей; Дело №А68-10514/2019 от 27 февраля 2020 года
+                            </p>
+                        </div>
+                        <div class="practice__item">
+                            <a href="https://sudact.ru/arbitral/doc/WJj3c4gnDF19/?arbitral-txt=&arbitral-case_doc=&arbitral-lawchunkinfo=Статья+1250.+Защита+интеллектуальных+прав%28ГК+РФ%29&arbitral-date_from=&arbitral-date_to=&arbitral-region=&arbitral-court=&arbitral-judge=&_=1597326530973"
+                               target="_blank" class="practice__item-link">4. Нарушение исключительных прав</a>
+                            <p
+                                    class="practice__item-text">
+                                Сумма иска: 1.700.000 рублей; Дело №А57-14969/2019 от 04 марта 2020 года
+
+                            </p>
+                        </div>
+                        <div class="practice__item">
+                            <a href="https://sudact.ru/arbitral/doc/1R645rEncbUa/?arbitral-txt=&arbitral-case_doc=&arbitral-lawchunkinfo=Статья+1250.+Защита+интеллектуальных+прав%28ГК+РФ%29&arbitral-date_from=&arbitral-date_to=&arbitral-region=&arbitral-court=&arbitral-judge=&_=1597340118396"
+                               target="_blank" class="practice__item-link">5. Нарушение исключительных прав
+                            </a>
+                            <p class="practice__item-text">
+                                Сумма иска: 20.000 рублей; Дело №А48-11194/2019 от 02 марта 2020 года
+                            </p>
+                        </div>
+                        <div class="practice__item">
+                            <a href="https://sudact.ru/arbitral/doc/TmgrxiIGEQVl/?arbitral-txt=&arbitral-case_doc=&arbitral-lawchunkinfo=Статья+1250.+Защита+интеллектуальных+прав%28ГК+РФ%29&arbitral-date_from=&arbitral-date_to=&arbitral-region=&arbitral-court=&arbitral-judge=&_=1597340118396"
+                               target="_blank" class="practice__item-link">6. Нарушение исключительных имущественных прав на
+                                произведение</a>
+                            <p class="practice__item-text">
+                                Сумма иска: 22.000 рублей; Дело №А54-9372/2019 от 02 марта 2020 года
+                            </p>
+                        </div>
+                        <div class="practice__item">
+                            <a href="https://sudact.ru/arbitral/doc/Fc3fn5AwKbrd/?page=2&arbitral-judge=&arbitral-court=&arbitral-case_doc=&arbitral-date_from=&arbitral-lawchunkinfo=Статья+1250.+Защита+интеллектуальных+прав%28ГК+РФ%29&arbitral-txt=&arbitral-date_to=&_=1597340810243&arbitral-region="
+                               target="_blank" class="practice__item-link">7. Нарушение авторских прав</a>
+                            <p class="practice__item-text">
+                                Сумма иска: 76.000 рублей; Дело №А37-2956/2019 от 04 марта 2020 года
+                            </p>
+                        </div>
+                        <div class="practice__item">
+                            <a href="https://sudact.ru/arbitral/doc/KvmiEPV9szQa/?page=2&arbitral-judge=&arbitral-court=&arbitral-case_doc=&arbitral-date_from=&arbitral-lawchunkinfo=Статья+1250.+Защита+интеллектуальных+прав%28ГК+РФ%29&arbitral-txt=&arbitral-date_to=&_=1597340810243&arbitral-region="
+                               target="_blank" class="practice__item-link">8. Нарушение исключительных прав на произведения</a>
+                            <p class="practice__item-text">Сумма иска: 60.000 рублей; Дело №А12-41765/2019 от 03 марта 2020 года</p>
+                        </div>
+
+                        <div class="practice__item">
+                            <a href="https://sudact.ru/arbitral/doc/XluZsqaS9eY9/?page=2&arbitral-judge=&arbitral-court=&arbitral-case_doc=&arbitral-date_from=&arbitral-lawchunkinfo=Статья+1250.+Защита+интеллектуальных+прав%28ГК+РФ%29&arbitral-txt=&arbitral-date_to=&_=1597340810243&arbitral-region="
+                               target="_blank" class="practice__item-link">9. Нарушение исключительных прав</a>
+                            <p class="practice__item-text">Сумма иска: 113.000 рублей; Дело №А42-11341/2019 от 03 марта 2020 года</p>
+                        </div>
+
+                        <div class="practice__item">
+                            <a href="https://sudact.ru/arbitral/doc/VqxAJgGdmyL/?page=2&arbitral-judge=&arbitral-court=&arbitral-case_doc=&arbitral-date_from=&arbitral-lawchunkinfo=Статья+1250.+Защита+интеллектуальных+прав%28ГК+РФ%29&arbitral-txt=&arbitral-date_to=&_=1597340810243&arbitral-region="
+                               target="_blank" class="practice__item-link">10. Нарушение исключительных прав</a>
+                            <p class="practice__item-text">Сумма иска: 60.000 рублей; Дело №А65-35062/2019 от 25 февраля 2020 года</p>
+                        </div>
+
+                        <div class="practice__item">
+                            <a href="https://sudact.ru/arbitral/doc/FsP8vwtkgJN1/?page=3&arbitral-judge=&arbitral-court=&arbitral-case_doc=&arbitral-date_from=&arbitral-lawchunkinfo=Статья+1250.+Защита+интеллектуальных+прав%28ГК+РФ%29&arbitral-txt=&arbitral-date_to=&_=1597342810758&arbitral-region="
+                               target="_blank" class="practice__item-link">11. Нарушение исключительных прав</a>
+                            <p class="practice__item-text">Сумма иска: 60.000 рублей; Дело №А57-22959/2019 от 03 марта 2020 года</p>
+                        </div>
+
+                        <div class="practice__item">
+                            <a href="https://sudact.ru/arbitral/doc/K9LJGFzi5Bgb/?page=3&arbitral-judge=&arbitral-court=&arbitral-case_doc=&arbitral-date_from=&arbitral-lawchunkinfo=Статья+1250.+Защита+интеллектуальных+прав%28ГК+РФ%29&arbitral-txt=&arbitral-date_to=&_=1597342810758&arbitral-region="
+                               target="_blank" class="practice__item-link">12. Нарушение права использования произведения</a>
+                            <p class="practice__item-text">Сумма иска: 1.699.000 рублей; Дело №А33-24411/2019 от 02 марта 2020
+                                года</p>
+                        </div>
+
+                        <div class="practice__item">
+                            <a href="https://sudact.ru/arbitral/doc/xxJOAmoArAxN/?page=3&arbitral-judge=&arbitral-court=&arbitral-case_doc=&arbitral-date_from=&arbitral-lawchunkinfo=Статья+1250.+Защита+интеллектуальных+прав%28ГК+РФ%29&arbitral-txt=&arbitral-date_to=&_=1597342810758&arbitral-region="
+                               target="_blank" class="practice__item-link">13. Нарушение исключительных прав</a>
+                            <p class="practice__item-text">Сумма иска: 100.000 рублей; Дело №А55-30280/2019 от 21 февраля 2020
+                                года</p>
+                        </div>
+
+                        <div class="practice__item">
+                            <a href="https://sudact.ru/arbitral/doc/IKUDzR4SIel/?page=4&arbitral-judge=&arbitral-court=&arbitral-case_doc=&arbitral-date_from=&arbitral-lawchunkinfo=Статья+1250.+Защита+интеллектуальных+прав%28ГК+РФ%29&arbitral-txt=&arbitral-date_to=&_=1597343487850&arbitral-region="
+                               target="_blank" class="practice__item-link">14. Нарушение исключительных прав</a>
+                            <p class="practice__item-text">Сумма иска: 200.000 рублей; Дело №А09-13008/2019 от 21 февраля 2020
+                                года</p>
+                        </div>
+
+                        <div class="practice__item">
+                            <a href="https://sudact.ru/arbitral/doc/QRztnikwPVrR/?page=4&arbitral-judge=&arbitral-court=&arbitral-case_doc=&arbitral-date_from=&arbitral-lawchunkinfo=Статья+1250.+Защита+интеллектуальных+прав%28ГК+РФ%29&arbitral-txt=&arbitral-date_to=&_=1597343487850&arbitral-region="
+                               target="_blank" class="practice__item-link">15. Нарушение исключительных прав</a>
+                            <p class="practice__item-text">Сумма иска: 90.000 рублей; Дело №А45-37053/2019 от 20 февраля 2020 года</p>
+                        </div>
+
+                        <div class="practice__item">
+                            <a href="https://sudact.ru/arbitral/doc/BsKSh3eNBGLa/?page=4&arbitral-judge=&arbitral-court=&arbitral-case_doc=&arbitral-date_from=&arbitral-lawchunkinfo=Статья+1250.+Защита+интеллектуальных+прав%28ГК+РФ%29&arbitral-txt=&arbitral-date_to=&_=1597343487850&arbitral-region="
+                               target="_blank" class="practice__item-link">16. Нарушение исключительных прав</a>
+                            <p class="practice__item-text">Сумма иска: 80.000 рублей; Дело №А76-14386/2019 от 27 февраля 2020 года</p>
+                        </div>
+
+                        <div class="practice__item">
+                            <a href="https://sudact.ru/arbitral/doc/5lvXGer3oTo5/?page=5&arbitral-judge=&arbitral-court=&arbitral-case_doc=&arbitral-date_from=&arbitral-lawchunkinfo=Статья+1250.+Защита+интеллектуальных+прав%28ГК+РФ%29&arbitral-txt=&arbitral-date_to=&_=1597345094092&arbitral-region="
+                               target="_blank" class="practice__item-link">17. Нарушение исключительных прав</a>
+                            <p class="practice__item-text">Сумма иска: 300.000 рублей; Дело А56-13767/2019 от 25 февраля 2020 года</p>
+                        </div>
+
+                        <div class="practice__item">
+                            <a href="https://sudact.ru/arbitral/doc/6opi7Kv1kiw/?page=5&arbitral-judge=&arbitral-court=&arbitral-case_doc=&arbitral-date_from=&arbitral-lawchunkinfo=Статья+1250.+Защита+интеллектуальных+прав%28ГК+РФ%29&arbitral-txt=&arbitral-date_to=&_=1597345094092&arbitral-region="
+                               target="_blank" class="practice__item-link">18. Нарушение исключительных прав</a>
+                            <p class="practice__item-text">Сумма иска: 70.000 рублей; Дело А76-50860/2019 от 06 марта 2020 года</p>
+                        </div>
+
+                        <div class="practice__item">
+                            <a href="https://sudact.ru/arbitral/doc/bbXCiIqy5Bgg/?page=5&arbitral-judge=&arbitral-court=&arbitral-case_doc=&arbitral-date_from=&arbitral-lawchunkinfo=Статья+1250.+Защита+интеллектуальных+прав%28ГК+РФ%29&arbitral-txt=&arbitral-date_to=&_=1597345094092&arbitral-region="
+                               target="_blank" class="practice__item-link">19. Нарушение исключительных прав</a>
+                            <p class="practice__item-text">Сумма иска: 100.000 рублей; Дело А09-13007/2019 от 19 февраля 2020 года</p>
+                        </div>
+
+                        <div class="practice__item">
+                            <a href="https://sudact.ru/arbitral/doc/pI4HfPupp3dw/?page=5&arbitral-judge=&arbitral-court=&arbitral-case_doc=&arbitral-date_from=&arbitral-lawchunkinfo=Статья+1250.+Защита+интеллектуальных+прав%28ГК+РФ%29&arbitral-txt=&arbitral-date_to=&_=1597345094092&arbitral-region="
+                               target="_blank" class="practice__item-link">20. Нарушение исключительных прав</a>
+                            <p class="practice__item-text">Сумма иска: 124.000 рублей; Дело А56-126138/2019 от 19 февраля 2020
+                                года</p>
+                        </div>
+
+                    </div>
                 </div>
             </div>
+            <div class="practice__text col-md-12 col-lg-6">
+                <p>Вы можете ознакомиться с судебными делами владельцев сайтов - которые не успели вовремя привести свой сайт в
+                    порядок или обратиться к нам, и нарушили законодательство РФ.<br><br>В данном списке, мы публикуем ссылки на
+                    последние судебные решения.<br><br> Помните, своевременно исправленные нарушения - сэкономят Вам не только
+                    внушительные суммы средств, но и нервы. Соответствуйте Законодательству, развивайте Ваш бизнес без проблем и
+                    не попадайте в такие списки!</p>
+                <strong>Приведем Ваш сайт в порядок, поможем избежать проблем</strong>
+            </div>
         </div>
-        <div class="arbitrage-practice-right">
-            <p>Вы можете ознакомиться с судебными делами владельцев сайтов - которые не успели вовремя привести свой сайт в порядок или обратиться к нам, и нарушили законодательство РФ.</p>
-            <p>В данном списке, мы публикуем ссылки на последние судебные решения.</p>
-            <p>Помните, своевременно исправленные нарушения - сэкономят Вам не только внушительные суммы средств, но и нервы. Соответствуйте Законодательству, развивайте Ваш бизнес без проблем и не попадайте в такие списки!</p>
-            <b>Приведем Ваш сайт в порядок, поможем избежать проблем</b>
-        </div>
+
     </div>
 </section>
 <section class="save-your-bussiness" id="checking">
@@ -336,7 +397,7 @@ $this->title = 'Документы для сайта | Интернет прав
             <form action="">
                 <h3 class="h3">Оставьте свой номер и
                     мы вам перезвоним</h3>
-                <input type="text" name="phone" id="phone" placeholder="+7 900 000 00 00">
+                <input type="text" name="phone" class="phone" id="phone" placeholder="+7-(900)-000-00-00">
                 <p class="error">Необходимо заполнить «Ваш телефон».</p>
 
                 <input type="checkbox" name="polit" id="polit">

@@ -9,13 +9,15 @@ use app\modules\system\models\users\Users;
 /* @var $model app\modules\system\models\users\Users */
 
 $this->title = 'Изменить пользователя';
+/** Выводим Верхнее меню; */
+echo Cabinet::topMenu();
 ?>
 
 <section class="main-cabinet">
     <div class="main-cabinet-container">
         <?= Cabinet::menu('users');?>
         <div class="main-cabinet-content">
-            <h2><?= Html::encode($this->title) ?></h2>
+            <h2 class="h2 title"><?= Html::encode($this->title) ?></h2>
 
             <?php $form = ActiveForm::begin(); ?>
 
@@ -35,7 +37,7 @@ $this->title = 'Изменить пользователя';
                 <div class="form-group col-md-6">
                     <?= $form
                         ->field($model, 'password', [
-                            'template' => '<div>{label}</div><div>{input}</div><small>Введите пароль, если вы хотите его изменить либо оставьте поле пустым.</small>
+                            'template' => '<div>{label}</div><div>{input}</div>
                             <div class="text-danger">{error}</div>'
                         ])
                         ->passwordInput();

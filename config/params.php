@@ -5,6 +5,7 @@ return [
 //    'bsDependencyEnabled' => false,
 
     'adminEmail' => 'info@dokumenti.site',
+    'callbackPhone' => '+7 (499) 938-87-64',
     'senderEmail' => 'no-reply@dokumenti.site',
     'senderName' => 'Example.com mailer',
     'siteName' => 'dokumenti.site',

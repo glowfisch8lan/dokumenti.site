@@ -13,12 +13,13 @@ $('.pay-refill').click(function (e) {
   const paymentType = $('#refill-modal .profile__order-select option:selected').val();
   const validate = $('.field-history-amount').hasClass('has-success');
 
-
   if (validate)
     $.post('/api/balance/increase',
       {amount: amount, payment_type: paymentType},
       function (tb_data) {
+          console.log(tb_data);
         if (tb_data.Success) {
+
           document.location.replace(tb_data.PaymentURL);
         } else {
           $('#refill-modal').modal('hide');

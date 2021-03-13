@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Список заказов
+ */
 use app\modules\system\models\rbac\AccessControl;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
@@ -12,23 +14,19 @@ use app\modules\system\helpers\ArrayHelper;
 /* @var $searchModel app\modules\system\models\users\UsersOrdersSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Заявки';
+$this->title = 'Список заказов';
 
 /**
  * Выводим Верхнее меню;
  */
 echo Cabinet::topMenu();
 
-/**
- * Определяем стандартные параметры для хелпера GridView. По ходу выполнения в зависимости от разрешений пользователя - будем переопределять данные в массиве;
- */
+/** Определяем стандартные параметры для хелпера GridView. По ходу выполнения в зависимости от разрешений пользователя - будем переопределять данные в массиве; */
 $grid = [
         'dataProvider' => $dataProvider,
         'columns' => [
 
-            /**
-             * Колонка "Идентификатор"
-             */
+            /** Колонка "Идентификатор" */
             [   'attribute' => 'id',
                 'label' => 'Идентификатор',
                 'headerOptions' => [
@@ -38,9 +36,7 @@ $grid = [
                 'contentOptions' => ['class' => 'text-center'],
             ],
 
-            /**
-             * Колонка "Адрес Сайта"
-             */
+            /** Колонка "Адрес Сайта" */
             [   'attribute' => 'url',
                 'label' => 'Адрес сайта',
                 'format' => 'raw',
@@ -49,9 +45,7 @@ $grid = [
                 }
             ],
 
-            /**
-             * Колонка "Тип сайта"
-             */
+            /** Колонка "Тип сайта" */
             [   'attribute' => 'sitetype',
                 'label' => 'Тип сайта',
                 'format' => 'raw',
@@ -65,9 +59,7 @@ $grid = [
                 }
             ],
 
-            /**
-             * Колонка "Статус платежа"
-             */
+            /** Колонка "Статус платежа" */
             [   'attribute' => 'status',
                 'label' => 'Статус платежа',
                 'format' => 'raw',
@@ -86,9 +78,7 @@ $grid = [
                 }
             ],
 
-            /**
-             * Колонка "Этап выполнения"
-             */
+            /** Колонка "Этап выполнения" */
             [   'attribute' => 'stage',
                 'label' => 'Этап выполнения',
                 'format' => 'raw',
@@ -108,81 +98,87 @@ $grid = [
             ],
         ],
 ];
-/**
- * ЯЧейка-шапка колонки "Кнопки-действия"
- */
-$grid['ActionColumnHeader'] = '&nbsp;';
-/**
- * Шаблон колонки "Кнопки-действия"
- */
-$grid['buttonsOptions'] = ['template' => '{view} {delete}'];
 
-/**
- * Выключаем ActionColumn для обычного пользователя
- */
+/** Включаем ActionColumn для обычного пользователя */
 $options = ['enableActionColumn' => true];
 
-/**
- * Grid для Модераторов
- */
-if(AccessControl::checkAccess(
-        Yii::$app->user->identity->id,
-        ArrayHelper::getDataById(Yii::$app->getModule('system')->routes, 'all-user-orders')['access']
-    ))
+/** Ячейка-шапка колонки "Кнопки-действия */
+$grid['ActionColumnHeader'] = '&nbsp;';
+
+/** Шаблон колонки "Кнопки-действия" */
+$grid['buttonsOptions'] = ['template' => '{view} {delete}'];
+
+/** Grid для Модераторов */
+if( AccessControl::checkAccess( Yii::$app->user->identity->id, ArrayHelper::getDataById(Yii::$app->getModule('system')->routes, 'all-user-orders')['access'] ))
 {
 
-    /**
-     * Включаем ActionColumn
-     */
+    /** Включаем ActionColumn */
     $options = ['enableActionColumn' => true];
 
-    /**
-     * Колонка "Кнопки-действия"
-     */
+    /** Колонка "Кнопки-действия" */
     $grid['ActionColumnButtons'] = [
         'locking' => function ($url,$model) {
             $locking = (!$model['locking']) ? 'fa-lock-open' : 'fa-lock';
-            $disabled = ($model['locking'] != Yii::$app->user->identity->id && $model['locking']) ? ' disabled' : null;
+            $disabled = ($model['locking'] != Yii::$app->user->identity->id && $model['locking']) ? true : false;
             $_span = ($disabled) ? '<span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Заблокировано '.Users::getUser($model['locking'])->username.'">' : '<span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Разблокировано">';
 
+            if($disabled)
+            {
+                return
+                    Html::tag('span','<i class="fas '.$locking.'"></i>',
+                        [
+                            'class' => 'btn'
+                        ]);
+            }
+
             return $_span.
-                Html::a('<i class="fas '.$locking.'"></i>', $url,
+                Html::a( '<i class="fas '.$locking.'"></i>', $url,
                 [
-                    'class' => 'btn btn-outline-info'.$disabled,
+                    'class' => 'btn',
+                    'disabled' => true,
                     'data' => [
                         'method' => 'post'
                     ]
                 ]) . '</span>';
         },
-        'view' => function ($url,$model) {
+        'view'    => function ($url,$model) {
             return
                 Html::a('<i class="fas fa-eye"></i>', $url,
                     [
-                        'class' => 'btn btn-outline-info',
+                        'class' => 'btn',
                         'data' => [
                             'method' => 'post'
                         ]
                     ]);
         },
-        'update' => function ($url,$model) {
+        'update'  => function ($url,$model) {
 
         if($model['locking'] != Yii::$app->user->identity->id && Yii::$app->user->identity->id != 1){
             return;
         }
 
         $locking = (!$model['locking']) ? 'fa-pencil-alt' : 'fa-pencil-alt';
-        $disabled = ($model['locking'] != Yii::$app->user->identity->id && $model['locking'] && Yii::$app->user->identity->id != 1) ? ' disabled' : null;
+        $disabled = ($model['locking'] != Yii::$app->user->identity->id && $model['locking'] && Yii::$app->user->identity->id != 1) ? true : false;
+
+        if($disabled)
+        {
+            return
+                Html::tag('span','<i class="fas fa-pencil-alt"></i>',
+                    [
+                        'class' => 'btn'
+                    ]);
+        }
 
         return
             Html::a('<i class="fas fa-pencil-alt"></i>', $url,
                 [
-                    'class' => 'btn btn-outline-danger '.$disabled,
+                    'class' => 'btn',
                     'data' => [
                         'method' => 'post'
                     ]
                 ]);
         },
-        'delete' => function ($url,$model) {
+        'delete'  => function ($url,$model) {
 
             if($model['locking'] || Yii::$app->user->identity->id != 1){
                 return;
@@ -191,25 +187,20 @@ if(AccessControl::checkAccess(
             return
                 Html::a('<i class="fas fa-trash"></i>', $url,
                     [
-                        'class' => 'btn btn-outline-danger',
+                        'class' => 'btn',
                         'data' => [
                             'method' => 'post'
                         ]
                     ]);
         }
-
     ];
 
-    /**
-     * ЯЧейка-шапка колонки "Кнопки-действия"
-     */
+    /** Ячейка-шапка колонки "Кнопки-действия"*/
     $grid['ActionColumnHeader'] = '&nbsp;';
 
-    /**
-     * Шаблон колонки "Кнопки-действия"
-     */
-    $grid['buttonsOptions'] = ['template' => '{view} {update} {locking} '];
-    $grid['buttonsOptions']['headerWidth'] = '200';
+    /** Шаблон колонки "Кнопки-действия"*/
+    $grid['buttonsOptions'] = ['template' => '{view}&nbsp;{update}&nbsp;{locking}'];
+    $grid['buttonsOptions']['headerWidth'] = 280;
     /**
      * Колонка "Владелец заказа"
      */
@@ -226,7 +217,7 @@ if(AccessControl::checkAccess(
         <?= Cabinet::menu('orders');?>
         <div class="main-cabinet-content">
             <div class="main-cabinet-orders">
-                <h2 class="h2 title">Список заказов</h2>
+                <h2 class="h2 title"><?= Html::encode($this->title) ?></h2>
 
                 <?php Pjax::begin(); ?>
                 <?= Grid::initWidget( $grid, $options );?>

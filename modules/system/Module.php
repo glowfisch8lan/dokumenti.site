@@ -55,17 +55,9 @@ class Module extends \yii\base\Module
             'description' => 'Доступ к состоянию заказов',
             'visible' => true
         ],
-//        [
-//            'id' => 'lawyer-orders',
-//            'route' => '/system/lawyer/orders',
-//            'title' => '<i class="fas fa-list-alt"></i>&nbsp;Все заказы',
-//            'access' => 'viewLawyerOrders',
-//            'description' => 'Доступ к заказам (Адвокат)',
-//            'visible' => true
-//        ],
         [
             'id' => 'all-user-orders',
-            'route' => '/',
+            'route' => '',
             'title' => '',
             'access' => 'viewAllOrders',
             'description' => 'Видеть все заказы',
@@ -73,7 +65,7 @@ class Module extends \yii\base\Module
         ],
         [
             'id' => 'modify-user-orders',
-            'route' => '/',
+            'route' => '/system/orders/update',
             'title' => '',
             'access' => 'modifyUserOrders',
             'description' => 'Редактировать заказы',
@@ -96,7 +88,7 @@ class Module extends \yii\base\Module
             'visible' => false
         ],
         [
-            'id' => 'login-by-user',
+            'id' => 'user-profile',
             'route' => '/users/profile',
             'title' => '<i class="fas fa-users"></i>&nbsp;Пользователи',
             'access' => 'loginByUser',

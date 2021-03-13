@@ -6,7 +6,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-$this->title = 'Login';
+$this->title = 'Вход';
 ?>
 <section class="login">
 

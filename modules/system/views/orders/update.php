@@ -18,7 +18,7 @@ echo Cabinet::topMenu();
     <div class="main-cabinet-container">
         <?= Cabinet::menu('orders');?>
         <div class="main-cabinet-content">
-            <h2><?= Html::encode($this->title) ?></h2>
+            <h2 class="h2 title"><?= Html::encode($this->title) ?></h2>
         <div class="main-form">
             <?php $form = ActiveForm::begin(); ?>
 
@@ -54,7 +54,8 @@ echo Cabinet::topMenu();
 
             <div class="form-row">
                 <div class="form-group col-md-12">
-                    <?= $form->field($model, '_files')->widget(FileInput::classname(), ['options' => ['multiple' => true]]);?>
+                    <span>Вы можете загрузить несколько файлов формата doc(x), pdf</span>
+                    <?= $form->field($model, '_files')->widget(FileInput::classname(), ['options' => ['multiple' => true]])->label('');?>
                 </div>
             </div>
 

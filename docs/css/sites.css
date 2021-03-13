@@ -1,4 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@700&family=Open+Sans:wght@300;400;600;700&display=swap");
+
+td > a.btn{
+  margin:5px;
+
+}
+div.summary {
+  margin:10px;
+
+}
 .cabinet-top-menu {
   width: 100%;
   display: -webkit-box;
@@ -120,7 +129,7 @@
 }
 
 .main-cabinet-container {
-  width: 1300px;
+/*  min-width: 1300px;*/
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -385,7 +394,7 @@
 }
 
 .main-cabinet-orders h2.h2.title {
-  font-size: 24px;
+/*  font-size: 24px;*/
   margin-bottom: 10px;
 }
 

@@ -20,8 +20,7 @@ echo Cabinet::topMenu();
     <div class="main-cabinet-container">
         <?= Cabinet::menu('orders');?>
         <div class="main-cabinet-content">
-            <h2><?= Html::encode($this->title) ?></h2>
-
+            <h2 class="h2 title"><?= Html::encode($this->title) ?></h2>
             <?= DetailView::widget([
                 'model' => $model,
                 'attributes' => [

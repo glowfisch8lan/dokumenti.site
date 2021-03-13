@@ -64,8 +64,8 @@ class History extends \yii\db\ActiveRecord
     return [
       'id' => 'ID',
       'user_id' => 'User ID',
-      'amount' => 'Amount',
-      'description' => 'Description',
+      'amount' => 'Сумма',
+      'description' => 'Описание',
       'status' => 'Status',
       'created_at' => 'Created At',
       'updated_at' => 'Updated At',
