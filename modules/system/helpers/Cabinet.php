@@ -48,7 +48,8 @@ class Cabinet
         }
 
         if (isset($body))
-            $code .= '<div class="box-alert"><div>' . Alert::widget( ['options' => ['class' => $class], 'body' => $body] ) . '</div></div>';
+            $code .= '<div class="box-alert"><div>' .
+                Alert::widget( ['options' => ['class' => $class], 'closeButton' => ['label'=>'x', 'tag' => 'a'], 'body' => $body] ) . '</div></div>';
 
         return $code;
     }

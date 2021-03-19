@@ -5,6 +5,8 @@ use app\modules\system\helpers\Cabinet;
 use yii\widgets\ActiveForm;
 use kartik\file\FileInput;
 use yii\widgets\DetailView;
+use app\modules\system\models\users\UsersOrders;
+
 /* @var $this yii\web\View */
 /* @var $model app\modules\system\models\users\UsersOrders */
 
@@ -44,8 +46,9 @@ echo Cabinet::topMenu();
                         'template' => '<div>{label}</div><div>{input}</div><div class="text-danger">{error}</div>'
                     ])->dropDownList(
                             [
-                                'В работе',
-                                'Выполнено'
+                                UsersOrders::WAIT_FOR_PAYMENT => 'Ожидает оплаты',
+                                UsersOrders::IN_WORK => 'В работе',
+                                UsersOrders::WORK_DONE => 'Выполнено',
                             ]
                     ); ?>
                 </div>

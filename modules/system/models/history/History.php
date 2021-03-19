@@ -28,6 +28,7 @@ class History extends \yii\db\ActiveRecord
   const STATUS_ORDER_PAID = 4; //Заказ оплачен;
   const STATUS_ORDER_PAY_AWAITS = 5; //Ожидание оплаты заказа;
 
+    public $paymentType;
   /**
    * {@inheritdoc}
    */
@@ -53,6 +54,7 @@ class History extends \yii\db\ActiveRecord
       [['user_id', 'amount', 'status', 'created_at', 'updated_at'], 'integer'],
       [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['user_id' => 'id']],
       [['transaction_id'], 'exist', 'skipOnError' => true, 'targetClass' => Transactions::className(), 'targetAttribute' => ['transaction_id' => 'id']],
+        ['paymentType', 'integer']
     ];
   }
 
@@ -67,6 +69,7 @@ class History extends \yii\db\ActiveRecord
       'amount' => 'Сумма',
       'description' => 'Описание',
       'status' => 'Status',
+      'paymentType' => 'Способ оплаты',
       'created_at' => 'Created At',
       'updated_at' => 'Updated At',
     ];

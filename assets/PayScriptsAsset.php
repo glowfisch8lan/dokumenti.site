@@ -20,7 +20,7 @@ class PayScriptsAsset extends AssetBundle
     public $css = [
     ];
     public $js = [
-        'js/refill.js'
+/*        'js/refill.js'*/
     ];
     public $depends = [
         'yii\web\JqueryAsset',

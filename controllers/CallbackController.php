@@ -15,6 +15,8 @@ use app\modules\system\models\users\UsersBalance;
 /**
  * Класс, слушающий webhook от Банка;
  *
+ *
+ *
  * Class CallbackController
  * @package app\controllers
  */
@@ -40,7 +42,7 @@ class CallbackController extends Controller
 
         /** Ищем транзакцию в БД, которую записали ранее */
 
-        $transaction = Transactions::findOne($response['OrderId']);
+        $transaction = Transactions::findOne(mb_substr($response['OrderId'], 0, -2)); /**Удаляем последние два знака в переданном заказе, чтобы всегда оплата была уникальная */
         $transaction->status = ($response['Success']) ? Transactions::CONFIRMED : Transactions::REJECTED;
         $transaction->tb_payment_id = $response['PaymentId'];
         $transaction->tb_amount = (floatval($response['Amount'])/100);

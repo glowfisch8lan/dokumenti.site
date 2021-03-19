@@ -13,6 +13,7 @@ use yii\filters\VerbFilter;
 use app\modules\system\models\rbac\AccessControl;
 use app\modules\system\helpers\ArrayHelper;
 use yii\web\UploadedFile;
+use app\modules\system\models\settings\Settings;
 /**
  * OrdersController implements the CRUD actions for UsersOrders model.
  */
@@ -48,10 +49,8 @@ class OrdersController extends Controller
      */
     public function actionIndex()
     {
-        
+
         $searchModel = new UsersOrdersSearch();
-
-
         /**
          * Разрешение: Показать все заказы;
          */
@@ -116,7 +115,7 @@ class OrdersController extends Controller
             $model->user_id = Yii::$app->user->identity->id;
 
             if($model->load(Yii::$app->request->post())) {
-
+                $model->coast =  Settings::getValue(  UsersOrders::getSiteType(intval($model->sitetype))['settings']  );
                 /**
                  * Фильтруем http(s)://
                  */

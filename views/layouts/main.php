@@ -12,7 +12,7 @@ use app\modules\feedback\models\FeedbackRequest;
 use app\modules\system\models\users\Groups;
 use app\modules\system\models\users\Users;
 use app\modules\system\models\history\History;
-
+use yii\widgets\Pjax;
 AppAsset::register($this);
 $js = <<< JS
 $('button.close').on('click', function(){
@@ -35,6 +35,7 @@ $model = new FeedbackRequest();
     <meta charset="<?= Yii::$app->charset ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="yandex-verification" content="6026d9741acd055e" />
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
@@ -198,6 +199,7 @@ $model = new FeedbackRequest();
                     <?php $model = new History() ?>
 
                     <?php $form = ActiveForm::begin([
+                            'action' => '/api/balance/increase',
                             'options' => ['class' => 'profile__refill-form']
                     ]) ?>
 
@@ -208,19 +210,21 @@ $model = new FeedbackRequest();
                         'placeholder' => '3000'
                     ])->label('Введите сумму') ?>
 
-                    <div class="form-group">
-                        <label class="profile__refill-label">Способ оплаты</label>
-                        <div class="profile__select">
-                            <select class="form-control profile__order-url profile__order-select">
-                                <option value="<?= \app\modules\system\models\users\UsersOrders::PAYMENT_TYPE_CARD ?>">Карта Visa, Mastercard, МИР
-                                <option value="<?= \app\modules\system\models\users\UsersOrders::PAYMENT_TYPE_INVOICE ?>">Счёт юридического лица
-                                </option>
-                            </select>
-                        </div>
-                    </div>
+                    <? echo $form->field($model, 'paymentType', [
+                        'labelOptions' => ['class' => 'profile__refill-label'],
+                        'template' => '{label}<div class="profile__select">{input}</div> <div class="help-block">{error}</div>'
+                    ])->dropDownList(
+                        [
+                        \app\modules\system\models\users\UsersOrders::PAYMENT_TYPE_CARD => 'Карта Visa, Mastercard, МИР',
+                            \app\modules\system\models\users\UsersOrders::PAYMENT_TYPE_INVOICE => 'Счёт юридического лица'
+                        ],
+                        [
+                            'class' => 'form-control profile__order-url profile__order-select'
+                        ]
+                    )->label('Способ оплаты');?>
 
                     <div class="form-group">
-                        <button class="btn btn_prices pay-refill">Оплатить</button>
+                        <?= Html::submitButton('Оплатить', ['class' => 'btn btn_prices pay-refill', 'name' => 'login-button'])?>
                     </div>
 
                     <?php ActiveForm::end() ?>

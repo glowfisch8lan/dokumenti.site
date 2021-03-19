@@ -2,6 +2,7 @@
 
 namespace app\modules\system\controllers;
 
+use app\models\notifications\NotifyMail;
 use app\modules\system\models\history\History;
 use app\modules\system\models\users\UsersBalance;
 use app\modules\system\models\users\UsersOrders;
@@ -47,9 +48,10 @@ class PaymentController extends Controller
 
         /** Проверяем хватит ли денег на оплату на балансе */
 
-        if( ($balance->value - $order_coast) < 0 )
-            throw new ServerErrorHttpException('Извините! Стоимость заказа '.$order_coast.' руб. На вашем балансе не достаточно средств.');
-
+        if( ($balance->value - $order_coast) < 0 ){
+            Yii::$app->session->setFlash('alert-danger', 'Извините! Стоимость заказа '.$order_coast.' руб. На вашем балансе не достаточно средств.');
+            return $this->redirect('/system/orders/index');
+        }
 
         /** Списываем деньги с баланса пользователя */
         $balance->subtract($order_coast);
@@ -59,6 +61,7 @@ class PaymentController extends Controller
 
         /** Обновление статуса платежа */
         $order->status = UsersOrders::STATUS_ORDER_PAID;
+        $order->stage = UsersOrders::IN_WORK;
         if(!$order->save())
             throw new ServerErrorHttpException('Извините! Произошла ошибка обновления статуса оплаты заказа.');
 
@@ -75,6 +78,9 @@ class PaymentController extends Controller
 
 
         Yii::$app->session->setFlash('alert-success', 'Ваш заказ №<b>'.$order_id.'</b> успешно оплачен!');
+
+        (new NotifyMail())->set(['to' => 'glowfisch8lan@gmail.com', 'message' => 'Пользователь '.Yii::$app->user->identity->username. ' успешно оплатил заказ', 'subject' => 'Оплата заказ #'.$order_id.'', 'type' => 'payment'])->send();
+
         return $this->redirect('/system/orders');
     }
 

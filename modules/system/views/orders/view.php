@@ -64,7 +64,7 @@ echo Cabinet::topMenu();
                         }
                     ],
                     [
-                        'label' => 'Файлы',
+                        'label' => 'Документы',
                         'format' => 'raw',
                         'value' => function($data) use($model){
                                 $array = $model->getOrderFiles();
@@ -80,7 +80,7 @@ echo Cabinet::topMenu();
 
                                             $code .= $i.')&nbsp;';
                                             $code .= 'Загружено: <b>'. date('j.m.Y H:i:s',$file['timestamp']). '</b> -&nbsp;';
-                                            $code .=  'Пользователь: <b>'. Users::getUser($file['user_id'])->name . '</b> -&nbsp;';
+                                                /*$code .=  'Пользователь: <b>'. Users::getUser($file['user_id'])->name . '</b> -&nbsp;';*/
                                             if(Files::fileExist($file->tag, $file->filename)) {
                                                 $code .= Html::a('Скачать <i class="fas fa-file-download"></i>', '/system/files/get-file?uuid=' . $file->tag . '&file=' . $file->filename,
                                                     [

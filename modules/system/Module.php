@@ -56,6 +56,14 @@ class Module extends \yii\base\Module
             'visible' => true
         ],
         [
+            'id' => 'orders-delete',
+            'route' => '/system/orders/delete',
+            'title' => '',
+            'access' => 'deleteOrders',
+            'description' => 'Возможность удалять заказы',
+            'visible' => false
+        ],
+        [
             'id' => 'all-user-orders',
             'route' => '',
             'title' => '',

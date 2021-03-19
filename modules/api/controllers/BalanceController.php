@@ -48,24 +48,27 @@ class BalanceController extends Controller
      * @param \yii\base\Action $action
      * @return bool
      * @throws \yii\web\BadRequestHttpException
-     */
+     *//*
   public function beforeAction($action)
   {
     Yii::$app->response->format = Response::FORMAT_JSON;
 
     return parent::beforeAction($action);
-  }
+  }*/
 
    /**
     * Пополнение баланса
     */
   public function actionIncrease()
   {
+      $history = new History();
+      $history->load(Yii::$app->request->post());
 
-    $amount = Yii::$app->request->post('amount'); //Сумма платежа;
-    $payment_type_id = (int)Yii::$app->request->post('payment_type'); //Тип платежа
 
-    $history = new History();
+    $amount = (int) $history->amount;
+    $payment_type_id = (int) $history->paymentType;
+
+
     $history->description = 'Инициализация транзакции';
 
     if ($payment_type_id !== UsersOrders::PAYMENT_TYPE_INVOICE) {
@@ -80,18 +83,22 @@ class BalanceController extends Controller
 
     }
 
-    $history->user_id = Yii::$app->user->identity->id;
-    $history->amount = $amount;
 
+    $history->user_id = Yii::$app->user->identity->id;
     $history->status = History::STATUS_BALANCE_FILL_AWAITS;
 
     if ($history->save()) {
       if ($payment_type_id !== UsersOrders::PAYMENT_TYPE_INVOICE) {
         $service = new PaymentService();
-        Yii::$app->response->data = Json::decode($service->payRefill($transaction->id, $amount));
+        $result = json_decode($service->payRefill($transaction->id . rand(0,100), $amount)); /** чтобы получить истинный id-> надо убрать 2 цифры последние из номера заказа */
+
+          if($result->Success)
+              return $this->redirect($result->PaymentURL, 301);
+
+
+
       } else {
-        $this->sendEmail(Yii::$app->user->identity, $amount);
-        Yii::$app->response->data = ['result' => 'invoice-request'];
+          return false;
       }
 
     }

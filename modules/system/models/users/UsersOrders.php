@@ -6,6 +6,7 @@ use Yii;
 use app\modules\system\helpers\ArrayHelper;
 use app\modules\system\models\files\Files;
 use app\modules\system\models\settings\Settings;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "users_orders".
@@ -26,6 +27,9 @@ class UsersOrders extends \yii\db\ActiveRecord
     const PAYMENT_TYPE_ACCOUNT = 2;
     const PAYMENT_TYPE_INVOICE = 3;
 
+    const WAIT_FOR_PAYMENT = 0;
+    const IN_WORK = 1;
+    const WORK_DONE = 2;
 
 
     /**
@@ -69,6 +73,13 @@ class UsersOrders extends \yii\db\ActiveRecord
         return 'users_orders';
     }
 
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -81,7 +92,7 @@ class UsersOrders extends \yii\db\ActiveRecord
             [['user_id'], 'integer'],
             [['stage'], 'integer'],
             [['comment', 'locking', 'tag'], 'safe'],
-            [['_files'], 'safe']
+            [['_files', 'coast'], 'safe']
         ];
     }
 
@@ -98,7 +109,8 @@ class UsersOrders extends \yii\db\ActiveRecord
             'comment' => 'Комментарий',
             'status' => 'Статус платежа',
             'stage'  => 'Стадия выполнения',
-            '_files' => 'Файлы'
+            '_files' => 'Документы',
+            'coast' => 'Стоимость заказа'
 
         ];
     }

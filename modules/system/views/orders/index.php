@@ -9,6 +9,7 @@ use app\modules\system\helpers\Grid;
 use app\modules\system\helpers\Cabinet;
 use app\modules\system\models\users\Users;
 use app\modules\system\helpers\ArrayHelper;
+use app\modules\system\models\users\UsersOrders;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\modules\system\models\users\UsersOrdersSearch */
@@ -71,7 +72,15 @@ $grid = [
                 'value' => function($data){
                     switch($data['status']){
                         case 0:
-                            return '<span class="text-danger font-weight-bold">Не оплачено</span>';
+                            return '<span class="text-danger font-weight-bold">Не оплачено&nbsp;</span>'.
+                            Html::a('(Оплатить)', ['/system/payment/pay', 'order_id' => $data['id']],
+                                            [
+                                                'class' => 'link',
+                                                'data' => [
+                                                    'method' => 'post',
+                                                    'confirm' => 'Вы уверены, что хотите оплатить данный заказ?'
+                                                ]
+                                            ]);
                         case 1:
                             return '<span class="text-success font-weight-bold">Оплачено</span>';
                     }
@@ -89,12 +98,24 @@ $grid = [
                  */
                 'value' => function($data){
                     switch($data['stage']){
-                        case 0:
+                        case UsersOrders::WAIT_FOR_PAYMENT:
+                            return '<span class="text-warning font-weight-bold">Ожидает оплаты</span>';
+                        case UsersOrders::IN_WORK:
                             return '<span class="text-info font-weight-bold">В работе</span>';
-                        case 1:
+                        case UsersOrders::WORK_DONE:
                             return '<span class="text-success font-weight-bold">Выполнено</span>';
                     }
                 }
+            ],
+            /** Колонка "Стоимость заказа" */
+            [   'attribute' => 'coast',
+                'label' => 'Стоимость заказа',
+                'format' => 'raw',
+                'value' => function($data){return $data['coast'] . ' руб.';}
+                /**
+                 * Преобразует ID наименования Типа сайта в Строку;
+                 */
+
             ],
         ],
 ];
@@ -106,7 +127,7 @@ $options = ['enableActionColumn' => true];
 $grid['ActionColumnHeader'] = '&nbsp;';
 
 /** Шаблон колонки "Кнопки-действия" */
-$grid['buttonsOptions'] = ['template' => '{view} {delete}'];
+$grid['buttonsOptions'] = ['template' => '{view}'];
 
 /** Grid для Модераторов */
 if( AccessControl::checkAccess( Yii::$app->user->identity->id, ArrayHelper::getDataById(Yii::$app->getModule('system')->routes, 'all-user-orders')['access'] ))
@@ -199,7 +220,7 @@ if( AccessControl::checkAccess( Yii::$app->user->identity->id, ArrayHelper::getD
     $grid['ActionColumnHeader'] = '&nbsp;';
 
     /** Шаблон колонки "Кнопки-действия"*/
-    $grid['buttonsOptions'] = ['template' => '{view}&nbsp;{update}&nbsp;{locking}'];
+    $grid['buttonsOptions'] = ['template' => '{view}{update}{locking}'];
     $grid['buttonsOptions']['headerWidth'] = 280;
     /**
      * Колонка "Владелец заказа"
@@ -210,6 +231,13 @@ if( AccessControl::checkAccess( Yii::$app->user->identity->id, ArrayHelper::getD
     ];
 }
 
+/**
+ * Вывод кнопки удаления заказа по наличию разрешения;
+ */
+if( AccessControl::checkAccess( Yii::$app->user->identity->id, ArrayHelper::getDataById(Yii::$app->getModule('system')->routes, 'orders-delete')['access'] ))
+{
+    $grid['buttonsOptions']['template'] = $grid['buttonsOptions']['template'] . '{delete}';
+}
 ?>
 
 <section class="main-cabinet">
@@ -222,24 +250,6 @@ if( AccessControl::checkAccess( Yii::$app->user->identity->id, ArrayHelper::getD
                 <?php Pjax::begin(); ?>
                 <?= Grid::initWidget( $grid, $options );?>
                 <?php Pjax::end(); ?>
-
-<!--                <div class="main-cabinet-orders__item">-->
-<!--                    <p class="title">Оплата пакета “Landing-page” для example2.ru</p>-->
-<!--                    <p class="summ">Сумма платежа: <span>3000 ₽</span></p>-->
-<!--                    <p class="status">Статус: <span class="wait">Ожидает оплаты</span></p>-->
-<!--                </div>-->
-<!--                -->
-<!--                <div class="main-cabinet-orders__item">-->
-<!--                    <p class="title">Пакет “Landing-page” для example2.ru оплачен</p>-->
-<!--                    <p class="summ">Сумма платежа: <span>3000 ₽</span></p>-->
-<!--                    <p class="status">Статус: <span class="success">Оплачено</span></p>-->
-<!--                </div>-->
-<!--                -->
-<!--                <div class="main-cabinet-orders__item">-->
-<!--                    <p class="title">Оплата example2.ru отменена</p>-->
-<!--                    <p class="summ">Сумма платежа: <span>3000 ₽</span></p>-->
-<!--                    <p class="status">Статус: <span class="canceled">Отменено</span></p>-->
-<!--                </div>-->
 
             </div>
         </div>
