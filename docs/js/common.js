@@ -1,5 +1,4 @@
 $(function(){
-/*
     $('#phone').mask("+7(999) 999-99-99");
 
     $('.articles-tab').click(function(){
@@ -62,7 +61,7 @@ $(function(){
         $('.articles-desc-right h3').text(title);
         $('.articles-desc-right p').text(desc2);
         $('.articles-desc-right b').text(fine);
-    });*/
+    });
 
     // Открытие и закрытие мобильного меню
 
