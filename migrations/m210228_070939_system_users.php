@@ -19,7 +19,12 @@ class m210228_070939_system_users extends Migration
             'password' => $this->string(255)->notNull()
         ]);
 
-        $this->insert('system_users', array('login'=>'admin','password'=>'$2y$13$srKMjyd5c.Z3QHdZd/.RXO7soqZ/ZQ4651XmcVSZ97tvxJYiUVPxi','name'=>'Администратор'));
+        $this->insert('system_users', [
+            'login'=>'admin',
+            'name'=>'Администратор',
+            'password'=>'$2y$13$srKMjyd5c.Z3QHdZd/.RXO7soqZ/ZQ4651XmcVSZ97tvxJYiUVPxi'
+
+        ]);
 
     }
 

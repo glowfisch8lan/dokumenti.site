@@ -16,7 +16,8 @@ class m210228_071234_system_settings extends Migration
             'id' => $this->primaryKey(),
             'name' => $this->string(255)->notNull()->unique(),
             'value' => $this->string(255)->notNull(),
-            'user_id' => $this->integer(11)
+            'user_id' => $this->integer(11),
+            'description' => $this->string(255),
         ]);
 
 

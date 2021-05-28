@@ -14,7 +14,7 @@ class m210308_072810_users_balance extends Migration
     {
         $this->createTable('users_balance', [
             'id' => $this->primaryKey(),
-            'user_id' => $this->string(255)->notNull()->unique(),
+            'user_id' => $this->integer(11)->notNull()->unique(),
             'value' => $this->string(255)->notNull(),
         ]);
 

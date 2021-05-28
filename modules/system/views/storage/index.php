@@ -10,11 +10,7 @@ echo Cabinet::topMenu();
         <div class="main-cabinet-content">
             <div class="main-cabinet-sites">
                 <!--Документы готовые к скачиванию-->
-
-                <?
-                $orders = \app\modules\system\models\users\UsersOrders::find()->where(['user_id' => Yii::$app->request->])
-
-                ?>
+1
                 <div class="main-cabinet-sites__item">
                     <div class="main-cabinet-sites__item__head">
                         <b>examplesite.ru</b>
