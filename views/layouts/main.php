@@ -64,6 +64,7 @@ $model = new FeedbackRequest();
     <div class="callback">
         <div class="callback-container">
             <?php $form = ActiveForm::begin([
+                    'action' => '/site/callback-to',
                 'options' => [
                     'class' => 'callback-content'
                 ],
@@ -79,13 +80,11 @@ $model = new FeedbackRequest();
                 Оставьте нам свой номер и <br>
                 мы обязательно перезвоним
             </h2>
-            <?= $form->field($model, 'name')->textInput(['autofocus' => true])->input('text', ['placeholder' => "Ваше Имя", 'name'=>'name','id' => 'name'])->label('Ваше имя',['for' => 'name'])?>
-            <?= $form->field($model, 'phone')->textInput(['autofocus' => true])->input('text', ['placeholder' => "+7 900 000 00 00", 'id' => 'phone', 'class' => 'phone'])->label('')?>
+            <?= $form->field($model, 'name')->textInput(['autofocus' => true])->input('text', ['placeholder' => "Ваше Имя",'id' => 'name'])->label('Ваше имя',['for' => 'name'])?>
+            <?= $form->field($model, 'phone')->textInput(['autofocus' => true])->input('text', ['placeholder' => "+7 900 000 00 00", 'id' => 'phone', 'class' => 'phone'])->label('Телефон')?>
 
-            <div class="callback-content__item">
-                <input type="checkbox" name="polit" id="polit">
-                <label for="polit">Я согласен на обработку персональных данных</label>
-            </div>
+            <?=$form->field($model, 'polit',['template' => '{input}{label}{error}{hint}'])
+                ->input('checkbox')->label('Я согласен на обработку персональных данных');?>
 
             <div class="form-group">
                 <?= Html::submitButton('Отправить', ['class' => '', 'name' => 'login-button'])?>
@@ -123,9 +122,9 @@ $model = new FeedbackRequest();
                 <a href="#">Обратная связь</a>
             </div>
             <div class="mobile-menu-phone">
-                <a href="telTo:+7(499)9388764">
+                <a href="telTo:+7(495)1381488">
                     <img src="/img/open-24-hours-mobile.svg" alt="">
-                    <p>+7 (499) 938-87-64 <br>
+                    <p>+7 (495) 138-14-88 <br>
                         <span>Круглосуточная поддержка</span>
                     </p>
                 </a>
@@ -138,8 +137,16 @@ $model = new FeedbackRequest();
             </div>
         </div>
         <div class="mobile-menu-login">
-            <a href="/site/login">Войти</a>
-            <a href="/site/sign-up">Зарегистрироваться</a>
+            <?php  if(Yii::$app->user->isGuest)
+            {
+                echo '<a href="/site/login">Войти</a><a href="/site/sign-up">Зарегистрироваться</a>';
+            }
+            else {
+                echo Html::a( 'Заказать', '/system/orders/create');
+                echo Html::a( 'Личный кабинет', '/system/orders');
+            }
+            ?>
+
         </div>
     </div>
 
@@ -154,9 +161,9 @@ $model = new FeedbackRequest();
                 <a href="#">Обратная связь</a>
             </div>
             <div class="header-phone">
-                <a href="telTo:+7(499)9388764">
+                <a href="telTo:+7(495)1381488">
                     <img src="/img/open-24-hours.svg" alt="">
-                    <p>+7 (499) 938-87-64 <br>
+                    <p>+7 (495) 138-14-88 <br>
                         <span>Круглосуточная поддержка</span>
                     </p>
                 </a>
@@ -246,9 +253,9 @@ $model = new FeedbackRequest();
                 <div class="footer-navs-item">
                     <b>Навигация</b>
                     <a href="/">Главная</a>
-                    <a href="/#">Услуги и цены</a>
-                    <a href="/#">О нас</a>
-                    <a href="/#">Этапы работы</a>
+                    <a href="/#services">Услуги и цены</a>
+                    <a href="/#about">О нас</a>
+                    <a href="/#steps">Этапы работы</a>
                 </div>
                 <div class="footer-navs-item">
                     <b>Доп. информация</b>
@@ -265,7 +272,6 @@ $model = new FeedbackRequest();
                         echo Html::a( Yii::$app->user->identity->username, '/system/orders');
                     }
                     ?>
-
 
                 </div>
             </div>

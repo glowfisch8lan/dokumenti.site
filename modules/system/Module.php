@@ -34,7 +34,7 @@ class Module extends \yii\base\Module
         [
             'id' => 'order',
             'route' => '/system/orders/create',
-            'title' => '<i class="fas fa-plus-square"></i>&nbsp;Заказ документов',
+            'title' => 'Заказ услуг',
             'access' => 'createOrder',
             'description' => 'Доступ к формированию заказа',
             'visible' => true
@@ -42,7 +42,8 @@ class Module extends \yii\base\Module
         [
             'id' => 'files',
             'route' => '/system/storage',
-            'title' => '<i class="fas fa-file-pdf"></i>&nbsp;Мои файлы',
+/*            'title' => '<i class="fas fa-file-pdf"></i>&nbsp;Мои документы',*/
+            'title' => 'Мои документы',
             'access' => 'viewStorage',
             'description' => 'Доступ к Хранилищу Файлов',
             'visible' => true
@@ -50,7 +51,8 @@ class Module extends \yii\base\Module
         [
             'id' => 'orders',
             'route' => '/system/orders',
-            'title' => '<i class="fas fa-list-alt"></i>&nbsp;Список заказов',
+/*            'title' => '<i class="fas fa-list-alt"></i>&nbsp;Список заказов',*/
+            'title' => 'Список заказов',
             'access' => 'viewOrders',
             'description' => 'Доступ к состоянию заказов',
             'visible' => true
@@ -82,7 +84,8 @@ class Module extends \yii\base\Module
         [
             'id' => 'users',
             'route' => '/system/users',
-            'title' => '<i class="fas fa-users"></i>&nbsp;Пользователи',
+/*            'title' => '<i class="fas fa-users"></i>&nbsp;Пользователи',*/
+            'title' => 'Пользователи',
             'access' => 'viewUsers',
             'description' => 'Доступ к просмотру управлению пользователями',
             'visible' => true
@@ -90,7 +93,7 @@ class Module extends \yii\base\Module
         [
             'id' => 'login-by-user',
             'route' => '/users/login',
-            'title' => '<i class="fas fa-users"></i>&nbsp;Пользователи',
+            'title' => '',
             'access' => 'loginByUser',
             'description' => 'Право логиниться под другим пользователем',
             'visible' => false
@@ -98,7 +101,7 @@ class Module extends \yii\base\Module
         [
             'id' => 'user-profile',
             'route' => '/users/profile',
-            'title' => '<i class="fas fa-users"></i>&nbsp;Пользователи',
+            'title' => '',
             'access' => 'loginByUser',
             'description' => 'Право логиниться под другим пользователем',
             'visible' => false
@@ -130,7 +133,8 @@ class Module extends \yii\base\Module
         [
             'id' => 'groups',
             'route' => '/system/groups',
-            'title' => '<i class="fas fa-users-cog"></i>&nbsp;Группы',
+/*            'title' => '<i class="fas fa-users-cog"></i>&nbsp;Группы',*/
+            'title' => 'Группы',
             'access' => 'viewGroups',
             'description' => 'Доступ к управлению группами',
             'visible' => true
@@ -138,7 +142,8 @@ class Module extends \yii\base\Module
         [
             'id' => 'settings',
             'route' => '/system/settings',
-            'title' => '<i class="fas fa-cog"></i>&nbsp;Настройки',
+/*            'title' => '<i class="fas fa-cog"></i>&nbsp;Настройки',*/
+            'title' => 'Настройки',
             'access' => 'viewSettings',
             'description' => 'Доступ к настройкам',
             'visible' => true
@@ -219,17 +224,11 @@ class Module extends \yii\base\Module
 
     public function beforeAction($action)
     {
-
-        /*
-         *  Проверка регистрации модуля в системе: в случае отсутствия регистрации - выбросить исключение;
-         */
+        /** Проверка регистрации модуля в системе: в случае отсутствия регистрации - выбросить исключение;*/
         if(!Modules::checkRegister(Yii::$app->controller->module->id))
-        {
             throw new ForbiddenHttpException('Модуль не зарегистрирован! Пожалуйста, зарегистрируйте модуль в системе.');
-        }
-        /*
-         * Если пользователь неГость - проверка прав доступа к модулю | категории | действию;
-         */
+
+        /** Если пользователь неГость - проверка прав доступа к модулю | категории | действию; */
         (!(Yii::$app->user->isGuest)) ? $this->verifyAccess() : false;
 
         return parent::beforeAction($action);

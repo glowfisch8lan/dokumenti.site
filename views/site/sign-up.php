@@ -23,10 +23,16 @@ $this->title = 'Регистрация';
     <?= $form->field($model, 'username')->textInput(['autofocus' => true])->input('login', ['placeholder' => "example@mail.ru", 'id' => 'e-mail'])->label('E-mail <span>*</span>')?>
     <?= $form->field($model, 'password')->passwordInput()->input('password', ['placeholder' => "Введите свой пароль",  'id' => 'password'])->label('Пароль <span>*</span>')?>
     <?= $form->field($model, 'phone')->textInput(['autofocus' => false])->input('text', ['placeholder' => "+7(900)-000-00-00", 'id' => 'phone', 'class' => 'phone'])->label('Телефон <span>*</span>')?>
+    <p>Нажимая на кнопку
+        «Зарегистрироваться»,
+        вы соглашаетесь с <a href="#">Условиями использования</a>
+        и <a href="#">Политикой конфиденциальности</a></p>
     <div class="form-group">
         <?= Html::submitButton('Регистрация', ['class' => 'btn btn-info shadow- mb-4', 'name' => 'login-button'])?>
     </div>
 
     <?php ActiveForm::end();?>
-
+    <div class="reg-already">
+        <p>Уже зарегистрировались? &nbsp; <a href="/site/login">Войти</a></p>
+    </div>
 </section>

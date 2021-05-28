@@ -92,7 +92,6 @@ class UsersController extends Controller
     {
         $model = $this->findModel($id);
 
-
         if ($model->load(Yii::$app->request->post()) && $model->save()){
             /** Удаляем все группы пользователя; */
             Groups::removeAllGroupMember($id);

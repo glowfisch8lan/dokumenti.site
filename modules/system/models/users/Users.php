@@ -12,6 +12,8 @@ use app\modules\system\components\behaviors\CachedBehavior;
 
 class Users extends ActiveRecord implements IdentityInterface
 {
+    const STATUS_DELETED = 0;
+    const STATUS_ACTIVE = 10;
 
     public $permissions;
     public $groups;
@@ -39,7 +41,7 @@ class Users extends ActiveRecord implements IdentityInterface
                 'message' => 'Заполните поля!'
             ],
             [
-                ['username', 'name', 'groups', 'password'],
+                ['username', 'name', 'groups', 'password', 'phone'],
                 'required',
                 'message' => 'Заполните поля!',
                 'on' => 'sign-up'
@@ -67,7 +69,6 @@ class Users extends ActiveRecord implements IdentityInterface
         return false;
     }
 
-
     public function afterSave($insert, $changedAttributes){
 
         /** Если в таблице users_balance нет записи о балансе - создаем ее с нулевым значением; */
@@ -81,7 +82,6 @@ class Users extends ActiveRecord implements IdentityInterface
 
         parent::afterSave($insert, $changedAttributes);
     }
-
 
     /**
      * Определяем поведение, очищающее кеш, при записи в БД AR
