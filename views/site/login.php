@@ -28,4 +28,10 @@ $this->title = 'Вход';
 </div>
 
 <?php ActiveForm::end();?>
+        <p class="login__register-offer">
+            Еще не зарегистрировались? <a class="login__register-link" href="/site/sign-up">Регистрация </a>
+        </p>
+        <p class="login__register-offer login__restore-offer">
+            Забыли пароль? <a class="login__register-link" href="<?= \yii\helpers\Url::to(['site/request-password-reset'])?>">Восстановить</a>
+        </p>
 </section>

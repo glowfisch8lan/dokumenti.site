@@ -14,6 +14,9 @@ use Yii;
  */
 class FeedbackRequest extends \yii\db\ActiveRecord
 {
+
+    public $polit;
+
     /**
      * {@inheritdoc}
      */
@@ -28,8 +31,8 @@ class FeedbackRequest extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'phone', 'timestamp'], 'required'],
-            [['name'], 'integer'],
+            [['name', 'phone', 'timestamp', 'polit'], 'required'],
+            [['name'], 'string'],
             [['phone'], 'string'],
             [['timestamp'], 'safe'],
         ];
@@ -42,8 +45,9 @@ class FeedbackRequest extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'phone' => 'Phone',
+            'name' => 'Имя',
+            'phone' => 'Телефон',
+            'polit' => 'Согласие на обработку',
             'timestamp' => 'Timestamp',
         ];
     }

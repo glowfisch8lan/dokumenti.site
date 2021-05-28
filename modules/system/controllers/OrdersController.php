@@ -3,6 +3,8 @@
 namespace app\modules\system\controllers;
 
 use app\modules\system\models\files\Files;
+use app\modules\system\models\notifications\NotifyMail;
+use app\modules\system\models\users\Users;
 use Yii;
 use app\modules\system\models\users\UsersOrders;
 use app\modules\system\models\users\UsersOrdersSearch;
@@ -70,6 +72,35 @@ class OrdersController extends Controller
         ]);
     }
 
+    /**
+     * Обработка формы при заказе "Я не знаю"
+     */
+    public function actionDontKnow()
+    {
+        if(Yii::$app->request->isPost)
+        {
+            $model = new UsersOrders();
+            $model->user_id = Yii::$app->user->identity->id;
+
+            if($model->load(Yii::$app->request->post())) {
+                (new NotifyMail())->set(['to' => 'glowfisch8lan@gmail.com',
+                    'message' =>
+                        'Поступил бесплатный заказ на оценку от пользователя ' .
+                        Users::findOne(['id'=>$model->user_id])->username .
+                        ' на сайт ' .
+                        $model->url .
+                        '. Номер телефона:' .
+                        Users::findOne(['id'=>$model->user_id])->phone,
+                    'subject' => 'dokumenti.site | Бесплатный заказ от пользователя ' .
+                        Users::findOne(['id'=>$model->user_id])->username,
+                    'type' => 'order'])->send();
+
+            }
+
+            Yii::$app->session->setFlash('alert-success', 'Ваше обращение успешно принято!');
+            return $this->redirect('index');
+        }
+    }
 
     /**
      * Displays a single UsersOrders model.
@@ -84,24 +115,6 @@ class OrdersController extends Controller
         ]);
     }
 
-//    /**
-//     * Creates a new UsersOrders model.
-//     * If creation is successful, the browser will be redirected to the 'view' page.
-//     * @return mixed
-//     */
-//    public function actionCreate()
-//    {
-//        $model = new UsersOrders();
-//
-//        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-//            return $this->redirect(['view', 'id' => $model->id]);
-//        }
-//
-//        return $this->render('create', [
-//            'model' => $model,
-//        ]);
-//    }
-
     /**
      * Категория "Сделать заказ"
      * @return string
@@ -109,12 +122,14 @@ class OrdersController extends Controller
     public function actionCreate()
     {
 
+
         if(Yii::$app->request->isPost)
         {
             $model = new UsersOrders();
             $model->user_id = Yii::$app->user->identity->id;
 
             if($model->load(Yii::$app->request->post())) {
+
                 $model->coast =  Settings::getValue(  UsersOrders::getSiteType(intval($model->sitetype))['settings']  );
                 /**
                  * Фильтруем http(s)://
@@ -166,6 +181,16 @@ class OrdersController extends Controller
              */
             if($model->save()){
 
+                if($model->stage === UsersOrders::WORK_DONE) {
+
+                    (new NotifyMail())->set(['to' => 'glowfisch8lan@gmail.com',
+                        'message' =>
+                            'Уважаемый, '.Yii::$app->user->identity->name.'! Статус вашего заказа #' . $model->id. ' изменился на "Выполнено"',
+                        'subject' => 'dokumenti.site | Статус заказа',
+                        'type' => 'order'])->send();
+
+                }
+
                 /**
                  * Осуществляем подгрузку файлов к заказу;
                  */
@@ -194,7 +219,7 @@ class OrdersController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        if($model->user_id === Yii::$app->user->identity->id){
+        if($model->user_id === Yii::$app->user->identity->id || Yii::$app->user->identity->id === 1){
             $model->delete();
             Yii::$app->session->setFlash('alert-danger', 'Ваш заказ №<b>'.$model->id.'</b> успешно удален!');
             return $this->redirect(['index']);
@@ -230,8 +255,6 @@ class OrdersController extends Controller
 
         return $this->redirect(['index']);
     }
-
-
 
     /**
      * Finds the UsersOrders model based on its primary key value.

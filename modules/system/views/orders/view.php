@@ -21,6 +21,7 @@ echo Cabinet::topMenu();
         <?= Cabinet::menu('orders');?>
         <div class="main-cabinet-content">
             <h2 class="h2 title"><?= Html::encode($this->title) ?></h2>
+            <div style="padding-bottom:2vh;"></div>
             <?= DetailView::widget([
                 'model' => $model,
                 'attributes' => [
@@ -77,7 +78,6 @@ echo Cabinet::topMenu();
                                 {
                                     foreach($files as $index => $file)
                                     {
-
                                             $code .= $i.')&nbsp;';
                                             $code .= 'Загружено: <b>'. date('j.m.Y H:i:s',$file['timestamp']). '</b> -&nbsp;';
                                                 /*$code .=  'Пользователь: <b>'. Users::getUser($file['user_id'])->name . '</b> -&nbsp;';*/

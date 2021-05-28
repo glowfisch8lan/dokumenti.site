@@ -29,7 +29,7 @@ class Cabinet
                     <p>'.Yii::$app->user->identity->username.'</p>
                 </div>
                 <div class="cabinet-top-menu-right">
-                    <a href="#" class="btn_profile btn_small" type="button" data-toggle="modal" data-target="#refill-modal">Пополнить</a>
+                    <a href="#" class="btn_profile btn_small" data-toggle="modal" data-target="#refill-modal">Пополнить</a>
                     <p>Баланс: <span>'.UsersBalance::getBalance(Yii::$app->user->identity->id).' ₽</span></p>
                 </div>
             </div>

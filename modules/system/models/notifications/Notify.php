@@ -13,7 +13,7 @@ namespace app\modules\system\models\notifications;
  */
 
 
-abstract class Notify extends Model {
+abstract class Notify {
 
     public $to; /** @var Notify Кому предназначалось сообщение; */
     public $message; /** @var Notify Тело сообщения */

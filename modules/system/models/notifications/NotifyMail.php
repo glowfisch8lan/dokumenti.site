@@ -3,6 +3,7 @@
 
 namespace app\modules\system\models\notifications;
 
+use Yii;
 
 /**
  * Class NotifyMail
@@ -26,7 +27,7 @@ class NotifyMail extends Notify
             ->setTo($this->to)
             ->setFrom(['no-reply@dokumenti.site' => $this->type])
             ->setSubject($this->subject)
-            ->setTextBody($this->data['body'])
+            ->setTextBody($this->message)
             ->send();
 
         return true;

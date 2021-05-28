@@ -100,6 +100,7 @@ class Grid extends GridView
         /**
          * Параметры Header
          */
+        $showHeader = (!empty($data['showHeader'] && $data['showHeader'] != true )) ? false : true;
         $headerActionColumn = empty($data['searchModel']) ? $headerCallback($urlCreate) : null; //Наличие или отсутствие searchModel;
         $headerActionColumn = !empty($data['ActionColumnHeader']) ? $data['ActionColumnHeader'] : $headerActionColumn; //Выбираем header: по-умолчанию или пользовательский;
         $ActionColumnHeaderWidth = !empty($data['buttonsOptions']['headerWidth']) ? $data['buttonsOptions']['headerWidth'] : 150; //Выбираем ширину колонки: по-умолчанию или пользовательский;
@@ -107,6 +108,7 @@ class Grid extends GridView
 
         $ActionColumnButtons = !empty($data['ActionColumnButtons']) ? $data['ActionColumnButtons'] : $ActionColumnButtonsDefault; //Выбираем конфигурацию кнопок-действий: по-умолчанию или пользовательские;
         $buttonsTemplate = !empty($data['buttonsOptions']['template']) ? $data['buttonsOptions']['template'] : '{update} {delete}'; //Выбираем какие кнопки отобразить: шаблон;
+
 
 
         /**
@@ -118,10 +120,10 @@ class Grid extends GridView
             'template' => $buttonsTemplate,
             'headerOptions' => [
                 'width' => $ActionColumnHeaderWidth,
-                'style' => 'text-align:center'
+                'style' => 'text-align:right'
             ],
             'filterOptions' => ['style' =>'text-align: center;'],
-            'contentOptions'=> ['style' =>'text-align: center;'],
+            'contentOptions'=> ['style' =>'text-align: right;'],
             'buttons' => $ActionColumnButtons
         ];
 
@@ -175,6 +177,7 @@ class Grid extends GridView
         return '<div class="table-responsive">'.GridView::widget([
            'dataProvider' => $dataProvider,
            'filterModel' => $searchModel,
+            'showHeader'=> $showHeader,
 
            'tableOptions' => [
                'class' => 'table table-bordered table-hover'

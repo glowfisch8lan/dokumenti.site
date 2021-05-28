@@ -22,7 +22,6 @@ class AccessControl
 
     public static function checkAccess( int $user_id, string $rule ): bool{
 
-
         $arr = [];
         foreach(Users::getUserGroups($user_id) as $group)
             $arr[] = Json::Decode(Groups::getPermissions($group['id'])['permissions']);

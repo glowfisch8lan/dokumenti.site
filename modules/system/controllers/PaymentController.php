@@ -2,7 +2,7 @@
 
 namespace app\modules\system\controllers;
 
-use app\models\notifications\NotifyMail;
+use app\modules\system\models\notifications\NotifyMail;
 use app\modules\system\models\history\History;
 use app\modules\system\models\users\UsersBalance;
 use app\modules\system\models\users\UsersOrders;
@@ -79,7 +79,7 @@ class PaymentController extends Controller
 
         Yii::$app->session->setFlash('alert-success', 'Ваш заказ №<b>'.$order_id.'</b> успешно оплачен!');
 
-        (new NotifyMail())->set(['to' => 'glowfisch8lan@gmail.com', 'message' => 'Пользователь '.Yii::$app->user->identity->username. ' успешно оплатил заказ', 'subject' => 'Оплата заказ #'.$order_id.'', 'type' => 'payment'])->send();
+        (new NotifyMail())->set(['to' => Yii::$app->params['emailForNotifications'], 'message' => 'Пользователь '.Yii::$app->user->identity->username. ' успешно оплатил заказ #' . $order_id, 'subject' => 'Оплата заказ #'.$order_id.'', 'type' => 'payment'])->send();
 
         return $this->redirect('/system/orders');
     }

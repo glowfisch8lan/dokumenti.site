@@ -40,27 +40,61 @@ class UsersOrders extends \yii\db\ActiveRecord
         [
             'id' => 1 ,
             'settings' => 'system.orders.sitetype.landingpage',
-            'name' => 'Landing-page',
-            'gid' => 'landing'
+            'name' => 'Сайт Визитка / Лэндинг',
+            'gid' => 'landing',
+            'html' => '
+                <ul>
+                    <li><span>Пользовательское соглашение</span></li>
+                    <li><span>Политика конфиденциальности</span></li>
+                    <li><span>Обработка персональных данных</span></li>
+                    <li><span>Уведомление об использовании технологий</span></li>
+                    <li><span>Установка документов на сайт</span></li>
+                    <li><span>Установка технических уведомлений на сайт</span></li>
+                </ul>'
         ],
         [
             'id' => 2 ,
-            'settings' => 'system.orders.sitetype.vizitka',
-            'name' => 'Сайт-визитка',
-            'gid' => 'visitka'
-        ],
-        [
-            'id' => 2 ,
-            'settings' => 'system.orders.sitetype.magazine',
-            'name' => 'Интернет-магазин',
-            'gid' => 'shop'
-
+            'settings' => 'system.orders.sitetype.catalog',
+            'name' => 'Интернет - каталог',
+            'gid' => 'catalog',
+            'html' => '<ul>
+                    <li><span>Пользовательское соглашение</span></li>
+                    <li><span>Политика конфиденциальности</span></li>
+                    <li><span>Обработка персональных данных</span></li>
+                    <li><span>Уведомление об использовании технологий</span></li>
+                    <li><span>Договор оферта</span></li>
+                    <li><span>Установка документов на сайт</span></li>
+                    <li><span>Установка технических уведомлений на сайт</span></li>
+                </ul>'
         ],
         [
             'id' => 3 ,
-            'settings' => 'system.orders.sitetype.forum',
-            'name' => 'Форум',
-            'gid' => 'forum'
+            'settings' => 'system.orders.sitetype.magazine',
+            'name' => 'Интернет - магазин',
+            'gid' => 'shop',
+            'html' => '<ul>
+                    <li><span>Пользовательское соглашение</span></li>
+                    <li><span>Политика конфиденциальности</span></li>
+                    <li><span>Обработка персональных данных</span></li>
+                    <li><span>Уведомление об использовании технологий</span></li>
+                    <li><span>Договор оферта</span></li>
+                    <li><span>Установка документов на сайт</span></li>
+                    <li><span>Установка технических уведомлений на сайт</span></li>
+                </ul>'
+
+        ],
+        [
+            'id' => 4 ,
+            'settings' => 'system.orders.sitetype.service',
+            'name' => 'Интернет - сервис',
+            'gid' => 'service',
+            'html' => '<ul>
+                    <li><span>Пользовательское соглашение</span></li>
+                    <li><span>Политика конфиденциальности</span></li>
+                    <li><span>Обработка персональных данных</span></li>
+                    <li><span>Уведомление об использовании технологий</span></li>
+                    <li><span>Дополнительные документы разрабатываются индивидуально в зависимости от типа сайта и бизнеса</span></li>
+                </ul>'
         ],
 
     ];
@@ -88,11 +122,13 @@ class UsersOrders extends \yii\db\ActiveRecord
         return [
             [['url', 'sitetype', 'user_id'], 'required'],
             [['url'], 'string'],
+            ['url', 'url', 'pattern'=>'/(([A-я0-9][A-я0-9_-]*)(\.[A-я0-9][A-я0-9_-]*)+)(?::\d{1,5})?(?:$|[?\/#])/i'],
             [['sitetype'], 'integer'],
             [['user_id'], 'integer'],
             [['stage'], 'integer'],
             [['comment', 'locking', 'tag'], 'safe'],
-            [['_files', 'coast'], 'safe']
+            [['coast'], 'safe'],
+            ['_files', 'file', 'extensions' => ['pdf', 'doc', 'docx']],
         ];
     }
 
