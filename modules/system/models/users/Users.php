@@ -12,6 +12,8 @@ use app\modules\system\components\behaviors\CachedBehavior;
 
 class Users extends ActiveRecord implements IdentityInterface
 {
+    const STATUS_DELETED = 0;
+    const STATUS_ACTIVE = 10;
 
     public $permissions;
     public $groups;
@@ -39,7 +41,7 @@ class Users extends ActiveRecord implements IdentityInterface
                 'message' => 'Заполните поля!'
             ],
             [
-                ['username', 'name', 'groups', 'password'],
+                ['username', 'name', 'groups', 'password', 'phone'],
                 'required',
                 'message' => 'Заполните поля!',
                 'on' => 'sign-up'

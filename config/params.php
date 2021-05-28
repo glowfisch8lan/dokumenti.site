@@ -14,5 +14,6 @@ return [
     'tb_secretKey' => 'igf97w7522fn09xv',
     //'tb_secretKey' => 'd88aqsj7l975bcls;',
     'tb_api_url' => 'https://securepay.tinkoff.ru/v2/',
-    'user.passwordResetTokenExpire' => 3600
+    'user.passwordResetTokenExpire' => 3600,
+    'emailForNotifications' => 'glowfisch8lan@gmail.com'
 ];

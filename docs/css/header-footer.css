@@ -419,13 +419,15 @@ button {
   margin-bottom: 20px;
   font-family: 'Open Sans Condensed',sans-serif;
   font-size: 18px;
-  font-weight: 70;
+  font-weight: 700;
 }
 
 .footer-navs-item a {
   color: #ffffff;
   margin-bottom: 10px;
   text-decoration: none;
+  font-weight: 300;
+  font-size: 16px;
 }
 
 .footer-navs-item a:hover {
@@ -1252,4 +1254,28 @@ button {
   border: none;
   font-weight: bold;
   font-size: 16px;
+}
+
+.help-block{
+  color: rgb(255, 50, 50);
+  font-size: 14px;
+  margin-top: 3px;
+}
+
+input#history-amount{
+  margin-bottom: 0;
+}
+
+.alert a.close{
+  padding: 0;
+  height: 90%;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.alert{
+  position: absolute;
+  z-index: 20;
 }

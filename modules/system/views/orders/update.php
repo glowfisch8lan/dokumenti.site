@@ -16,6 +16,14 @@ $this->title = 'Изменение Заказа: #' . $model->id;
  */
 echo Cabinet::topMenu();
 ?>
+<style>
+    .btn-primary, .btn-secondary, btn-outline-secondary{
+        border:0px solid #fff !important;
+    }
+    div.file-preview button.close{
+        background-image: none !important;
+    }
+</style>
 <section class="main-cabinet">
     <div class="main-cabinet-container">
         <?= Cabinet::menu('orders');?>
@@ -58,12 +66,20 @@ echo Cabinet::topMenu();
             <div class="form-row">
                 <div class="form-group col-md-12">
                     <span>Вы можете загрузить несколько файлов формата doc(x), pdf</span>
-                    <?= $form->field($model, '_files')->widget(FileInput::classname(), ['options' => ['multiple' => true]])->label('');?>
+                    <?= $form->field($model, '_files')->widget(FileInput::classname(), [
+                            'options' => ['multiple' => true],
+                        'pluginOptions' => [
+                            'showPreview' => false,
+                            'showRemove' => false,
+                            'showUpload' => false,
+                            'browseClass' => 'btn'
+                        ]
+                    ])->label('');?>
                 </div>
             </div>
 
             <div class="form-group">
-                <?= Html::submitButton('<i class="fa fa-save"></i> Cохранить', ['class' => 'btn btn-success']) ?>
+                <?= Html::submitButton('<i class="fa fa-save"></i> Cохранить', ['class' => 'btn']) ?>
             </div>
             <?php ActiveForm::end(); ?>
 

@@ -3,6 +3,8 @@ use app\modules\system\helpers\Cabinet;
 use yii\widgets\ActiveForm;
 use app\modules\system\models\settings\Settings;
 use app\modules\system\models\users\UsersOrders;
+use yii\helpers\Html;
+
 $script = <<< JS
 $('.main-cabinet-order__item__radio > input[ type=radio ]').click(function(){
     
@@ -13,7 +15,7 @@ $('.main-cabinet-order__item__radio > input[ type=radio ]').click(function(){
 JS;
 
 $this->registerJs($script, \yii\web\View::POS_READY);
-
+$this->title = 'Создание заказа | dokumenti.site';
 $array = UsersOrders::$data;
 
 echo Cabinet::topMenu();
@@ -63,23 +65,38 @@ echo Cabinet::topMenu();
                         <p>Не следует, однако забывать, что постоянное информационно пропагандистское</p>
                     </div>
                     <div class="main-cabinet-order__info__center">
-                        <ul>
-                            <li><span>Повседневная практика показывает, </span></li>
-                            <li><span>что Консультация с широким активом </span></li>
-                            <li><span>представляет Собой интересный </span></li>
-                            <li><span>эксперимент проверки систем </span></li>
-                            <li><span>Массового участия. Товарищи! </span></li>
-                        </ul>
+                    '.$value['html'].'
                     </div>
                     <div class="main-cabinet-order__info__right">
                         <b>'.Settings::getValue($value['settings']).'₽</b>
-                        <a href="#" onclick="document.getElementById(\'order\').submit()">Заказать</a>
+                        '.Html::a('Заказать', '/system/orders/create', [
+                            'class' => 'btn',
+                            'data' => [
+                            'method' => 'post'
+                            ]
+                            ]).'
                     </div>
                 </div>
             </div>';
+
+
+
+
             }
             ?>
+            <div class="main-cabinet-order__dontknow">
+                <h3 class="h3">Не знаете какой у Вас сайт? <br>
+                    <span>Бесплатная оценка для Вас</span></h3>
+                <p>Наш специалисты оценят Ваш сайт и подберут документы и тд., что постоянное информационно-пропагандистское обеспечение нашей деятельности в значительной степени обуславливает создание модели развития.</p>
+                <?=Html::a('Заказать', '/system/orders/dont-know', [
+                'class' => 'btn',
+                'data' => [
+                'method' => 'post'
+                ]
+                ]);?>
+            </div>
             <?php ActiveForm::end();?>
+
 
         </div>
     </div>

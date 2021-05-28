@@ -126,10 +126,11 @@ div.summary {
       -ms-flex-pack: center;
           justify-content: center;
   padding: 20px 0;
+  min-height: calc(100vh - 225px - 250px);
 }
 
 .main-cabinet-container {
-/*  min-width: 1300px;*/
+  width: 1300px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -211,7 +212,7 @@ div.summary {
 
 @media (max-width: 1000px) {
   .main-cabinet-menu a {
-    width: calc(100% / 3);
+    width: calc(100% / 2);
   }
 }
 
@@ -517,6 +518,7 @@ div.summary {
   font-family: 'Open Sans Condensed', sans-serif;
   font-size: 24px;
   margin-bottom: 10px;
+  font-weight: bold;
 }
 
 .main-cabinet-order__item input[type=text] {
@@ -657,6 +659,7 @@ div.summary {
   font-family: 'Open Sans Condensed', sans-serif;
   color: #AA3E3E;
   margin-bottom: 5px;
+  font-weight: bold;
 }
 
 .main-cabinet-order__info__left p {
@@ -677,11 +680,13 @@ div.summary {
 .main-cabinet-order__info__center ul {
   width: 100%;
   padding-left: 20px;
+  list-style: circle;
 }
 
 .main-cabinet-order__info__center ul li {
   color: #AA3E3E;
   margin-bottom: 5px;
+  font-size: 14px;
 }
 
 .main-cabinet-order__info__center ul li span {
@@ -798,4 +803,12 @@ div.summary {
 .main-cabinet-order__dontknow a:hover {
   background-color: #fff;
   color: #AA3E3E;
+}
+
+.main-cabinet table.table thead tr th a{
+  color: #3d3d3d;
+}
+
+.main-cabinet .summary{
+  margin-left: 0;
 }
