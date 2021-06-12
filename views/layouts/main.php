@@ -295,7 +295,7 @@ $model = new FeedbackRequest();
         <div class="footer-copyright">
             <p>Copyright 2021 ©. Все права защищены.</p>
             <a href="#">Политика конфиденциальности</a>
-            <a href="#">Оферта</a>
+            <a href="/uploads/dokumenti_site_oferta.pdf" target="_blank">Оферта</a>
             <a href="https://webrazavr.ru/">WEBRAZAVR - Студия для Вашего бизнеса</a>
         </div>
     </footer>
