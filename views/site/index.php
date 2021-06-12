@@ -402,7 +402,6 @@ $this->title = 'Документы для сайта | Интернет прав
                     мы вам перезвоним</h3>
                 <input type="text" name="phone" class="phone" id="phone" placeholder="+7-(900)-000-00-00">
                 <p class="error">Необходимо заполнить «Ваш телефон».</p>
-
                 <input type="checkbox" name="polit" id="polit">
                 <label for="polit">
                     Я согласен на обработку персональных данных

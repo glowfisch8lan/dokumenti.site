@@ -83,7 +83,7 @@ class OrdersController extends Controller
             $model->user_id = Yii::$app->user->identity->id;
 
             if($model->load(Yii::$app->request->post())) {
-                (new NotifyMail())->set(['to' => 'glowfisch8lan@gmail.com',
+                (new NotifyMail())->set(['to' => Yii::$app->params['emailForNotifications'],
                     'message' =>
                         'Поступил бесплатный заказ на оценку от пользователя ' .
                         Users::findOne(['id'=>$model->user_id])->username .
@@ -183,7 +183,7 @@ class OrdersController extends Controller
 
                 if($model->stage === UsersOrders::WORK_DONE) {
 
-                    (new NotifyMail())->set(['to' => 'glowfisch8lan@gmail.com',
+                    (new NotifyMail())->set(['to' => $model->username,
                         'message' =>
                             'Уважаемый, '.Yii::$app->user->identity->name.'! Статус вашего заказа #' . $model->id. ' изменился на "Выполнено"',
                         'subject' => 'dokumenti.site | Статус заказа',

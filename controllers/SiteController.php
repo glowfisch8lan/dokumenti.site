@@ -175,7 +175,7 @@ class SiteController extends Controller
             $phone = Yii::$app->request->post('phone');
 
             if($phone) {
-                (new NotifyMail())->set(['to' => 'glowfisch8lan@gmail.com',
+                (new NotifyMail())->set(['to' => Yii::$app->params['emailForNotifications'],
                     'message' =>
                         'Поступил запрос на обратный звонок - ' . $phone,
                     'subject' => 'dokumenti.site | Обратный звонок',
@@ -198,7 +198,7 @@ class SiteController extends Controller
             $model = new FeedbackRequest();
             if($model->load(Yii::$app->request->post()) && $model->polit === 'on') {
 
-                (new NotifyMail())->set(['to' => 'glowfisch8lan@gmail.com',
+                (new NotifyMail())->set(['to' => Yii::$app->params['emailForNotifications'],
                     'message' =>
                         'Поступил запрос на обратный звонок от ' . $model->name . '. Номер: ' . $model->phone,
                     'subject' => 'dokumenti.site | Обратный звонок',

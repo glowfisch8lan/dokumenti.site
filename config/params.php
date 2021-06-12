@@ -17,5 +17,5 @@ return [
 
     'tb_api_url' => 'https://securepay.tinkoff.ru/v2/',
     'user.passwordResetTokenExpire' => 3600,
-    'emailForNotifications' => 'glowfisch8lan@gmail.com'
+    'emailForNotifications' => 'info@dokumenti.site'
 ];
